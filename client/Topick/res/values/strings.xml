@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Topick</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="search_topic_btn">話題を探す</string>
+    <string name="management_keyphrase_btn">キーフレーズ管理</string>
+    <string name="setting_btn">設定</string>
+    <string name="title_activity_search_topic">SearchTopicActivity</string>
+    <string name="edit_search_name_hint">名前入力</string>
+    <string name="search_btn">検索</string>
+    <string name="title_activity_search_topic_by_photo">SearchTopicByPhotoActivity</string>
+    <string name="title_activity_found_account_list">FoundAccountListActivity</string>
+    <string name="found_account_title">見つかったアカウント</string>
+    
+    <string name="title_activity_topic_list">TopicListActivity</string>
+    <string name="topic">話題</string>
+    
+    <string name="title_activity_management_key_phrase">ManagementKeyPhraseActivity</string>
+    <string name="pick_up_keyphrase_btn">抽出する</string>
+    <string name="add_keyphrase_btn">追加</string>
+    <string name="add_keyphrase_hint">追加するキーフレーズ</string>
+    <string name="search_keyphrase_hint">キーフレーズを検索</string>
+</resources>
