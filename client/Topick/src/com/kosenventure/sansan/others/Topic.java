@@ -1,9 +1,10 @@
-package com.kosenventure.sansan.topick;
+package com.kosenventure.sansan.others;
 
 public class Topic {
 	
-	String[] keyphrases;
-	String image,content;
+	public String[] keyphrases;
+	public String image;
+	public String content;
 	
 	public Topic(String[] keyphrase, String image, String content) {
 		this.keyphrases = keyphrase;

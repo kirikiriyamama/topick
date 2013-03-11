@@ -1,5 +1,7 @@
 package com.kosenventure.sansan.topick;
 
+import com.kosenventure.sansan.others.Topic;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,4 +1,6 @@
-package com.kosenventure.sansan.topick;
+package com.kosenventure.sansan.others;
+
+import com.kosenventure.sansan.topick.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,10 +19,14 @@ public class KeyPhraseListView extends LinearLayout {
 	
 	private Activity mContext;
 	private String[] mKeyPhrases;
+	private AccessDb mAd;
 	
 	public KeyPhraseListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = (Activity) context;
+		mAd = new AccessDb(mContext);
+		
+		saveData();
 		
 		mKeyPhrases = new String[6];
 		mKeyPhrases[0] = new String("çÇêÍ");
@@ -29,6 +35,10 @@ public class KeyPhraseListView extends LinearLayout {
 		mKeyPhrases[3] = new String("çÇêÍ");
 		
 		inithializeView();
+	}
+	
+	private saveData(){
+		
 	}
 	
 	private void inithializeView(){
