@@ -25,12 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kosenventure.sansan.topick.SearchTopicActivity"
-            android:label="@string/title_activity_search_topic"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
-        </activity>
-        <activity
             android:name="com.kosenventure.sansan.topick.FoundAccountListActivity"
             android:label="@string/title_activity_found_account_list"
             android:screenOrientation="portrait"
@@ -39,12 +33,6 @@
         <activity
             android:name="com.kosenventure.sansan.topick.TopicListActivity"
             android:label="@string/title_activity_topic_list"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
-        </activity>
-        <activity
-            android:name="com.kosenventure.sansan.topick.ManagementKeyPhraseActivity"
-            android:label="@string/title_activity_management_key_phrase"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>

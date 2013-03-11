@@ -8,18 +8,36 @@
     <string name="management_keyphrase_btn">キーフレーズ管理</string>
     <string name="setting_btn">設定</string>
     <string name="title_activity_search_topic">SearchTopicActivity</string>
+    <string name="text_search_name">名前</string>
     <string name="edit_search_name_hint">名前入力</string>
+    <string name="text_search_email">メール</string>
+    <string name="edit_search_email_hint">メールアドレス入力</string>
+    <string name="text_search_twitter">Twitter</string>
+    <string name="edit_search_twitter_hint">＠</string>
+    <string name="text_search_other">その他</string>
+    <string name="edit_search_other_hint">好きなキーワード</string>
     <string name="search_btn">検索</string>
     <string name="title_activity_search_topic_by_photo">SearchTopicByPhotoActivity</string>
     <string name="title_activity_found_account_list">FoundAccountListActivity</string>
     <string name="found_account_title">見つかったアカウント</string>
-    
     <string name="title_activity_topic_list">TopicListActivity</string>
     <string name="topic">話題</string>
-    
     <string name="title_activity_management_key_phrase">ManagementKeyPhraseActivity</string>
     <string name="pick_up_keyphrase_btn">抽出する</string>
     <string name="add_keyphrase_btn">追加</string>
     <string name="add_keyphrase_hint">追加するキーフレーズ</string>
     <string name="search_keyphrase_hint">キーフレーズを検索</string>
+    <string name="title_activity_search_topic_fragment">SearchTopicFragment</string>
+    <string name="title_activity_management_key_phrase_fragment">ManagementKeyPhraseFragment</string>
+    <string name="title_activity_settings_fragment">SettingsFragment</string>
+    
+    
+    <string name="keyphrase_table">keyphrase_table</string>
+    <string name="cancel_keyphrase_table">cancel_keyphrase_table</string>
+    <string name="create_keyphrase_table_sql">CREATE TABLE keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT, date TEXT);</string>
+    <string name="create_cancel_keyphrase_table_sql">CREATE TABLE cancel_keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT, date TEXT);</string>
+
+    <string name="text_setting_cancel_keyphrase_on_off">１度キャンセルしたキーフレーズを表示しない</string>
+    <string name="text_setting_sns_relation">SNSアカウントを登録</string>
+    
 </resources>
