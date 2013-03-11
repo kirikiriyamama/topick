@@ -20,12 +20,25 @@ class Topick < Sinatra::Base
 
 
 	get '/' do
-		session[:access_token]
+		if session[:access_token] then
+			graph = Koala::Facebook::API.new(session[:access_token])
+			graph.get_connections('me', 'posts', :limit => 50).each do |post|
+				p post['message'] unless post['message'].nil?
+				if post['type'] == 'link' and post['status_type'] == 'shared_story' then
+					p post['name'] unless post['name'].nil?
+					p post['description'] unless post['description'].nil?
+				end
+			end
+			
+			session[:access_token]
+		else
+			redirect '/login'
+		end
 	end
 
 	get '/login' do
 		session[:access_token] = nil
-		redirect @oauth.url_for_oauth_code
+		redirect @oauth.url_for_oauth_code(:scope => 'read_stream')
 	end
 
 	get '/logout' do
