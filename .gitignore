@@ -1,0 +1,4 @@
+server/.ruby-version
+server/.bundle
+server/vendor
+server/config
