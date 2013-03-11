@@ -13,5 +13,4 @@ public class ManagementKeyPhraseFragment extends Fragment {
 		return inflater.inflate(R.layout.fragment_management_key_phrase_layout, container, false);
 	}
 	
-	
 }
