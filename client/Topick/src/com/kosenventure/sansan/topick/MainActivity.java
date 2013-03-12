@@ -38,7 +38,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
         actionBar.addTab(actionBar.newTab().setText("キーフレーズ管理").setIcon(R.drawable.ic_tab_topic_selected).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("設定").setIcon(R.drawable.ic_tab_settings_selected).setTabListener(this));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.getTabAt(1).select(); // 0番目のタブを選択しておく
+        actionBar.getTabAt(0).select(); // 0番目のタブを選択しておく
 	}
 
 	@Override

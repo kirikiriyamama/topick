@@ -16,7 +16,8 @@
     <string name="edit_search_twitter_hint">＠</string>
     <string name="text_search_other">その他</string>
     <string name="edit_search_other_hint">好きなキーワード</string>
-    <string name="search_btn">検索</string>
+    <string name="btn_launch_camera">カメラで名刺を読み込む</string>
+    <string name="btn_topic_search">話題を探す</string>
     <string name="title_activity_search_topic_by_photo">SearchTopicByPhotoActivity</string>
     <string name="title_activity_found_account_list">FoundAccountListActivity</string>
     <string name="found_account_title">見つかったアカウント</string>
