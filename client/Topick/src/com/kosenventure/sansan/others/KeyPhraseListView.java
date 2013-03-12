@@ -1,5 +1,6 @@
 package com.kosenventure.sansan.others;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
 import com.kosenventure.sansan.topick.R;
 
 import android.app.Activity;
@@ -36,7 +37,7 @@ public class KeyPhraseListView extends ScrollView {
 		mContext = (Activity) context;
 		mAd = new AccessDb(mContext);
 		
-		saveData();
+//		saveData();
 //		deleteData();
 		getKeyPhrasesFromDb();
 		

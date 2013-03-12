@@ -1,18 +1,30 @@
 package com.kosenventure.sansan.topick;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.content.Context;
+import android.content.res.AssetManager;
 
 public class MainActivity extends SherlockFragmentActivity implements TabListener, FragmentManager.OnBackStackChangedListener{
 
+	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath(); 
+	private static final File SDCARD_DIRECTORY = new File(TESSBASE_PATH+"/tessdata/");
+	
 	private Context mContext;
     private Fragment mFragment;
     private int mSelectedTabPosition = -1; // 何番目のタブが選択されているか
@@ -25,6 +37,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		
 		mContext = getApplicationContext();
 		
+		// 起動時にファイルをコピーする
+		copyOCRLibrary();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.addOnBackStackChangedListener(this);
@@ -41,6 +55,48 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
         actionBar.getTabAt(0).select(); // 0番目のタブを選択しておく
 	}
 
+	// assetsフォルダからライブラリファイルを読み込んでSDカード内にコピーする
+	private void copyOCRLibrary(){
+		// /sdcard/tessdataがあるかどうか確認する
+		if( !SDCARD_DIRECTORY.exists() ){
+			// なければ作成
+			SDCARD_DIRECTORY.mkdirs();
+			
+			// assetsからライブラリファイルを読み込んでSDカード内にコピーする
+			AssetManager assetManager = getResources().getAssets();
+			InputStream input = null;
+			OutputStream output = null;
+			String[] files = null;
+			try {
+				files = assetManager.list("");
+			} catch (IOException e) {
+				Log.e("tag", "Failed to get asset file list.", e);
+			}
+			for ( String file : files ) {
+				try {
+					input = assetManager.open(file);
+					output = new FileOutputStream(TESSBASE_PATH + "/tessdata/" + file);
+					copyFile(input, output);
+					input.close();
+					input = null;
+					output.flush();
+					output.close();
+					output = null;
+				} catch (IOException e) {
+				  e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void copyFile(InputStream in, OutputStream out) throws IOException {
+	    byte[] buffer = new byte[1024];
+	    int read;
+	    while((read = in.read(buffer)) != -1){
+	      out.write(buffer, 0, read);
+	    }
+	}
+	
 	@Override
 	public void onBackStackChanged() {
 		
