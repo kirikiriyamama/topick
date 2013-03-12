@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'net/http'
 require 'rexml/document'
 
 require File.join(DIR, 'lib', 'Hash')
@@ -14,63 +15,65 @@ class Topick < Sinatra::Base
 	end
 
 	configure do
-		set :sessions, true
 		enable :sessions
 
 		set(:facebook) { YAML.load_file(FACEBOOK_CONF).symbolize_keys }
 		set(:yahoo_api) { YAML.load_file(YAHOO_API_CONF).symbolize_keys }
 	end
 	
-	def initialize
-		super
-		@oauth = Koala::Facebook::OAuth.new(settings.facebook[:app_id], settings.facebook[:app_secret], 'http://api.sansan-plus-plus.tk/callback')
+	def oauth_facebook
+		Koala::Facebook::OAuth.new(
+			settings.facebook[:app_id],
+			settings.facebook[:app_secret],
+			create_url(request.scheme, request.host, '/auth/facebook/callback'))
 	end
 
 
 	get '/' do
-		if session[:access_token] then
-			posts = Array.new
-			graph = Koala::Facebook::API.new(session[:access_token])
-			graph.get_connections('me', 'posts', :limit => 50).each do |feed|
+		halt 400 if session[:access_token_facebook].blank?
+
+		# post
+		posts = Array.new
+		begin
+			graph = Koala::Facebook::API.new(session[:access_token_facebook])
+			graph.get_connections('me', 'feed', :limit => 50).each do |feed|
 				posts << feed['message'] unless feed['message'].nil?
 				if feed['type'] == 'link' and feed['status_type'] == 'shared_story' then
 					posts << feed['name'] unless feed['name'].nil?
 					posts << feed['description'] unless feed['description'].nil?
 				end
 			end
-			
-			posts.each do |post|
-				parameter = {
-					:appid => settings.yahoo_api[:app_id],
-					:sentence => URI.encode(post)
-				}
-				url = create_url('http', settings.yahoo_api[:host], settings.yahoo_api[:path], parameter)
-
-				REXML::Document.new(open(url)).elements.each('ResultSet/Result') do |result|
+		rescue
+			halt 400
+		end
+		
+		# keyphrase
+		posts.each do |post|
+			next unless post =~ /[^ -~｡-ﾟ]/
+			Net::HTTP.start(settings.yahoo_api[:host]) do |http|
+				response = http.post(settings.yahoo_api[:path], "appid=#{settings.yahoo_api[:app_id]}&sentence=#{URI.encode(post)}")
+				REXML::Document.new(response.body).elements.each('ResultSet/Result') do |result|
 					puts "#{result.elements['Score'].text.rjust(3, '0')}: #{result.elements['Keyphrase'].text}"
 				end
 			end
-
-			session[:access_token]
-		else
-			redirect '/login'
 		end
+
+		200
 	end
 
-	get '/login' do
-		session[:access_token] = nil
-		redirect @oauth.url_for_oauth_code(:scope => 'read_stream')
+	get '/auth/facebook' do
+		halt 400 if session[:access_token_facebook].blank?
+		"<script>Login.sendAccessToken(\"#{session[:access_token_facebook]}\");</script>"
 	end
 
-	get '/logout' do
-		session[:access_token] = nil
+	get '/auth/facebook/login' do
+		session[:access_token_facebook] = nil
+		redirect oauth_facebook.url_for_oauth_code(:scope => 'read_stream')
+	end
+
+	get '/auth/facebook/callback' do
+		halt 400 if params[:code].blank?
+		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
 		redirect '/'
-	end
-
-	get '/callback' do
-		if params[:code] then
-			session[:access_token] =  @oauth.get_access_token(params[:code])
-			redirect '/'
-		end
 	end
 end
