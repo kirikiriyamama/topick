@@ -8,11 +8,15 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name="com.kosenventure.sansan.topick.MainActivity"
             android:label="@string/app_name"
@@ -23,12 +27,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.kosenventure.sansan.topick.SearchTopicActivity"
-            android:label="@string/title_activity_search_topic"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name="com.kosenventure.sansan.topick.FoundAccountListActivity"
@@ -43,8 +41,8 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.kosenventure.sansan.topick.ManagementKeyPhraseActivity"
-            android:label="@string/title_activity_management_key_phrase"
+            android:name="com.kosenventure.sansan.topick.WebViewActivity"
+            android:label="@string/title_activity_web_view" 
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>

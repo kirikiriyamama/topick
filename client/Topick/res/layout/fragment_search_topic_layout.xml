@@ -1,0 +1,108 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SearchTopicFragment" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+        <TextView 
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_search_name"
+            />
+        <EditText android:id="@+id/edit_search_name"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        android:hint="@string/edit_search_name_hint"
+            />
+    </LinearLayout> 
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView 
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_search_email"
+            />
+        <EditText android:id="@+id/edit_search_email"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/edit_search_email_hint"
+            />
+    </LinearLayout> 
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView 
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_search_twitter"
+            />
+        <EditText android:id="@+id/edit_search_twitter"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/edit_search_twitter_hint"
+            />
+    </LinearLayout> 
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView 
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_search_other"
+            />
+        <EditText android:id="@+id/edit_search_other"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/edit_search_other_hint"
+            />
+    </LinearLayout> 
+    
+    <Button android:id="@+id/btn_launch_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_launch_camera"
+        />
+    
+    <Button android:id="@+id/btn_topic_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_topic_search"
+        />
+    
+    <ImageView android:id="@+id/testimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+        
+</LinearLayout>
