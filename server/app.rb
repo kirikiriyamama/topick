@@ -49,6 +49,7 @@ class Topick < Sinatra::Base
 		
 		# keyphrase
 		posts.each do |post|
+			next unless post =~ /[^ -~｡-ﾟ]/
 			Net::HTTP.start(settings.yahoo_api[:host]) do |http|
 				response = http.post(settings.yahoo_api[:path], "appid=#{settings.yahoo_api[:app_id]}&sentence=#{URI.encode(post)}")
 				REXML::Document.new(response.body).elements.each('ResultSet/Result') do |result|
