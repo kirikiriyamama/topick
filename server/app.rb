@@ -29,10 +29,41 @@ class Topick < Sinatra::Base
 	end
 
 
-	get '/' do
+	get '/search/facebook' do
+		halt 400 if session[:access_token_facebook].blank?
+		halt 400 if params[:name].blank?
+
+		q = Array.new
+		if params[:name] =~ /[^ -~｡-ﾟ]/ then
+			q << params[:name].gsub(/　/, "\s").to_roman
+			q << String.new
+			q.first.split(/\s/).each do |str|
+				q[1] << "#{str.to_kunrei} "
+			end
+			q[1].chop!
+		else
+			q << params[:name].gsub(/　/, "\s")
+		end
+
+		results = Array.new
+		begin
+			graph = Koala::Facebook::API.new(session[:access_token_facebook])
+			q.each do |name|
+				graph.graph_call('search', :type => 'user', :q => name).each do |user|
+					results << user
+				end
+			end
+		rescue
+			halt 400
+		end
+		pp results.uniq
+
+		200
+	end
+
+	get '/keyphrase/facebook' do
 		halt 400 if session[:access_token_facebook].blank?
 
-		# post
 		posts = Array.new
 		begin
 			graph = Koala::Facebook::API.new(session[:access_token_facebook])
@@ -47,7 +78,6 @@ class Topick < Sinatra::Base
 			halt 400
 		end
 		
-		# keyphrase
 		posts.each do |post|
 			next unless post =~ /[^ -~｡-ﾟ]/
 			Net::HTTP.start(settings.yahoo_api[:host]) do |http|
@@ -74,6 +104,6 @@ class Topick < Sinatra::Base
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
 		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
-		redirect '/'
+		redirect '/search/facebook?name=tanabe%20yoichi'
 	end
 end
