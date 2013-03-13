@@ -38,25 +38,26 @@ class Topick < Sinatra::Base
 			q << params[:name].gsub(/　/, "\s").to_roman
 			q << String.new
 			q.first.split(/\s/).each do |str|
-				q[1] << "#{str.to_kunrei} "
+				q.last << "#{str.to_kunrei} "
 			end
-			q[1].chop!
+			q.last.chop!
 		else
 			q << params[:name].gsub(/　/, "\s")
 		end
 
 		results = Array.new
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
 		begin
-			graph = Koala::Facebook::API.new(session[:access_token_facebook])
 			q.each do |name|
 				graph.graph_call('search', :type => 'user', :q => name).each do |user|
-					results << user
+					results << user['id']
 				end
 			end
-		rescue
+
+			pp graph.get_objects(results.uniq, :locale => 'ja_JP')
+		rescue Koala::KoalaError
 			halt 400
 		end
-		pp results.uniq
 
 		200
 	end
@@ -65,8 +66,8 @@ class Topick < Sinatra::Base
 		halt 400 if session[:access_token_facebook].blank?
 
 		posts = Array.new
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
 		begin
-			graph = Koala::Facebook::API.new(session[:access_token_facebook])
 			graph.get_connections('me', 'feed', :limit => 50).each do |feed|
 				posts << feed['message'] unless feed['message'].nil?
 				if feed['type'] == 'link' and feed['status_type'] == 'shared_story' then
@@ -74,7 +75,7 @@ class Topick < Sinatra::Base
 					posts << feed['description'] unless feed['description'].nil?
 				end
 			end
-		rescue
+		rescue Koala::KoalaError
 			halt 400
 		end
 		
