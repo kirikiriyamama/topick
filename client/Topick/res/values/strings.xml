@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- AppName -->
     <string name="app_name">Topick</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    
+    <!-- TabName -->
     <string name="search_topic_btn">話題を探す</string>
     <string name="management_keyphrase_btn">キーフレーズ管理</string>
     <string name="setting_btn">設定</string>
-    <string name="title_activity_search_topic">SearchTopicActivity</string>
+    
+    <!-- SearchTopicFragment -->
+    <string name="text_subtitle_facebook">Facebookで検索</string>
     <string name="text_search_name">名前</string>
-    <string name="edit_search_name_hint">名前入力</string>
-    <string name="text_search_email">メール</string>
-    <string name="edit_search_email_hint">メールアドレス入力</string>
-    <string name="text_search_twitter">Twitter</string>
-    <string name="edit_search_twitter_hint">＠</string>
-    <string name="text_search_other">その他</string>
-    <string name="edit_search_other_hint">好きなキーワード</string>
-    <string name="btn_launch_camera">カメラで名刺を読み込む</string>
-    <string name="btn_topic_search">話題を探す</string>
+    <string name="text_kana">かな</string>
+    <string name="text_romaji">ローマ字</string>
+    <string name="text_kanji">漢字</string>
+    <string name="hint_first_name">苗字</string>
+    <string name="hint_last_name">名前</string>
+    <string name="text_subtitle_twitter">Twitterで検索</string>
+    <string name="text_search_twitter">TwitterID</string>
+    <string name="hint_twitter">＠</string>
+    <string name="btn_launch_camera">カメラで名刺を\n読み込む</string>
+    <string name="btn_topic_search">Topickする</string>
+    
+    <!-- OCRTask -->
+    <string name="dialog_ocr_mes">解析中</string>
+    <string name="dialog_pick_up_word_list_title_kana_name">かなの名前を選択してください</string>
+    <string name="dialog_pick_up_word_list_title_romaji_name">ローマ字の名前を選択してください</string>
+    <string name="dialog_pick_up_word_list_title_kanji_name">漢字の名前を選択してください</string>
+    <string name="dialog_pick_up_word_list_title_twitter_id">TwitterIDを選択してください</string>
+    <string name="dialog_pick_up_word_list_next_btn">ない場合は次へ</string>
+    <string name="dialog_pick_up_word_list_back_btn">戻る</string>
+    <string name="dialog_pick_up_word_list_end_btn">選択終了</string>
+    <string name="toast_pick_up_failure_msg">読み取りに失敗しました</string>
     <string name="title_activity_search_topic_by_photo">SearchTopicByPhotoActivity</string>
     <string name="title_activity_found_account_list">FoundAccountListActivity</string>
     <string name="found_account_title">見つかったアカウント</string>
