@@ -31,30 +31,34 @@ class Topick < Sinatra::Base
 
 	get '/search/facebook' do
 		halt 400 if session[:access_token_facebook].blank?
-		halt 400 if params[:name].blank?
 
 		q = Array.new
-		if params[:name] =~ /[^ -~｡-ﾟ]/ then
-			q << params[:name].gsub(/　/, "\s").to_roman
-			q << String.new
-			q.first.split(/\s/).each do |str|
-				q.last << "#{str.to_kunrei} "
-			end
-			q.last.chop!
+		if !params[:first_name_en].blank? && !params[:last_name_en].blank? then
+			q << "#{params[:first_name_en]} #{params[:last_name_en]}"
+		elsif !params[:first_name_kana].blank? && !params[:last_name_kana].blank? then
+			q << "#{params[:first_name_kana].to_roman} #{params[:last_name_kana].to_roman}"
+			q << "#{params[:first_name_kana].to_roman.to_kunrei} #{params[:last_name_kana].to_roman.to_kunrei}"
 		else
-			q << params[:name].gsub(/　/, "\s")
+			halt 400
 		end
 
+		users = Array.new
 		results = Array.new
 		graph = Koala::Facebook::API.new(session[:access_token_facebook])
 		begin
 			q.each do |name|
 				graph.graph_call('search', :type => 'user', :q => name).each do |user|
-					results << user['id']
+					users << user['id']
 				end
 			end
 
-			pp graph.get_objects(results.uniq, :locale => 'ja_JP')
+			graph.get_objects(users.uniq, :locale => 'ja_JP').each do |user_info|
+				next if (!params[:first_name_ja].blank?) && (params[:first_name_ja] != user_info.last['first_name'])
+				next if (!params[:last_name_ja].blank?) && (params[:last_name_ja] != user_info.last['last_name'])
+				user_info.last['picture'] = graph.get_picture(user_info.last['id'], :type => 'large')
+				results << user_info.last
+			end
+			pp results
 		rescue Koala::KoalaError
 			halt 400
 		end
@@ -105,6 +109,6 @@ class Topick < Sinatra::Base
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
 		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
-		redirect '/search/facebook?name=tanabe%20yoichi'
+		redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
 	end
 end
