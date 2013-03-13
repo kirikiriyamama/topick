@@ -32,10 +32,35 @@ class Topick < Sinatra::Base
 	get '/topic/facebook' do
 		halt 400 if session[:access_token_facebook].blank?
 		halt 400 if params[:id].blank?
+		halt 400 if params[:keyphrase].blank?
+
+		keyphrase = String.new
+		params[:keyphrase].split(',').each do |str|
+			keyphrase << "(#{str})|"
+		end
+		keyphrase.chop!
 		
+		topic = Array.new
 		graph = Koala::Facebook::API.new(session[:access_token_facebook])
 		begin
-			pp graph.get_connections(params[:id], 'posts', :limit => 50)
+			# if text =~ Regexp.new(keyphrase) then
+			graph.get_connections(params[:id], 'posts', :limit => 50).each do |feed|
+				if !feed['message'].nil? && feed['message'] =~ Regexp.new(keyphrase) then
+					topic << feed
+					next
+				end
+				if feed['type'] == 'link' and feed['status_type'] == 'shared_story' then
+					if !feed['name'].nil? && feed['name'] =~ Regexp.new(keyphrase) then
+						topic << feed
+						next
+					end
+					if !feed['description'].nil? && feed['description'] =~ Regexp.new(keyphrase) then
+						topic << feed
+						next
+					end
+				end
+			end
+			pp topic
 		rescue
 			halt 400
 		end
