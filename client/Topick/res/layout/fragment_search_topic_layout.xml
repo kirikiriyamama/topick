@@ -8,101 +8,196 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".SearchTopicFragment" >
+    tools:context=".SearchTopicFragment" 
+    android:background="@drawable/background"
+    >
 
+    <TextView
+        style="@style/StandardTextViewStyle"
+        android:layout_width="wrap_content"
+        android:text="@string/text_subtitle_facebook" 
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+    
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:focusable="true"
         android:focusableInTouchMode="true"
         >
-        <TextView 
-            android:layout_width="0dip"
+        <LinearLayout 
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_search_name"
             />
-        <EditText android:id="@+id/edit_search_name"
-	        android:layout_width="0dip"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="3"
-	        android:hint="@string/edit_search_name_hint"
+
+        <TextView
+            style="@style/StandardTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_search_name" 
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dip"
+            android:layout_marginRight="5dip"
+            />
+
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            >
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView 
+                    style="@style/StandardTextViewStyle"
+                    android:layout_width="0dip"
+                    android:text="@string/text_kana"
+                    android:layout_weight="2"
+                    />       
+                <EditText android:id="@+id/edit_kana_first_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_first_name"
+                    android:layout_weight="2"
+                    />
+                <EditText android:id="@+id/edit_kana_last_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_last_name"
+                    android:layout_weight="2"
+                    />
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView 
+                    style="@style/StandardTextViewStyle"
+                    android:layout_width="0dip"
+                    android:text="@string/text_romaji"
+                    android:layout_weight="2"
+                    />       
+                <EditText android:id="@+id/edit_romaji_first_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_first_name"
+                    android:layout_weight="2"
+                    />
+                <EditText android:id="@+id/edit_romaji_last_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_last_name"
+                    android:layout_weight="2"
+                    />
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView 
+                    style="@style/StandardTextViewStyle"
+                    android:layout_width="0dip"
+                    android:text="@string/text_kanji"
+                    android:layout_weight="2"
+                    />       
+                <EditText android:id="@+id/edit_kanji_first_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_first_name"
+                    android:layout_weight="2"
+                    />
+                <EditText android:id="@+id/edit_kanji_last_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_last_name"
+                    android:layout_weight="2"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             />
     </LinearLayout> 
+    
+    <TextView 
+        style="@style/StandardTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dip"
+        android:text="@string/text_subtitle_twitter"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
     
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         >
-        <TextView 
-            android:layout_width="0dip"
+        <LinearLayout 
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_search_email"
             />
-        <EditText android:id="@+id/edit_search_email"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="@string/edit_search_email_hint"
-            />
-    </LinearLayout> 
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
         <TextView 
+            style="@style/StandardTextViewStyle"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/text_search_twitter"
             />
-        <EditText android:id="@+id/edit_search_twitter"
+        <EditText android:id="@+id/edit_search_twitter_id"
+            style="@style/StandardEditTextStyle"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="@string/edit_search_twitter_hint"
+            android:layout_weight="2"
+            android:hint="@string/hint_twitter"
             />
-    </LinearLayout> 
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
-        <TextView 
-            android:layout_width="0dip"
+        <LinearLayout 
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_search_other"
-            />
-        <EditText android:id="@+id/edit_search_other"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="@string/edit_search_other_hint"
             />
     </LinearLayout> 
     
-    <Button android:id="@+id/btn_launch_camera"
+    <LinearLayout android:id="@+id/btn_launch_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_launch_camera"
-        />
+        android:layout_marginTop="20dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:background="@drawable/active_btn_background"
+        android:gravity="center"
+        
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            android:gravity="center"
+            android:text="@string/btn_launch_camera"
+            android:textColor="@color/white"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_key_phrase_ctrl"
+            />
+    </LinearLayout>
+    
     
     <Button android:id="@+id/btn_topic_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
         android:text="@string/btn_topic_search"
+        android:textColor="@color/white"
+        android:background="@drawable/active_btn_background"
         />
     
-    <ImageView android:id="@+id/testimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-        
 </LinearLayout>

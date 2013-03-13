@@ -29,13 +29,88 @@ class Topick < Sinatra::Base
 	end
 
 
-	get '/' do
+	get '/topic/facebook' do
+		halt 400 if session[:access_token_facebook].blank?
+		halt 400 if params[:id].blank?
+		halt 400 if params[:keyphrase].blank?
+
+		keyphrase = String.new
+		params[:keyphrase].split(',').each do |str|
+			keyphrase << "(#{str})|"
+		end
+		keyphrase.chop!
+		
+		topic = Array.new
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
+		begin
+			# if text =~ Regexp.new(keyphrase) then
+			graph.get_connections(params[:id], 'posts', :limit => 50).each do |feed|
+				if !feed['message'].nil? && feed['message'] =~ Regexp.new(keyphrase) then
+					topic << feed
+					next
+				end
+				if feed['type'] == 'link' and feed['status_type'] == 'shared_story' then
+					if !feed['name'].nil? && feed['name'] =~ Regexp.new(keyphrase) then
+						topic << feed
+						next
+					end
+					if !feed['description'].nil? && feed['description'] =~ Regexp.new(keyphrase) then
+						topic << feed
+						next
+					end
+				end
+			end
+			pp topic
+		rescue
+			halt 400
+		end
+
+		200
+	end
+
+	get '/search/facebook' do
 		halt 400 if session[:access_token_facebook].blank?
 
-		# post
-		posts = Array.new
+		q = Array.new
+		if !params[:first_name_en].blank? && !params[:last_name_en].blank? then
+			q << "#{params[:first_name_en]} #{params[:last_name_en]}"
+		elsif !params[:first_name_kana].blank? && !params[:last_name_kana].blank? then
+			q << "#{params[:first_name_kana].to_roman} #{params[:last_name_kana].to_roman}"
+			q << "#{params[:first_name_kana].to_roman.to_kunrei} #{params[:last_name_kana].to_roman.to_kunrei}"
+		else
+			halt 400
+		end
+
+		users = Array.new
+		results = Array.new
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
 		begin
-			graph = Koala::Facebook::API.new(session[:access_token_facebook])
+			q.each do |name|
+				graph.graph_call('search', :type => 'user', :q => name).each do |user|
+					users << user['id']
+				end
+			end
+
+			graph.get_objects(users.uniq, :locale => 'ja_JP').each do |user_info|
+				next if (!params[:first_name_ja].blank?) && (params[:first_name_ja] != user_info.last['first_name'])
+				next if (!params[:last_name_ja].blank?) && (params[:last_name_ja] != user_info.last['last_name'])
+				user_info.last['picture'] = graph.get_picture(user_info.last['id'], :type => 'large')
+				results << user_info.last
+			end
+			pp results
+		rescue Koala::KoalaError
+			halt 400
+		end
+
+		200
+	end
+
+	get '/keyphrase/facebook' do
+		halt 400 if session[:access_token_facebook].blank?
+
+		posts = Array.new
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
+		begin
 			graph.get_connections('me', 'feed', :limit => 50).each do |feed|
 				posts << feed['message'] unless feed['message'].nil?
 				if feed['type'] == 'link' and feed['status_type'] == 'shared_story' then
@@ -43,11 +118,10 @@ class Topick < Sinatra::Base
 					posts << feed['description'] unless feed['description'].nil?
 				end
 			end
-		rescue
+		rescue Koala::KoalaError
 			halt 400
 		end
 		
-		# keyphrase
 		posts.each do |post|
 			next unless post =~ /[^ -~｡-ﾟ]/
 			Net::HTTP.start(settings.yahoo_api[:host]) do |http|
@@ -74,6 +148,7 @@ class Topick < Sinatra::Base
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
 		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
-		redirect '/'
+		# redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
+		redirect '/topic/facebook?id=100001546266000'
 	end
 end
