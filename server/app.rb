@@ -29,6 +29,20 @@ class Topick < Sinatra::Base
 	end
 
 
+	get '/topic/facebook' do
+		halt 400 if session[:access_token_facebook].blank?
+		halt 400 if params[:id].blank?
+		
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
+		begin
+			pp graph.get_connections(params[:id], 'posts', :limit => 50)
+		rescue
+			halt 400
+		end
+
+		200
+	end
+
 	get '/search/facebook' do
 		halt 400 if session[:access_token_facebook].blank?
 
@@ -109,6 +123,7 @@ class Topick < Sinatra::Base
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
 		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
-		redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
+		# redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
+		redirect '/topic/facebook?id=100001546266000'
 	end
 end
