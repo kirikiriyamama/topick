@@ -29,6 +29,45 @@ class Topick < Sinatra::Base
 	end
 
 
+	get '/topic/facebook' do
+		halt 400 if session[:access_token_facebook].blank?
+		halt 400 if params[:id].blank?
+		halt 400 if params[:keyphrase].blank?
+
+		keyphrase = String.new
+		params[:keyphrase].split(',').each do |str|
+			keyphrase << "(#{str})|"
+		end
+		keyphrase.chop!
+		
+		topic = Array.new
+		graph = Koala::Facebook::API.new(session[:access_token_facebook])
+		begin
+			# if text =~ Regexp.new(keyphrase) then
+			graph.get_connections(params[:id], 'posts', :limit => 50).each do |feed|
+				if !feed['message'].nil? && feed['message'] =~ Regexp.new(keyphrase) then
+					topic << feed
+					next
+				end
+				if feed['type'] == 'link' and feed['status_type'] == 'shared_story' then
+					if !feed['name'].nil? && feed['name'] =~ Regexp.new(keyphrase) then
+						topic << feed
+						next
+					end
+					if !feed['description'].nil? && feed['description'] =~ Regexp.new(keyphrase) then
+						topic << feed
+						next
+					end
+				end
+			end
+			pp topic
+		rescue
+			halt 400
+		end
+
+		200
+	end
+
 	get '/search/facebook' do
 		halt 400 if session[:access_token_facebook].blank?
 
@@ -109,6 +148,7 @@ class Topick < Sinatra::Base
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
 		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
-		redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
+		# redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
+		redirect '/topic/facebook?id=100001546266000'
 	end
 end
