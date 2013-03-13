@@ -1,6 +1,5 @@
 package com.kosenventure.sansan.others;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
 import com.kosenventure.sansan.topick.R;
 
 import android.app.Activity;
@@ -36,9 +35,9 @@ public class KeyPhraseListView extends ScrollView {
 		super(context, attrs);
 		mContext = (Activity) context;
 		mAd = new AccessDb(mContext);
-		
-//		saveData();
-//		deleteData();
+
+		deleteData();
+		saveData();
 		getKeyPhrasesFromDb();
 		
 		mKeyPhraseListView = new RelativeLayout(mContext);
@@ -48,16 +47,26 @@ public class KeyPhraseListView extends ScrollView {
 	}
 	
 	private void saveData(){
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");	
 	}
 	
 	private void deleteData(){
@@ -79,6 +88,10 @@ public class KeyPhraseListView extends ScrollView {
 			} while (cursor.moveToNext());
 			cursor.close();
 		}
+	}
+	
+	public void closeDb(){
+		mAd.closeDb();
 	}
 	
 	private void getKeyPhrasesFromDb(){
