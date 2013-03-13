@@ -980,38 +980,41 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__titleDivider=0x7f04001c;
         public static final int abs__up=0x7f04000b;
-        public static final int account_bio=0x7f040045;
-        public static final int account_name=0x7f040044;
-        public static final int account_photo=0x7f040043;
-        public static final int action_settings=0x7f040049;
-        public static final int add_keyphrase_btn=0x7f040038;
-        public static final int btn_launch_camera=0x7f04003f;
-        public static final int btn_topic_search=0x7f040040;
+        public static final int account_bio=0x7f040048;
+        public static final int account_name=0x7f040047;
+        public static final int account_photo=0x7f040046;
+        public static final int action_settings=0x7f04004c;
+        public static final int add_keyphrase_btn=0x7f040039;
+        public static final int btn_launch_camera=0x7f040040;
+        public static final int btn_login_facebook=0x7f040043;
+        public static final int btn_topic_search=0x7f040041;
         public static final int container=0x7f040034;
         public static final int disableHome=0x7f040009;
-        public static final int edit_adding_keyphrase=0x7f040037;
+        public static final int edit_adding_keyphrase=0x7f040038;
         public static final int edit_query=0x7f040027;
-        public static final int edit_search_email=0x7f04003c;
-        public static final int edit_search_keyphrase=0x7f040039;
-        public static final int edit_search_name=0x7f04003b;
-        public static final int edit_search_other=0x7f04003e;
-        public static final int edit_search_twitter=0x7f04003d;
+        public static final int edit_search_email=0x7f04003d;
+        public static final int edit_search_keyphrase=0x7f04003a;
+        public static final int edit_search_name=0x7f04003c;
+        public static final int edit_search_other=0x7f04003f;
+        public static final int edit_search_twitter=0x7f04003e;
         public static final int found_account_list=0x7f040033;
         public static final int homeAsUp=0x7f040006;
-        public static final int keyphrase=0x7f040041;
-        public static final int keyphrase_btn=0x7f040042;
-        public static final int keyphrases_list=0x7f04003a;
+        public static final int keyphrase=0x7f040044;
+        public static final int keyphrase_btn=0x7f040045;
+        public static final int keyphrases_list=0x7f04003b;
         public static final int listMode=0x7f040002;
-        public static final int match_keyphrase=0x7f040046;
+        public static final int login_webview=0x7f040036;
+        public static final int match_keyphrase=0x7f040049;
         public static final int normal=0x7f040001;
-        public static final int pick_up_keyphrase_btn=0x7f040036;
+        public static final int pick_up_keyphrase_btn=0x7f040037;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
         public static final int tabMode=0x7f040003;
-        public static final int topic_content=0x7f040048;
+        public static final int testimage=0x7f040042;
+        public static final int topic_content=0x7f04004b;
         public static final int topic_list=0x7f040035;
-        public static final int topic_photo=0x7f040047;
+        public static final int topic_photo=0x7f04004a;
         public static final int useLogo=0x7f040004;
         public static final int wrap_content=0x7f040000;
     }
@@ -1045,14 +1048,15 @@ containing a value of this type.
         public static final int activity_found_account_list_layout=0x7f030017;
         public static final int activity_main_layout=0x7f030018;
         public static final int activity_topic_list_layout=0x7f030019;
-        public static final int fragment_management_key_phrase_layout=0x7f03001a;
-        public static final int fragment_search_topic_layout=0x7f03001b;
-        public static final int fragment_settings_layout=0x7f03001c;
-        public static final int keyphrase_layout=0x7f03001d;
-        public static final int list_found_account_layout=0x7f03001e;
-        public static final int list_topic_layout=0x7f03001f;
-        public static final int sherlock_spinner_dropdown_item=0x7f030020;
-        public static final int sherlock_spinner_item=0x7f030021;
+        public static final int activity_web_view_layout=0x7f03001a;
+        public static final int fragment_management_key_phrase_layout=0x7f03001b;
+        public static final int fragment_search_topic_layout=0x7f03001c;
+        public static final int fragment_settings_layout=0x7f03001d;
+        public static final int keyphrase_layout=0x7f03001e;
+        public static final int list_found_account_layout=0x7f03001f;
+        public static final int list_topic_layout=0x7f030020;
+        public static final int sherlock_spinner_dropdown_item=0x7f030021;
+        public static final int sherlock_spinner_item=0x7f030022;
     }
     public static final class menu {
         public static final int found_account_list=0x7f0b0000;
@@ -1061,6 +1065,7 @@ containing a value of this type.
         public static final int search_topic=0x7f0b0003;
         public static final int settings=0x7f0b0004;
         public static final int topic_list=0x7f0b0005;
+        public static final int web_view=0x7f0b0006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1143,6 +1148,7 @@ containing a value of this type.
         public static final int title_activity_search_topic_fragment=0x7f09002a;
         public static final int title_activity_settings_fragment=0x7f09002c;
         public static final int title_activity_topic_list=0x7f090023;
+        public static final int title_activity_web_view=0x7f090033;
         public static final int topic=0x7f090024;
     }
     public static final class style {

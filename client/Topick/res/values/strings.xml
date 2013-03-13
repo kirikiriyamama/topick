@@ -31,14 +31,12 @@
     <string name="title_activity_search_topic_fragment">SearchTopicFragment</string>
     <string name="title_activity_management_key_phrase_fragment">ManagementKeyPhraseFragment</string>
     <string name="title_activity_settings_fragment">SettingsFragment</string>
-    
-    
     <string name="keyphrase_table">keyphrase_table</string>
     <string name="cancel_keyphrase_table">cancel_keyphrase_table</string>
     <string name="create_keyphrase_table_sql">CREATE TABLE keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT, date TEXT);</string>
     <string name="create_cancel_keyphrase_table_sql">CREATE TABLE cancel_keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT, date TEXT);</string>
-
     <string name="text_setting_cancel_keyphrase_on_off">１度キャンセルしたキーフレーズを表示しない</string>
     <string name="text_setting_sns_relation">SNSアカウントを登録</string>
-    
+    <string name="title_activity_web_view">WebViewActivity</string>
+
 </resources>
