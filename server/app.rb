@@ -55,6 +55,7 @@ class Topick < Sinatra::Base
 			graph.get_objects(users.uniq, :locale => 'ja_JP').each do |user_info|
 				next if (!params[:first_name_ja].blank?) && (params[:first_name_ja] != user_info.last['first_name'])
 				next if (!params[:last_name_ja].blank?) && (params[:last_name_ja] != user_info.last['last_name'])
+				user_info.last['picture'] = graph.get_picture(user_info.last['id'], :type => 'large')
 				results << user_info.last
 			end
 			pp results
@@ -108,6 +109,6 @@ class Topick < Sinatra::Base
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
 		session[:access_token_facebook] = oauth_facebook.get_access_token(params[:code])
-		redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe'
+		redirect '/search/facebook?first_name_en=youiti&last_name_en=tanabe&first_name_ja=%E6%B4%8B%E4%B8%80&last_name_ja=%E7%94%B0%E8%BE%BA'
 	end
 end
