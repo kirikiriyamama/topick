@@ -36,8 +36,8 @@ public class KeyPhraseListView extends ScrollView {
 		mContext = (Activity) context;
 		mAd = new AccessDb(mContext);
 
-		deleteData();
-		saveData();
+//		deleteData();
+//		saveData();
 		getKeyPhrasesFromDb();
 		
 		mKeyPhraseListView = new RelativeLayout(mContext);

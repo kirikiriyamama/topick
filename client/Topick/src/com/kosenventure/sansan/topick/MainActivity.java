@@ -52,7 +52,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
         actionBar.addTab(actionBar.newTab().setText("キーフレーズ管理").setIcon(R.drawable.tab_key_phrase_ctrl).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("設定").setIcon(R.drawable.tab_set).setTabListener(this));
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.getTabAt(0).select(); // 0番目のタブを選択しておく
+        actionBar.getTabAt(2).select(); // 0番目のタブを選択しておく
 	}
 
 	// assetsフォルダからライブラリファイルを読み込んでSDカード内にコピーする

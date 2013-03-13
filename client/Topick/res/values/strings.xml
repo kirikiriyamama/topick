@@ -43,6 +43,8 @@
     <string name="btn_save_kay_phrase_change">変更を保存</string>
     
     <!-- SettingFragment -->
+    <string name="facebook_access_token_set_key">facebook_access_token</string>
+    <string name="twitter_access_token_set_key">twitter_access_token</string>
     
     <!-- AccessDb -->
     <string name="keyphrase_table">keyphrase_table</string>
