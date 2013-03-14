@@ -1,6 +1,7 @@
 package com.kosenventure.sansan.others;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
+import java.util.ArrayList;
+
 import com.kosenventure.sansan.topick.R;
 
 import android.app.Activity;
@@ -22,12 +23,13 @@ public class KeyPhraseListView extends ScrollView {
 
 	final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
 	final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
+	final static String DUMMY_DATE = "1111-11-11 11:11:11";
 	
 	private boolean mSortFlag = false;
 	
 	private Activity mContext;
-	private KeyPhrase[] mKeyPhrases;
-	private KeyPhrase[] mCancelKeyPhrases;
+	private ArrayList<KeyPhrase> mKeyPhrases = new ArrayList<KeyPhrase>();
+	private ArrayList<KeyPhrase> mCancelKeyPhrases = new ArrayList<KeyPhrase>();
 	private AccessDb mAd;
 	
 	private RelativeLayout mKeyPhraseListView;
@@ -36,94 +38,50 @@ public class KeyPhraseListView extends ScrollView {
 		super(context, attrs);
 		mContext = (Activity) context;
 		mAd = new AccessDb(mContext);
-		
-//		saveData();
+
 //		deleteData();
+//		saveData();
 		getKeyPhrasesFromDb();
 		
 		mKeyPhraseListView = new RelativeLayout(mContext);
 		addView(mKeyPhraseListView, new ViewGroup.LayoutParams(MP, MP));
 		
-		addKeyPhrases();
+		setKeyPhrases();
 	}
 	
-	private void saveData(){
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "高専", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.cancel_keyphrase_table), "春休み", "2009-08-24 23:10:15");	
-	}
-	
-	private void deleteData(){
-		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, null, null, "id");
-		int id;
-		if(cursor != null){
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				mAd.deleteDb(getStr(R.string.keyphrase_table), String.valueOf(id));
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-		
-		cursor = mAd.readDb(getStr(R.string.cancel_keyphrase_table), null, null, null, "id");
-		if(cursor != null){
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				mAd.deleteDb(getStr(R.string.cancel_keyphrase_table), String.valueOf(id));
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-	}
-	
-	private void getKeyPhrasesFromDb(){
-		int i = 0;
-		int id;
-		String phrase,date;
-		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, null, null, "id");
-		if(cursor != null){
-			mKeyPhrases = new KeyPhrase[cursor.getCount()];
-			
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				phrase = cursor.getString(cursor.getColumnIndex("phrase"));
-				date = cursor.getString(cursor.getColumnIndex("date"));
-				
-				mKeyPhrases[i++] = new KeyPhrase(id, phrase, date);
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-		
-		i = 0;
-		cursor = mAd.readDb(getStr(R.string.cancel_keyphrase_table), null, null, null, "id");
-		if(cursor != null){
-			mCancelKeyPhrases = new KeyPhrase[cursor.getCount()];
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				phrase = cursor.getString(cursor.getColumnIndex("phrase"));
-				date = cursor.getString(cursor.getColumnIndex("date"));
-				
-				mCancelKeyPhrases[i++] = new KeyPhrase(id, phrase, date);
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-	}
-	
-	private String getStr(int resourceId) {
-		return mContext.getResources().getString(resourceId);
-	}
-	
-	private void addKeyPhrases(){
+	private void setKeyPhrases(){
 		int id = 1;
 		if( mKeyPhrases != null ) for( KeyPhrase phrase : mKeyPhrases ) addKeyPhraseView(phrase, id++);
 		if( mCancelKeyPhrases != null ) for( KeyPhrase phrase : mCancelKeyPhrases ) addKeyPhraseView(phrase, id++);
 	}
 	
+	public void searchKeyPhrase(String key){
+		int id = 1;
+		removeAllKeyPhrases();
+		if( mKeyPhrases != null ){
+			for( KeyPhrase phrase : mKeyPhrases ){
+				if( phrase.phrase.indexOf(key) != -1 )	addKeyPhraseView(phrase, id++);
+			}
+		}
+		mSortFlag = false;
+	}
+
+	public void addKeyPhrase(String phrase) {
+		// DBにキーフレーズを追加
+		mAd.writeDb(getStr(R.string.keyphrase_table), phrase, DUMMY_DATE);
+		// リストに追加
+		mKeyPhrases.add( new KeyPhrase(mKeyPhrases.get(mKeyPhrases.size()-1).id+1, phrase, DUMMY_DATE));
+		// Viewに追加
+		addKeyPhraseView(mKeyPhrases.get(mKeyPhrases.size()-1), mKeyPhraseListView.getChildAt(mKeyPhraseListView.getChildCount()-1).getId()+1);
+		// Viewをソート
+		mSortFlag = false;
+	}
+	
+	private void removeAllKeyPhrases(){
+		mKeyPhraseListView.removeAllViews();
+	}
+	
+
 	private void addKeyPhraseView(KeyPhrase phrase, int id){
 		LayoutInflater inflater = mContext.getLayoutInflater();
 		LinearLayout keyphraseView;
@@ -146,7 +104,7 @@ public class KeyPhraseListView extends ScrollView {
 		
 	}
 	
-	private void sortKeyPhrases(){
+	private void sortKeyPhraseViews(){
 		mSortFlag = true;
 		
 		int count = mKeyPhraseListView.getChildCount();
@@ -179,6 +137,95 @@ public class KeyPhraseListView extends ScrollView {
 	    }
 	}
 	
+	// デバッグ用。DBにダミーデータを追加
+	private void saveData(){
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
+		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
+	}
+	// デバッグ用。DBのデータをすべて削除
+	private void deleteData(){
+		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, null, null, "id");
+		int id;
+		if(cursor != null){
+			do {
+				id = cursor.getInt(cursor.getColumnIndex("id"));
+				mAd.deleteDb(getStr(R.string.keyphrase_table), String.valueOf(id));
+			} while (cursor.moveToNext());
+			cursor.close();
+		}
+		
+		cursor = mAd.readDb(getStr(R.string.cancel_keyphrase_table), null, null, null, "id");
+		if(cursor != null){
+			do {
+				id = cursor.getInt(cursor.getColumnIndex("id"));
+				mAd.deleteDb(getStr(R.string.cancel_keyphrase_table), String.valueOf(id));
+			} while (cursor.moveToNext());
+			cursor.close();
+		}
+	}
+	// DBをcloseする
+	public void closeDb(){
+		mAd.closeDb();
+	}
+	// DBからキーフレーズを取得する
+	private void getKeyPhrasesFromDb(){
+		int id;
+		String phrase,date;
+		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, null, null, "id");
+		if(cursor != null){
+			do {
+				id = cursor.getInt(cursor.getColumnIndex("id"));
+				phrase = cursor.getString(cursor.getColumnIndex("phrase"));
+				date = cursor.getString(cursor.getColumnIndex("date"));
+				
+				mKeyPhrases.add(new KeyPhrase(id, phrase, date));
+			} while (cursor.moveToNext());
+			cursor.close();
+		}
+		
+//			i = 0;
+//			cursor = mAd.readDb(getStr(R.string.cancel_keyphrase_table), null, null, null, "id");
+//			if(cursor != null){
+//				mCancelKeyPhrases = new KeyPhrase[cursor.getCount()];
+//				do {
+//					id = cursor.getInt(cursor.getColumnIndex("id"));
+//					phrase = cursor.getString(cursor.getColumnIndex("phrase"));
+//					date = cursor.getString(cursor.getColumnIndex("date"));
+//					
+//					mCancelKeyPhrases[i++] = new KeyPhrase(id, phrase, date);
+//				} while (cursor.moveToNext());
+//				cursor.close();
+//			}
+	}
+
+	private String getStr(int resourceId) {
+		return mContext.getResources().getString(resourceId);
+	}
+	
 	private RelativeLayout.LayoutParams params(int width, int height, int[] verbs, int anchor){
 		RelativeLayout.LayoutParams params  = new RelativeLayout.LayoutParams(width, height);
 		params.setMargins(5, 0, 5, 5);
@@ -191,6 +238,6 @@ public class KeyPhraseListView extends ScrollView {
 		super.onDraw(canvas);
 		
 		if( mSortFlag ) return;
-		sortKeyPhrases();
+		sortKeyPhraseViews();
 	}
 }
