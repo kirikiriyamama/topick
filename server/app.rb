@@ -183,6 +183,34 @@ class Topick < Sinatra::Base
 		"<script>Login.sendFacebookAccessToken(\"#{oauth_facebook.get_access_token(params[:code])}\");</script>"
 	end
 
+
+	get '/search/twitter' do
+		halt 400 if params[:access_token].blank?
+		halt 400 if params[:access_token_secret].blank?
+		halt 400 if params[:screen_name].blank?
+
+		Twitter.configure do |config|
+			config.consumer_key = settings.twitter[:consumer_key]
+			config.consumer_secret = settings.twitter[:consumer_secret]
+			config.oauth_token = params[:access_token]
+			config.oauth_token_secret = params[:access_token_secret]
+		end
+		twitter = Twitter::Client.new
+
+		response = Array.new
+		unless (result = twitter.user_search(params[:screen_name]).first).blank? then
+			response << {
+				:id => result.id,
+				:screen_name => result.screen_name,
+				:name => result.name,
+				:description => result.description,
+				:picture => result.profile_image_url(:bigger)}
+		end
+
+		content_type :json
+		response.to_json
+	end
+
 	get '/auth/twitter' do
 		request_token = oauth_twitter.get_request_token(:oauth_callback => create_url(request.scheme, request.host, '/auth/twitter/callback'))
 		session[:request_token] = request_token.token
