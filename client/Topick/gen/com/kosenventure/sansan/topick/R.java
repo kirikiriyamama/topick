@@ -994,7 +994,7 @@ containing a value of this type.
         public static final int btn_launch_camera=0x7f040047;
         public static final int btn_login_facebook=0x7f040049;
         public static final int btn_pick_up_key_phrase=0x7f040039;
-        public static final int btn_save_key_phrase_changez=0x7f04003f;
+        public static final int btn_save_key_phrase_changes=0x7f04003f;
         public static final int btn_search_key_phrase=0x7f04003b;
         public static final int btn_topic_search=0x7f040048;
         public static final int container=0x7f040034;
@@ -1117,20 +1117,21 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090009;
+        public static final int alert_search_key_phrase=0x7f09002b;
         /**  AppName 
          */
         public static final int app_name=0x7f09000f;
-        public static final int btn_add_key_phrase=0x7f09002b;
+        public static final int btn_add_key_phrase=0x7f09002c;
         public static final int btn_launch_camera=0x7f09001d;
         /**  ManagementKeyPhraseFragment 
          */
         public static final int btn_pick_up_keyphrase=0x7f090028;
-        public static final int btn_save_kay_phrase_change=0x7f09002d;
+        public static final int btn_save_kay_phrase_change=0x7f09002e;
         public static final int btn_search_key_phrase=0x7f090029;
         public static final int btn_topic_search=0x7f09001e;
-        public static final int cancel_keyphrase_table=0x7f090031;
-        public static final int create_cancel_keyphrase_table_sql=0x7f090033;
-        public static final int create_keyphrase_table_sql=0x7f090032;
+        public static final int cancel_keyphrase_table=0x7f090032;
+        public static final int create_cancel_keyphrase_table_sql=0x7f090034;
+        public static final int create_keyphrase_table_sql=0x7f090033;
         /**  OCRTask 
          */
         public static final int dialog_ocr_mes=0x7f09001f;
@@ -1143,16 +1144,16 @@ containing a value of this type.
         public static final int dialog_pick_up_word_list_title_twitter_id=0x7f090023;
         /**  SettingFragment 
          */
-        public static final int facebook_access_token_set_key=0x7f09002e;
-        public static final int found_account_title=0x7f090034;
-        public static final int hint_add_key_phrase=0x7f09002c;
+        public static final int facebook_access_token_set_key=0x7f09002f;
+        public static final int found_account_title=0x7f090035;
+        public static final int hint_add_key_phrase=0x7f09002d;
         public static final int hint_first_name=0x7f090018;
         public static final int hint_last_name=0x7f090019;
         public static final int hint_search_key_phrase=0x7f09002a;
         public static final int hint_twitter=0x7f09001c;
         /**  AccessDb 
          */
-        public static final int keyphrase_table=0x7f090030;
+        public static final int keyphrase_table=0x7f090031;
         public static final int management_keyphrase_btn=0x7f090011;
         /**  TabName 
          */
@@ -1163,18 +1164,18 @@ containing a value of this type.
         public static final int text_romaji=0x7f090016;
         public static final int text_search_name=0x7f090014;
         public static final int text_search_twitter=0x7f09001b;
-        public static final int text_setting_cancel_keyphrase_on_off=0x7f090038;
-        public static final int text_setting_sns_relation=0x7f090039;
+        public static final int text_setting_cancel_keyphrase_on_off=0x7f090039;
+        public static final int text_setting_sns_relation=0x7f09003a;
         /**  SearchTopicFragment 
          */
         public static final int text_subtitle_facebook=0x7f090013;
         public static final int text_subtitle_twitter=0x7f09001a;
-        public static final int title_activity_found_account_list=0x7f090036;
-        public static final int title_activity_topic_list=0x7f090035;
-        public static final int title_activity_web_view=0x7f09003a;
+        public static final int title_activity_found_account_list=0x7f090037;
+        public static final int title_activity_topic_list=0x7f090036;
+        public static final int title_activity_web_view=0x7f09003b;
         public static final int toast_pick_up_failure_msg=0x7f090027;
-        public static final int topic=0x7f090037;
-        public static final int twitter_access_token_set_key=0x7f09002f;
+        public static final int topic=0x7f090038;
+        public static final int twitter_access_token_set_key=0x7f090030;
     }
     public static final class style {
         /** 

@@ -38,6 +38,7 @@
     <string name="btn_pick_up_keyphrase">抽出する</string>
     <string name="btn_search_key_phrase">検索</string>
     <string name="hint_search_key_phrase">キーフレーズを検索</string>
+    <string name="alert_search_key_phrase">何か入力してください</string>
     <string name="btn_add_key_phrase">追加</string>
     <string name="hint_add_key_phrase">追加するキーフレーズ</string>
     <string name="btn_save_kay_phrase_change">変更を保存</string>
