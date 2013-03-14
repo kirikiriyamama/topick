@@ -1,5 +1,6 @@
 package com.kosenventure.sansan.topick;
 
+import com.kosenventure.sansan.others.KeyPhrase;
 import com.kosenventure.sansan.others.KeyPhraseListView;
 
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -64,22 +66,35 @@ public class ManagementKeyPhraseFragment extends Fragment implements OnClickList
 	
 	private void searchKeyPhrase(){
 		String searchKey = mEditSearchKeyPhrase.getText().toString();
+		mEditSearchKeyPhrase.clearFocus();
+		closeIME(mEditSearchKeyPhrase);
+		
 		// 何も入力されていない場合
 		if( searchKey.equals("") ){
 			toast(getString(R.string.alert_search_key_phrase));
 			return;
 		}
-		mKeyPhraseListView.addKeyPhrasesBySearch(searchKey);
+		mKeyPhraseListView.searchKeyPhrase(searchKey);
 	}
 
 	private void addKeyPhrase(){
-		String searchKey = mEditSearchKeyPhrase.getText().toString();
+		String addPhrase = mEditAddKeyPhrase.getText().toString();
+		mEditAddKeyPhrase.getEditableText().clear();
+		mEditAddKeyPhrase.clearFocus();
+		closeIME(mEditAddKeyPhrase);
+		
 		// 何も入力されていない場合
-		if( searchKey.equals("") ){
+		if( addPhrase.equals("") ){
 			toast(getString(R.string.alert_search_key_phrase));
 			return;
 		}
-		mKeyPhraseListView.addKeyPhrasesBySearch(searchKey);
+		mKeyPhraseListView.addKeyPhrase(addPhrase);
+	}
+	
+	private void closeIME(View v){
+        //ソフトキーボードを閉じる
+		InputMethodManager inputMethodManager = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
 	}
 	
 	private void log(String msg){
@@ -95,6 +110,9 @@ public class ManagementKeyPhraseFragment extends Fragment implements OnClickList
 		if ( v == mSearchKeyPhraseBtn ) {
 			searchKeyPhrase();
 		}
+		else if( v == mAddKeyPhraseBtn ) {
+			addKeyPhrase();
+		}
 	}
 
 	@Override
@@ -104,7 +122,7 @@ public class ManagementKeyPhraseFragment extends Fragment implements OnClickList
 				searchKeyPhrase();
 			}
 			else if ( v == mAddKeyPhraseBtn ) {
-				
+				addKeyPhrase();
 			}
 		}
 		return false;
