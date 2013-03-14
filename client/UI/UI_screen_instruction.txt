@@ -50,7 +50,20 @@
 
 ③設定画面
 (タブの設定をタップするとこの画面に)
+・画像
+(！！まだ作成していません)
+ON/OFFボタンには switch_on.png、switch_off.pngを使用
+SNSアカウントを登録アイコンは、
+登録されている場合、ボタンの背景をbtn_background.pngにして
+その上にFacebookアイコン、Twitterアイコン画像を載せる感じ?
+facebook_icon.png	twitter_icon.png
 
+登録されていない場合ボタン背景btn_background_tap.png
+アイコンは
+facebook_icon_tap.png	twitter_icon_tap.png
+
+・カラーコード
+文字　黒#000000
 
 ④キーフレーズ抽出完了画面
 (ダイアログ③の後、キーフレーズが見つかったらこの画面に)
