@@ -1,5 +1,7 @@
 package com.kosenventure.sansan.others;
 
+import java.util.ArrayList;
+
 import com.kosenventure.sansan.topick.R;
 
 import android.app.Activity;
@@ -7,7 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,13 @@ public class KeyPhraseListView extends ScrollView {
 
 	final static int MP = LinearLayout.LayoutParams.MATCH_PARENT;
 	final static int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
+	final static String DUMMY_DATE = "1111-11-11 11:11:11";
 	
 	private boolean mSortFlag = false;
 	
 	private Activity mContext;
-	private KeyPhrase[] mKeyPhrases;
-	private KeyPhrase[] mCancelKeyPhrases;
+	private ArrayList<KeyPhrase> mKeyPhrases = new ArrayList<KeyPhrase>();
+	private ArrayList<KeyPhrase> mCancelKeyPhrases = new ArrayList<KeyPhrase>();
 	private AccessDb mAd;
 	
 	private RelativeLayout mKeyPhraseListView;
@@ -44,16 +46,16 @@ public class KeyPhraseListView extends ScrollView {
 		mKeyPhraseListView = new RelativeLayout(mContext);
 		addView(mKeyPhraseListView, new ViewGroup.LayoutParams(MP, MP));
 		
-		addKeyPhrases();
+		setKeyPhrases();
 	}
 	
-	private void addKeyPhrases(){
+	private void setKeyPhrases(){
 		int id = 1;
 		if( mKeyPhrases != null ) for( KeyPhrase phrase : mKeyPhrases ) addKeyPhraseView(phrase, id++);
 		if( mCancelKeyPhrases != null ) for( KeyPhrase phrase : mCancelKeyPhrases ) addKeyPhraseView(phrase, id++);
 	}
 	
-	public void addKeyPhrasesBySearch(String key){
+	public void searchKeyPhrase(String key){
 		int id = 1;
 		removeAllKeyPhrases();
 		if( mKeyPhrases != null ){
@@ -63,10 +65,22 @@ public class KeyPhraseListView extends ScrollView {
 		}
 		mSortFlag = false;
 	}
+
+	public void addKeyPhrase(String phrase) {
+		// DBにキーフレーズを追加
+		mAd.writeDb(getStr(R.string.keyphrase_table), phrase, DUMMY_DATE);
+		// リストに追加
+		mKeyPhrases.add( new KeyPhrase(mKeyPhrases.get(mKeyPhrases.size()-1).id+1, phrase, DUMMY_DATE));
+		// Viewに追加
+		addKeyPhraseView(mKeyPhrases.get(mKeyPhrases.size()-1), mKeyPhraseListView.getChildAt(mKeyPhraseListView.getChildCount()-1).getId()+1);
+		// Viewをソート
+		mSortFlag = false;
+	}
 	
 	private void removeAllKeyPhrases(){
 		mKeyPhraseListView.removeAllViews();
 	}
+	
 
 	private void addKeyPhraseView(KeyPhrase phrase, int id){
 		LayoutInflater inflater = mContext.getLayoutInflater();
@@ -122,8 +136,6 @@ public class KeyPhraseListView extends ScrollView {
 	    	view.setLayoutParams(prm);
 	    }
 	}
-	
-	
 	
 	// デバッグ用。DBにダミーデータを追加
 	private void saveData(){
@@ -181,19 +193,16 @@ public class KeyPhraseListView extends ScrollView {
 	}
 	// DBからキーフレーズを取得する
 	private void getKeyPhrasesFromDb(){
-		int i = 0;
 		int id;
 		String phrase,date;
 		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, null, null, "id");
 		if(cursor != null){
-			mKeyPhrases = new KeyPhrase[cursor.getCount()];
-			
 			do {
 				id = cursor.getInt(cursor.getColumnIndex("id"));
 				phrase = cursor.getString(cursor.getColumnIndex("phrase"));
 				date = cursor.getString(cursor.getColumnIndex("date"));
 				
-				mKeyPhrases[i++] = new KeyPhrase(id, phrase, date);
+				mKeyPhrases.add(new KeyPhrase(id, phrase, date));
 			} while (cursor.moveToNext());
 			cursor.close();
 		}
