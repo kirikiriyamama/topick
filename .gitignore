@@ -2,7 +2,3 @@ server/.ruby-version
 server/.bundle
 server/vendor
 server/config
-login/.ruby-version
-login/.bundle
-login/vendor
-login/config
