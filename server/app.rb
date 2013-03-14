@@ -15,8 +15,12 @@ class Topick < Sinatra::Base
 	end
 
 	configure do
-		set(:facebook) { YAML.load_file(FACEBOOK_CONF).symbolize_keys }
-		set(:yahoo_api) { YAML.load_file(YAHOO_API_CONF).symbolize_keys }
+		set :sessions, true
+		enable :sessions
+
+		set(:facebook) { YAML.load_file(File.join(DIR, 'config', 'facebook.yml')).symbolize_keys }
+		set(:twitter) { YAML.load_file(File.join(DIR, 'config', 'twitter.yml')).symbolize_keys }
+		set(:yahoo_api) { YAML.load_file(File.join(DIR, 'config', 'yahoo_api.yaml')).symbolize_keys }
 	end
 	
 	def oauth_facebook
@@ -24,6 +28,13 @@ class Topick < Sinatra::Base
 			settings.facebook[:app_id],
 			settings.facebook[:app_secret],
 			create_url(request.scheme, request.host, '/auth/facebook/callback'))
+	end
+
+	def oauth_twitter
+		OAuth::Consumer.new(
+			settings.twitter[:consumer_key],
+			settings.twitter[:consumer_secret],
+			:site => 'https://api.twitter.com')
 	end
 
 
@@ -169,6 +180,19 @@ class Topick < Sinatra::Base
 
 	get '/auth/facebook/callback' do
 		halt 400 if params[:code].blank?
-		"<script>Login.sendAccessToken(\"#{oauth_facebook.get_access_token(params[:code])}\");</script>"
+		"<script>Login.sendFacebookAccessToken(\"#{oauth_facebook.get_access_token(params[:code])}\");</script>"
+	end
+
+	get '/auth/twitter' do
+		request_token = oauth_twitter.get_request_token(:oauth_callback => create_url(request.scheme, request.host, '/auth/twitter/callback'))
+		session[:request_token] = request_token.token
+		session[:request_token_secret] = request_token.secret
+		redirect request_token.authorize_url
+	end
+
+	get '/auth/twitter/callback' do
+		request_token = OAuth::RequestToken.new(oauth_twitter, session[:request_token], session[:request_token_secret])
+		access_token = request_token.get_access_token(:oauth_token => params[:oauth_token], :oauth_verifier => params[:oauth_verifier]) rescue (halt 400)
+		"<script>Login.sendTwitterAccessToken(\"#{access_token.token}\", \"#{access_token.secret}\");</script>"
 	end
 end
