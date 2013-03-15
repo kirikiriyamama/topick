@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip"
+    android:paddingTop="10dip"
+    android:paddingBottom="10dip"
+    android:background="@color/trans"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dip"
+        >
+	    <TextView android:id="@+id/text_key_phrase"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical"
+	        android:paddingRight="40dip"
+	        android:textColor="@color/black"
+	        />
+	    
+	    <ImageButton android:id="@+id/btn_delete_key_phrase"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/set_fav_delete_btn"
+	        android:background="@color/trans"
+	        android:layout_gravity="center_vertical|right"
+	        android:layout_marginRight="10dip"
+	        />
+    </FrameLayout>
+
+</LinearLayout>

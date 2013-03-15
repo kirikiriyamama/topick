@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context=".ManagementKeyPhraseFragment" 
+    >
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/set_toptitle_bg"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="話題検索"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+        <LinearLayout android:id="@+id/btn_launch_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/set_topback_btn"
+            android:gravity="center"
+            android:paddingTop="2dip"
+            android:paddingBottom="2dip"
+            android:paddingLeft="2dip"
+            android:paddingRight="7dip" 
+            android:layout_gravity="center|left"
+            android:layout_marginLeft="10dip"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/set_topback_ic"
+                />
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="戻る"
+                    android:textColor="@color/white"
+                    />
+        </LinearLayout>
+    </FrameLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+        <EditText android:id="@+id/edit_search_key_phrase"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/hint_search_key_phrase"
+            android:inputType="text"
+            android:lines="1"
+            android:imeOptions="actionDone"
+            />
+        <Button android:id="@+id/btn_search_key_phrase"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:text="@string/btn_search_key_phrase"
+            android:textColor="@color/white"
+            android:background="@drawable/active_btn_background"
+            />
+    </LinearLayout>
+    
+    <ListView android:id="@+id/list_key_phrase"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/trans"
+        android:scrollingCache="false"
+        android:fadingEdge="none"
+        android:fadeScrollbars="false"
+        android:divider="@color/trans"
+        />
+    
+</LinearLayout>
