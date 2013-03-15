@@ -1,9 +1,10 @@
-require 'open-uri'
-require 'net/http'
-require 'rexml/document'
-
 require File.join(DIR, 'lib', 'Hash')
 require File.join(DIR, 'lib', 'create_url')
+require File.join(DIR, 'lib', 'oauth_facebook')
+require File.join(DIR, 'lib', 'oauth_twitter')
+require File.join(DIR, 'lib', 'twitter_configure')
+require File.join(DIR, 'lib', 'parse_tweet')
+require File.join(DIR, 'lib', 'get_keyphrases')
 
 
 class Topick < Sinatra::Base
@@ -20,21 +21,7 @@ class Topick < Sinatra::Base
 
 		set(:facebook) { YAML.load_file(File.join(DIR, 'config', 'facebook.yml')).symbolize_keys }
 		set(:twitter) { YAML.load_file(File.join(DIR, 'config', 'twitter.yml')).symbolize_keys }
-		set(:yahoo_api) { YAML.load_file(File.join(DIR, 'config', 'yahoo_api.yaml')).symbolize_keys }
-	end
-	
-	def oauth_facebook
-		Koala::Facebook::OAuth.new(
-			settings.facebook[:app_id],
-			settings.facebook[:app_secret],
-			create_url(request.scheme, request.host, '/auth/facebook/callback'))
-	end
-
-	def oauth_twitter
-		OAuth::Consumer.new(
-			settings.twitter[:consumer_key],
-			settings.twitter[:consumer_secret],
-			:site => 'https://api.twitter.com')
+		set(:yahoo_api) { YAML.load_file(File.join(DIR, 'config', 'yahoo_api.yml')).symbolize_keys }
 	end
 
 
@@ -79,7 +66,7 @@ class Topick < Sinatra::Base
 					response << topic
 				end
 			end
-		rescue Koala::KoalaError
+		rescue Koala::Facebook::ClientError
 			halt 400
 		end
 		
@@ -127,7 +114,7 @@ class Topick < Sinatra::Base
 					:link => result[:link],
 					:picture => graph.get_picture(result[:id], :type => 'large')}
 			end
-		rescue Koala::KoalaError
+		rescue Koala::Facebook::ClientError
 			halt 400
 		end
 
@@ -154,24 +141,12 @@ class Topick < Sinatra::Base
 					queries << result[:description] unless result[:description].nil?
 				end
 			end
-		rescue Koala::KoalaError
+		rescue Koala::Facebook::ClientError
 			halt 400
 		end
 		
-		# get keyphrases
-		response = Array.new
-		queries.each do |query|
-			next unless query =~ /[^ -~｡-ﾟ]/
-			Net::HTTP.start(settings.yahoo_api[:host]) do |http|
-				res = http.post(settings.yahoo_api[:path], "appid=#{settings.yahoo_api[:app_id]}&sentence=#{URI.encode(query)}")
-				REXML::Document.new(res.body).elements.each('ResultSet/Result') do |result|
-					response << result.elements['Keyphrase'].text if result.elements['Score'].text.to_i == 100
-				end
-			end
-		end
-
 		content_type :json
-		response.to_json
+		get_keyphrases(queries).to_json
 	end
 
 	get '/auth/facebook' do
@@ -189,26 +164,42 @@ class Topick < Sinatra::Base
 		halt 400 if params[:access_token_secret].blank?
 		halt 400 if params[:screen_name].blank?
 
-		Twitter.configure do |config|
-			config.consumer_key = settings.twitter[:consumer_key]
-			config.consumer_secret = settings.twitter[:consumer_secret]
-			config.oauth_token = params[:access_token]
-			config.oauth_token_secret = params[:access_token_secret]
-		end
-		twitter = Twitter::Client.new
-
 		response = Array.new
-		unless (result = twitter.user_search(params[:screen_name]).first).blank? then
-			response << {
-				:id => result.id,
-				:screen_name => result.screen_name,
-				:name => result.name,
-				:description => result.description,
-				:picture => result.profile_image_url(:bigger)}
+		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
+		begin
+			unless (result = twitter.user_search(params[:screen_name]).first).blank? then
+				response << {
+					:id => result.id,
+					:screen_name => result.screen_name,
+					:name => result.name,
+					:description => result.description,
+					:picture => result.profile_image_url(:bigger)}
+			end
+		rescue Twitter::Error::Unauthorized
+			halt 400
 		end
 
 		content_type :json
 		response.to_json
+	end
+
+	get '/keyphrase/twitter' do
+		halt 400 if params[:access_token].blank?
+		halt 400 if params[:access_token_secret].blank?
+		
+		queries = Array.new
+		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
+		begin
+			twitter.user_timeline(:count => 100).each do |result|
+				text = parse_tweet(result)
+				queries << text unless text.nil?
+			end
+		rescue Twitter::Error::Unauthorized
+			halt 400
+		end
+
+		content_type :json
+		get_keyphrases(queries).to_json
 	end
 
 	get '/auth/twitter' do
@@ -219,8 +210,12 @@ class Topick < Sinatra::Base
 	end
 
 	get '/auth/twitter/callback' do
-		request_token = OAuth::RequestToken.new(oauth_twitter, session[:request_token], session[:request_token_secret])
-		access_token = request_token.get_access_token(:oauth_token => params[:oauth_token], :oauth_verifier => params[:oauth_verifier]) rescue (halt 400)
+		begin
+			request_token = OAuth::RequestToken.new(oauth_twitter, session[:request_token], session[:request_token_secret])
+			access_token = request_token.get_access_token(:oauth_token => params[:oauth_token], :oauth_verifier => params[:oauth_verifier])
+		rescue Oauth::Unauthorized
+			halt 400
+		end
 		"<script>Login.sendTwitterAccessToken(\"#{access_token.token}\", \"#{access_token.secret}\");</script>"
 	end
 end
