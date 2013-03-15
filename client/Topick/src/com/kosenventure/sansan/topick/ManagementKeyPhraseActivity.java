@@ -1,26 +1,21 @@
 package com.kosenventure.sansan.topick;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.kosenventure.sansan.others.AccessDb;
-import com.kosenventure.sansan.others.KeyPhrase;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -29,8 +24,8 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	final static String DUMMY_DATE = "1111-11-11 11:11:11";
 	
 	private AccessDb mAd;
-	KeyPhraseArrayAdapter mKeyPhraseArrayAdapter;
-
+	private KeyPhraseCursorAdapter mKeyPhraseCursorAdapter;
+	
 	private EditText mEditSearchKeyPhrase;
 	private Button mSearchKeyPhraseBtn;
 	private ListView mKeyPhraseListView;
@@ -41,6 +36,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		setContentView(R.layout.activity_management_key_phrase_layout);
 		
 		mAd = new AccessDb(mContext);
+//		saveData();
 		
 		mEditSearchKeyPhrase = (EditText) findViewById(R.id.edit_search_key_phrase);
 		mEditSearchKeyPhrase.setOnKeyListener(this);
@@ -48,30 +44,16 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		mSearchKeyPhraseBtn = (Button) findViewById(R.id.btn_search_key_phrase);
 		mSearchKeyPhraseBtn.setOnClickListener(this);
 		
-		mKeyPhraseArrayAdapter = new KeyPhraseArrayAdapter(mContext, R.layout.list_key_phrase_layout, getKeyPhrasesFromDb(null, null));
+		mKeyPhraseCursorAdapter = new KeyPhraseCursorAdapter(mContext, getKeyPhrasesFromDb(null, null), false);
 		mKeyPhraseListView = (ListView) findViewById(R.id.list_key_phrase);
-		mKeyPhraseListView.setAdapter(mKeyPhraseArrayAdapter);
+		mKeyPhraseListView.setAdapter(mKeyPhraseCursorAdapter);
 		
 	}
 	
 	
 	// DBからキーフレーズを取得する
-	private ArrayList<KeyPhrase> getKeyPhrasesFromDb(String where, String[] answer){
-		int id;
-		String phrase,date;
-		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, where, answer, "id");
-		ArrayList<KeyPhrase> mKeyPhraseList = new ArrayList<KeyPhrase>();
-		if(cursor != null){
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				phrase = cursor.getString(cursor.getColumnIndex("phrase"));
-				date = cursor.getString(cursor.getColumnIndex("date"));
-				
-				mKeyPhraseList.add(new KeyPhrase(id, phrase, date));
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-		return mKeyPhraseList;
+	private Cursor getKeyPhrasesFromDb(String where, String[] answer){
+		return mAd.readDb(getStr(R.string.keyphrase_table), new String[]{"id as _id","phrase","date"}, where, answer, "id");
 	}
 	
 	// DBからキーフレーズを削除する
@@ -94,19 +76,6 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
 		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
 		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
 	}
 	
 	// デバッグ用。DBのデータをすべて削除
@@ -117,15 +86,6 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 			do {
 				id = cursor.getInt(cursor.getColumnIndex("id"));
 				mAd.deleteDb(getStr(R.string.keyphrase_table), String.valueOf(id));
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-		
-		cursor = mAd.readDb(getStr(R.string.cancel_keyphrase_table), null, null, null, "id");
-		if(cursor != null){
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				mAd.deleteDb(getStr(R.string.cancel_keyphrase_table), String.valueOf(id));
 			} while (cursor.moveToNext());
 			cursor.close();
 		}
@@ -144,8 +104,8 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		closeIME(mEditSearchKeyPhrase);
 		
 		// リストを再構成してアダプターを更新する
-		mKeyPhraseArrayAdapter = new KeyPhraseArrayAdapter(mContext, R.layout.list_key_phrase_layout, getKeyPhrasesFromDb("phrase like ?", new String[]{"%"+searchKey+"%"}));
-		mKeyPhraseListView.setAdapter(mKeyPhraseArrayAdapter);
+		mKeyPhraseCursorAdapter.swapCursor(getKeyPhrasesFromDb("phrase like ?", new String[]{"%"+searchKey+"%"}));
+		mKeyPhraseCursorAdapter.notifyDataSetChanged();
 	}
 	
 
@@ -172,37 +132,39 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		return false;
 	}
 	
-	private class KeyPhraseArrayAdapter extends ArrayAdapter<KeyPhrase> {
+	private class KeyPhraseCursorAdapter extends CursorAdapter {
 
-		private Context mContext;
-		private KeyPhraseArrayAdapter mMe = this;
+
+		private KeyPhraseCursorAdapter mMe = this;
 		
-		public KeyPhraseArrayAdapter(Context context, int textViewResourceId, List<KeyPhrase> objects) {
-			super(context, textViewResourceId, objects);
+
+		public KeyPhraseCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+			super(context, c, autoRequery);
 			mContext = context;
 		}
 		
 		@Override
-		public View getView (final int position, View convertView, ViewGroup parent) {
-			if(convertView == null){
-				LayoutInflater inflater = getLayoutInflater();
-				convertView = inflater.inflate(R.layout.list_key_phrase_layout, null);
-			}
+		public void bindView(View view, Context context, Cursor cursor) {
+			final int id = cursor.getInt(cursor.getColumnIndex("_id"));
 			
-			TextView textPhrase = (TextView) convertView.findViewById(R.id.text_key_phrase);
-			textPhrase.setText(getItem(position).phrase);
+			TextView textPhrase = (TextView) view.findViewById(R.id.text_key_phrase);
+			textPhrase.setText(cursor.getString(cursor.getColumnIndex("phrase")));
 			
-			ImageButton deleteBtn = (ImageButton) convertView.findViewById(R.id.btn_delete_key_phrase);
+			ImageButton deleteBtn = (ImageButton) view.findViewById(R.id.btn_delete_key_phrase);
 			deleteBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					deleteKeyPhraseFromDb(mMe.getItem(position).id);
-					mMe.remove(mMe.getItem(position));
-					mMe.notifyDataSetChanged();
+					// DBから削除
+					deleteKeyPhraseFromDb(id);
+					mMe.getCursor().requery();
 				}
 			});
-			
-			return convertView;
+		}
+
+		@Override
+		public View newView(Context context, Cursor cursor, ViewGroup parent) {
+			View v = getLayoutInflater().inflate(R.layout.list_key_phrase_layout, null);
+			return v;
 		}
 	}
 }
