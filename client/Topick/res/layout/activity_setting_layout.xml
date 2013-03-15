@@ -14,12 +14,12 @@
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="話題検索"
+            android:text="設定"
             android:textSize="22sp"
             android:textColor="@color/white"
             android:layout_gravity="center"
             />
-        <LinearLayout android:id="@+id/btn_launch_setting"
+        <LinearLayout android:id="@+id/btn_back_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/set_topback_btn"
@@ -34,7 +34,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/set_topback_ic"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/back_btn"
                 />
                 <TextView 
                     android:layout_width="wrap_content"

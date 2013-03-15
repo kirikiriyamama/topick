@@ -1,9 +1,12 @@
 package com.kosenventure.sansan.topick;
 
 import com.kosenventure.sansan.others.AccessDb;
+import com.kosenventure.sansan.others.PickUpKeyPhrasesTask;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,8 +17,10 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -26,6 +31,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	private AccessDb mAd;
 	private KeyPhraseCursorAdapter mKeyPhraseCursorAdapter;
 	
+	LinearLayout mBackBtn,mShowAddKeyPhraseMenu;
 	private EditText mEditSearchKeyPhrase;
 	private Button mSearchKeyPhraseBtn;
 	private ListView mKeyPhraseListView;
@@ -36,7 +42,13 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		setContentView(R.layout.activity_management_key_phrase_layout);
 		
 		mAd = new AccessDb(mContext);
-//		saveData();
+		saveData();
+		
+		mBackBtn = (LinearLayout) findViewById(R.id.btn_back_management_key_phrase);
+		mBackBtn.setOnClickListener(this);
+		
+		mShowAddKeyPhraseMenu = (LinearLayout) findViewById(R.id.btn_show_add_key_phrase_menu);
+		mShowAddKeyPhraseMenu.setOnClickListener(this);
 		
 		mEditSearchKeyPhrase = (EditText) findViewById(R.id.edit_search_key_phrase);
 		mEditSearchKeyPhrase.setOnKeyListener(this);
@@ -107,17 +119,27 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		mKeyPhraseCursorAdapter.swapCursor(getKeyPhrasesFromDb("phrase like ?", new String[]{"%"+searchKey+"%"}));
 		mKeyPhraseCursorAdapter.notifyDataSetChanged();
 	}
-	
 
 	private void closeIME(View v){
         //ソフトキーボードを閉じる
 		InputMethodManager inputMethodManager = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
 	}
-		
+	
+	private void showAddKeyPhraseMenu(){
+		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
+		mPickUpKeyPhrasesTask.execute();
+	}
+	
 	@Override
 	public void onClick(View v) {
-		if ( v == mSearchKeyPhraseBtn ) {
+		if ( v == mBackBtn) {
+			finish();
+		}
+		else if ( v == mShowAddKeyPhraseMenu) {
+			showAddKeyPhraseMenu();
+		}
+		else if ( v == mSearchKeyPhraseBtn ) {
 			searchKeyPhrase();
 		}
 	}
