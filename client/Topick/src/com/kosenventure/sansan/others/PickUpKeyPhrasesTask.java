@@ -38,14 +38,21 @@ public class PickUpKeyPhrasesTask extends AsyncTask<Void, Object, Object> {
 	@Override
 	protected Object doInBackground(Void... params) {
 		// Ç‹Ç∏FacebookÇ©ÇÁíäèoÇ∑ÇÈ
-		String data = getJsonFromAPI(getStr(R.string.url_facebook_pick_up_key_phrase));
+		String data = getJsonFromAPI(getStr(R.string.url_facebook_pick_up_key_phrase) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), ""));
 		if( data != null ){
-			
+			log(data);
 		}
 		// TwitterÇ©ÇÁíäèo
-		
+		data = getJsonFromAPI(getStr(R.string.url_twitter_pick_up_key_phrase) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&secret_access_token=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), ""));
+		if( data != null ){
+			log(data);
+		}
 		
 		return null;
+	}
+	
+	private void log(String msg){
+		Log.d("PickUpKeyPhraseTask", msg);
 	}
 
 	private String getJsonFromAPI(String url){
