@@ -6,53 +6,48 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.kosenventure.sansan.others.OCRTask;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.content.Context;
+import android.provider.MediaStore;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.content.res.AssetManager;
 
-public class MainActivity extends SherlockFragmentActivity implements TabListener, FragmentManager.OnBackStackChangedListener{
+public class MainActivity extends MyActivity implements OnClickListener{
 
 	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath(); 
 	private static final File SDCARD_DIRECTORY = new File(TESSBASE_PATH+"/tessdata/");
+	private static final int LAUNCH_CAMERA = 100;
 	
-	private Context mContext;
-    private Fragment mFragment;
-    private int mSelectedTabPosition = -1; // 何番目のタブが選択されているか
+	private Uri mImageUri;
 	
+	private LinearLayout mLaunchCameraBtn,mLaunchSettingBtn;
+	private Button mSearchBtn;	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_Sherlock);
 		setContentView(R.layout.activity_main_layout);
-		
-		mContext = getApplicationContext();
-		
+
 		// 起動時にファイルをコピーする
 		copyOCRLibrary();
+		
+		mLaunchSettingBtn = (LinearLayout) findViewById(R.id.btn_launch_setting);
+		mLaunchSettingBtn.setOnClickListener(this);
+		
+		mLaunchCameraBtn = (LinearLayout) findViewById(R.id.btn_launch_camera);
+		mLaunchCameraBtn.setOnClickListener(this);
+		
+		mSearchBtn = (Button) findViewById(R.id.btn_topic_search);
+		mSearchBtn.setOnClickListener(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(this);
-
-        // ActionBar
-        final ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowHomeEnabled(false);
-//        actionBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
-        
-        actionBar.addTab(actionBar.newTab().setText("話題検索").setIcon(R.drawable.tab_topic_search).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("キーフレーズ管理").setIcon(R.drawable.tab_key_phrase_ctrl).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("設定").setIcon(R.drawable.tab_set).setTabListener(this));
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.getTabAt(1).select(); // 0番目のタブを選択しておく
 	}
 
 	// assetsフォルダからライブラリファイルを読み込んでSDカード内にコピーする
@@ -70,7 +65,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			try {
 				files = assetManager.list("");
 			} catch (IOException e) {
-				Log.e("tag", "Failed to get asset file list.", e);
+				log("Failed to get asset file list.");
 			}
 			for ( String file : files ) {
 				try {
@@ -96,41 +91,46 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	      out.write(buffer, 0, read);
 	    }
 	}
+
+	private void launchCamera(){
+		// Resultで帰ってくるBitmapが小さいため一度ローカルに保存する
+	    String filename = System.currentTimeMillis() + ".jpg";
+	    
+	    ContentValues values = new ContentValues();
+	    values.put(MediaStore.Images.Media.TITLE, filename);
+	    values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+	    mImageUri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+	    
+	    Intent intent = new Intent();
+	    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+	    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+		startActivityForResult(intent, LAUNCH_CAMERA);
+	}
 	
 	@Override
-	public void onBackStackChanged() {
-		
-	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+    	if( requestCode == LAUNCH_CAMERA ){
+    		if( resultCode == -1 ){
+    			OCRTask ocrTask = new OCRTask(this, mImageUri);
+    			ocrTask.execute(data);
+    		}
+    	}
+    }
+	
+	@Override
+	public void onClick(View v) {
+		if ( v == mLaunchSettingBtn) {
+			Intent intent = new Intent(mContext, SettingActivity.class);
+			startActivity(intent);
+		}
+		if ( v == mLaunchCameraBtn ) {
+			launchCamera();
+		}else if ( v == mSearchBtn ) {
+			Intent intent = new Intent(mContext, FoundAccountListActivity.class);
+			startActivity(intent);
+		}
+	} 
 
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction transaction) {
-		int tabPosition = tab.getPosition();
-		if (mSelectedTabPosition == tabPosition) {
-			return;
-		}
-		mSelectedTabPosition = tabPosition;
-		switch (tabPosition) {
-		case 0:
-			mFragment = Fragment.instantiate(this, SearchTopicFragment.class.getName());
-			transaction.add(R.id.container, mFragment);
-			break;
-		case 1:
-			mFragment = Fragment.instantiate(this, ManagementKeyPhraseFragment.class.getName());
-			transaction.add(R.id.container, mFragment);
-			break;
-		case 2:
-			mFragment = Fragment.instantiate(this, SettingsFragment.class.getName());
-			transaction.add(R.id.container, mFragment);
-			break;
-		default:
-			break;
-		}
-	}
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction transaction) {
-		transaction.remove(mFragment);
-	}
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction transaction) {}
 
 }

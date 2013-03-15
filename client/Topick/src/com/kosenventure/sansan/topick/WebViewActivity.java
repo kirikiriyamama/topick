@@ -16,9 +16,16 @@ public class WebViewActivity extends Activity {
 	private SharedPreferences.Editor mEditor;  
 	
 	private class Login{
-		public void sendAccessToken(String token){
+		public void sendFacebookAccessToken(String token){
 			log(token);
 			mEditor.putString(getStr(R.string.facebook_access_token_set_key), token);
+			mEditor.commit();
+			finish();
+		}
+
+		public void sendTwitterAccessToken(String token){
+			log(token);
+			mEditor.putString(getStr(R.string.twitter_access_token_set_key), token);
 			mEditor.commit();
 			finish();
 		}
