@@ -5,12 +5,17 @@
     <string name="app_name">Topick</string>
 
     <!-- URL -->
-    <string name="url_facebook_login">http://sansan-plus-plus.tk/auth/facebook/</string>
-    <string name="url_twitter_login">http://sansan-plus-plus.tk/auth/twitter/</string>
-    <string name="url_facebook_pick_up_key_phrase">http://http://sansan-plus-plus.tk/keyphrase/facebook?access_token=</string>
-    <string name="url_twitter_pick_up_key_phrase">http://http://sansan-plus-plus.tk/keyphrase/twitter?access_token=</string>
-    <string name="url_facebook_search_user">http://http://sansan-plus-plus.tk/search/facebook?access_token=</string>
-    <string name="url_twitter_search_user">http://http://sansan-plus-plus.tk/search/twitter?access_token=</string>
+    <string name="url_facebook_login">http://sansan-plus-plus.tk/auth/facebook</string>
+    <string name="url_twitter_login">http://sansan-plus-plus.tk/auth/twitter</string>
+    <string name="url_facebook_pick_up_key_phrase">http://sansan-plus-plus.tk/keyphrase/facebook?access_token=</string>
+    <string name="url_twitter_pick_up_key_phrase">http://sansan-plus-plus.tk/keyphrase/twitter?access_token=</string>
+    <string name="url_facebook_search_user">http://sansan-plus-plus.tk/search/facebook?access_token=</string>
+    <string name="url_twitter_search_user">http://sansan-plus-plus.tk/search/twitter?access_token=</string>
+    
+    <!-- Preference -->
+    <string name="facebook_access_token_set_key">facebook_access_token</string>
+    <string name="twitter_access_token_set_key">twitter_access_token</string>
+    <string name="twitter_access_token_secret_set_key">twitter_access_token_secret</string>
     
     <!-- MainActivity -->
     <string name="text_subtitle_facebook">Facebookで検索</string>
@@ -45,8 +50,6 @@
     <string name="btn_launch_manegement_kay_phrase">キーフレーズ管理</string>
     <string name="btn_login_facebook">Facebook</string>
     <string name="btn_login_twitter">Twitter</string>
-    <string name="facebook_access_token_set_key">facebook_access_token</string>
-    <string name="twitter_access_token_set_key">twitter_access_token</string>
 
     <!-- ManagementKeyPhrase -->
     <string name="btn_pick_up_keyphrase">抽出する</string>
