@@ -160,6 +160,19 @@ class Topick < Sinatra::Base
 		"<script>Login.sendFacebookAccessToken(\"#{oauth_facebook.get_access_token(params[:code])}\");</script>"
 	end
 
+	get '/auth/check/facebook' do
+		halt 400 if params[:access_token].blank?
+		
+		graph = Koala::Facebook::API.new(params[:access_token])
+		begin
+			graph.get_object('me')
+		rescue Koala::Facebook::AuthenticationError
+			halt 400
+		end
+
+		200
+	end
+
 
 	get '/topic/twitter' do
 		halt 400 if params[:access_token].blank?
