@@ -207,11 +207,13 @@ class Topick < Sinatra::Base
 		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
 		begin
 			unless (result = twitter.user_search(params[:screen_name]).first).blank? then
+				pp result
 				response << {
 					:id => result.id,
 					:screen_name => result.screen_name,
 					:name => result.name,
 					:description => result.description,
+					:link => create_url('https', 'twitter.com', "/#{result.screen_name}"),
 					:picture => result.profile_image_url(:bigger)}
 			end
 		rescue Twitter::Error::ClientError
