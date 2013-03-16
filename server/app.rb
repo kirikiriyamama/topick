@@ -36,7 +36,7 @@ class Topick < Sinatra::Base
 		response = Array.new
 		graph = Koala::Facebook::API.new(params[:access_token])
 		begin
-			graph.get_connections(params[:target_user], 'posts', :limit => 100).each do |result|
+			graph.get_connection(params[:target_user], 'posts', :limit => 100).each do |result|
 				result = result.symbolize_keys
 				flg = false
 
@@ -132,7 +132,9 @@ class Topick < Sinatra::Base
 		graph = Koala::Facebook::API.new(params[:access_token])
 		begin
 			# get posts
-			graph.get_connections('me', 'feed', :limit => 100).each do |result|
+			args = { :limit => 100 }
+			args[:since] = params[:since] unless params[:since].blank?
+			graph.get_connection('me', 'feed', args).each do |result|
 				result = result.symbolize_keys
 
 				# message
@@ -241,10 +243,13 @@ class Topick < Sinatra::Base
 		halt 400 if params[:access_token].blank?
 		halt 400 if params[:access_token_secret].blank?
 		
+		since = Time::parse(params[:since]) unless params[:since].blank?
+
 		queries = Array.new
 		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
 		begin
 			twitter.user_timeline(:count => 100).each do |result|
+				break if !since.nil? && (result.created_at < since)
 				text = parse_tweet(result)
 				queries << text unless text.nil?
 			end
