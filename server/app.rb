@@ -259,4 +259,18 @@ class Topick < Sinatra::Base
 		end
 		pp "<script>Login.sendTwitterAccessToken(\"#{access_token.token}\", \"#{access_token.secret}\");</script>"
 	end
+
+	get '/auth/check/twitter' do
+		halt 400 if params[:access_token].blank?
+		halt 400 if params[:access_token_secret].blank?
+
+		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
+		begin
+			twitter.user
+		rescue Twitter::Error::Unauthorized
+			halt 400
+		end
+
+		200
+	end
 end
