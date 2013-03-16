@@ -181,7 +181,7 @@ class Topick < Sinatra::Base
 					topic[:shared_links] = Array.new
 					unless result.urls.blank? then
 						result.urls.each do |url|
-							topic[:shared_links] << url.expanded_url
+							topic[:shared_links] << { :link => url.expanded_url }
 						end
 					end
 					topic[:link] = create_url('https', 'twitter.com', "/#{result.user.screen_name}/status/#{result.id}")
