@@ -53,25 +53,26 @@ public final class R {
         public static final int subtitle_twitter=0x7f020017;
     }
     public static final class id {
-        public static final int account_bio=0x7f09001e;
-        public static final int account_name=0x7f09001d;
-        public static final int account_photo=0x7f09001c;
-        public static final int action_settings=0x7f090024;
-        public static final int btn_add_key_phrase=0x7f09001a;
+        public static final int account_bio=0x7f09001f;
+        public static final int account_name=0x7f09001e;
+        public static final int account_photo=0x7f09001d;
+        public static final int action_settings=0x7f090025;
+        public static final int btn_add_key_phrase=0x7f09001b;
         public static final int btn_back_management_key_phrase=0x7f09000b;
         public static final int btn_back_setting=0x7f090010;
-        public static final int btn_delete_key_phrase=0x7f090020;
+        public static final int btn_delete_key_phrase=0x7f090021;
         public static final int btn_launch_camera=0x7f090009;
         public static final int btn_launch_management_kay_phrase=0x7f090011;
         public static final int btn_launch_setting=0x7f090001;
         public static final int btn_login_facebook=0x7f090012;
         public static final int btn_login_twitter=0x7f090013;
-        public static final int btn_pick_up_key_phrase=0x7f09001b;
+        public static final int btn_pick_up_key_phrase=0x7f09001c;
         public static final int btn_search_key_phrase=0x7f09000e;
         public static final int btn_show_add_key_phrase_menu=0x7f09000c;
         public static final int btn_topic_search=0x7f09000a;
-        public static final int cb_pick_up_from_facebook=0x7f090016;
-        public static final int cb_pick_up_from_twitter=0x7f090017;
+        public static final int cb_pick_up_from_facebook=0x7f090017;
+        public static final int cb_pick_up_from_twitter=0x7f090018;
+        public static final int edit_add_key_phrase_name=0x7f090016;
         public static final int edit_kana_first_name=0x7f090004;
         public static final int edit_kana_last_name=0x7f090005;
         public static final int edit_kanji_first_name=0x7f090006;
@@ -82,14 +83,14 @@ public final class R {
         public static final int edit_search_twitter_id=0x7f090008;
         public static final int found_account_list=0x7f090000;
         public static final int list_key_phrase=0x7f09000f;
-        public static final int list_pick_up_word=0x7f090019;
+        public static final int list_pick_up_word=0x7f09001a;
         public static final int login_webview=0x7f090015;
-        public static final int match_keyphrase=0x7f090021;
-        public static final int text_key_phrase=0x7f09001f;
-        public static final int topic_content=0x7f090023;
+        public static final int match_keyphrase=0x7f090022;
+        public static final int text_key_phrase=0x7f090020;
+        public static final int topic_content=0x7f090024;
         public static final int topic_list=0x7f090014;
-        public static final int topic_photo=0x7f090022;
-        public static final int valuebase2=0x7f090018;
+        public static final int topic_photo=0x7f090023;
+        public static final int valuebase2=0x7f090019;
     }
     public static final class layout {
         public static final int activity_found_account_list_layout=0x7f030000;

@@ -145,11 +145,23 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 											.setNegativeButton("•Â‚¶‚é", null)
 											.show();
 		
-		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
-		mPickUpKeyPhrasesTask.execute();
+//		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
+//		mPickUpKeyPhrasesTask.execute();
 	}
 	
 	private void showAddKeyPhraseDialog() {
+		View view = inflater.inflate(R.layout.dialog_add_key_phrase_layout, null);
+		EditText edit = (EditText) view.findViewById(R.id.edit_add_key_phrase_name);
+		
+		addKeyPhraseDialog = new AlertDialog.Builder(this)
+											.setTitle("’Ç‰Á•û–@‚ð‘I‘ð")
+											.setView(view)
+											.setCancelable(false)
+											.setNegativeButton("•Â‚¶‚é", null)
+											.show();
+		
+		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
+		mPickUpKeyPhrasesTask.execute();
 		
 	}
 	
