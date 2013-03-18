@@ -1,18 +1,18 @@
 package com.kosenventure.sansan.others;
 
 import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.kosenventure.sansan.topick.FoundAccountListActivity;
 import com.kosenventure.sansan.topick.R;
-import com.kosenventure.sansan.topick.SelectPickUpKeyPhraseActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -30,24 +30,22 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 	private Activity mActivity;
 	private Context mContext;
 	private SharedPreferences mPreference;  
-	private SharedPreferences.Editor mEditor;  
 	private ProgressDialog mProgressDialog;
 	
 	public SearchUserTask(Activity activity) {
 		mActivity = activity;
 		mContext = activity.getApplicationContext();
 		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
-		mEditor = mPreference.edit();
 	}
 	
 	@Override
 	protected void onPreExecute(){
-//		mProgressDialog = new ProgressDialog(mActivity);
-//        mProgressDialog.setMessage(getStr(R.string.dialog_ocr_mes));
-//        mProgressDialog.setIndeterminate(false);
-//        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        mProgressDialog.setCancelable(false);
-//        mProgressDialog.show();
+		mProgressDialog = new ProgressDialog(mActivity);
+        mProgressDialog.setMessage("検索中");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
 	}
 	
 	@Override
@@ -70,7 +68,6 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 		if( !url.equals(purl) ) {
 			log(url);
 			fbData = getJsonFromAPI(url);
-			log(fbData);
 		}
 		
 		// Twitterから抽出
@@ -79,26 +76,50 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 			url += array[6];
 			log(url);
 			twData = getJsonFromAPI(url);
-			log(twData);
 		}
 		
-		return null;
+		return createAccountIntent(fbData, twData);
 	}	
 
+	private Intent createAccountIntent(String fb, String tw){
+		Intent intent = null;
+		JSONArray fbArray = null,twArray = null;
+		FacebookAccount[] fbAc = null;
+		TwitterAccount twAc = null;
+		try {
+			if(fb != null) fbArray = new JSONArray(fb);
+//			if(tw != null) twArray = new JSONArray(tw);
+			if(fb != null){
+				fbAc = new FacebookAccount[fb.length()];
+				for (int i = 0; i < fbArray.length(); i++){
+					JSONObject ac = fbArray.getJSONObject(i);
+					fbAc[i] = new FacebookAccount(ac.getInt("id"), ac.getString("name"), ac.getString("locale"), ac.getString("gender"), ac.getString("link"), ac.getString("picture"));
+				}
+			}
+//			if(tw != null) for (int j = 0; j < twArray.length(); j++,i++) keyPhraseArray[i] = twArray.getString(j);
+			
+			intent = new Intent(mContext, FoundAccountListActivity.class);
+			intent.putExtra("facebook", fbAc);
+			intent.putExtra("twitter", twAc);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return intent;
+	}
+	
 	@Override
 	protected void onPostExecute(Intent result) {
 		super.onPostExecute(result);
 		
 		// ダイアログを消す
-//        mProgressDialog.dismiss();
+        mProgressDialog.dismiss();
         
-//        if ( result == null ) Toast.makeText(mContext, "キーフレーズが見つかりませんでした", Toast.LENGTH_SHORT).show();
-//        else{
-//	        Intent intent = new Intent(mContext, SelectPickUpKeyPhraseActivity.class);
-//	        intent.putExtra("key_phrase", result);
-//	        intent.putExtra("date", getDate());
-//	        mActivity.startActivityForResult(intent, 200);
-//        }
+        if ( result == null ) Toast.makeText(mContext, "ユーザが見つかりませんでした。", Toast.LENGTH_SHORT).show();
+        else{
+	        mActivity.startActivity(result);
+        }
 	}
 	
 	private String getJsonFromAPI(String url){

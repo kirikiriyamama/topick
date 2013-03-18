@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/paper_brown"
+        android:background="@drawable/keyphrase_background"
         android:padding="10dip"
         >
 	    <TextView android:id="@+id/text_key_phrase"
@@ -25,7 +25,7 @@
 	    <ImageButton android:id="@+id/btn_delete_key_phrase"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/set_fav_delete_btn"
+	        android:src="@drawable/active_btn_delete"
 	        android:background="@color/trans"
 	        android:layout_gravity="center_vertical|right"
 	        android:layout_marginRight="10dip"

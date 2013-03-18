@@ -1,7 +1,6 @@
 package com.kosenventure.sansan.topick;
 
 import com.kosenventure.sansan.others.AccessDb;
-import com.kosenventure.sansan.others.OCRTask;
 import com.kosenventure.sansan.others.PickUpKeyPhrasesTask;
 
 import android.os.Bundle;
@@ -17,7 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.app.AlertDialog;
@@ -35,7 +34,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	private AccessDb mAd;
 	private KeyPhraseCursorAdapter mKeyPhraseCursorAdapter;
 	
-	LinearLayout mBackBtn,mShowAddKeyPhraseMenu;
+	private ImageView mBackBtn,mShowAddKeyPhraseMenu;
 	private EditText mEditSearchKeyPhrase;
 	private Button mSearchKeyPhraseBtn,mShowAddKeyPhraseDialogBtn,mShowPickUpKeyPhraseDialogBtn;
 	private ListView mKeyPhraseListView;
@@ -53,10 +52,10 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		inflater = getLayoutInflater();
 //		saveData();
 		
-		mBackBtn = (LinearLayout) findViewById(R.id.btn_back_management_key_phrase);
+		mBackBtn = (ImageView) findViewById(R.id.btn_back_management_key_phrase);
 		mBackBtn.setOnClickListener(this);
 		
-		mShowAddKeyPhraseMenu = (LinearLayout) findViewById(R.id.btn_show_add_key_phrase_menu);
+		mShowAddKeyPhraseMenu = (ImageView) findViewById(R.id.btn_show_add_key_phrase_menu);
 		mShowAddKeyPhraseMenu.setOnClickListener(this);
 		
 		mEditSearchKeyPhrase = (EditText) findViewById(R.id.edit_search_key_phrase);
@@ -182,6 +181,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 													addKeyPhrase(edit.getEditableText().toString());
 												}
 											})
+											.setNegativeButton("ï¬Ç∂ÇÈ", null)
 											.show();
 	}
 	
@@ -209,6 +209,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 													dialog.dismiss();
 												}
 											})
+											.setNegativeButton("ï¬Ç∂ÇÈ", null)
 											.show();
 	}
 	
@@ -258,20 +259,35 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 			mMe.getCursor().requery();
 		}
 		
+		private void showConfirmDialog(String phrase, final int id){
+			new AlertDialog.Builder(ManagementKeyPhraseActivity.this)
+						   .setMessage("Åu"+phrase+"ÅvÇçÌèúÇµÇƒÇÊÇÎÇµÇ¢Ç≈Ç∑Ç©ÅH")
+						   .setCancelable(false)
+						   .setPositiveButton("ÇÕÇ¢", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// DBÇ©ÇÁçÌèú
+									deleteKeyPhraseFromDb(id);
+									requery();
+								}
+							})
+							.setNegativeButton("Ç¢Ç¢Ç¶", null)
+							.show();
+		}
+		
 		@Override
 		public void bindView(View view, Context context, Cursor cursor) {
 			final int id = cursor.getInt(cursor.getColumnIndex("_id"));
+			final String phrase = cursor.getString(cursor.getColumnIndex("phrase"));
 			
 			TextView textPhrase = (TextView) view.findViewById(R.id.text_key_phrase);
-			textPhrase.setText(cursor.getString(cursor.getColumnIndex("phrase")));
+			textPhrase.setText(phrase);
 			
 			ImageButton deleteBtn = (ImageButton) view.findViewById(R.id.btn_delete_key_phrase);
 			deleteBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// DBÇ©ÇÁçÌèú
-					deleteKeyPhraseFromDb(id);
-					requery();
+					showConfirmDialog(phrase, id);
 				}
 			});
 		}

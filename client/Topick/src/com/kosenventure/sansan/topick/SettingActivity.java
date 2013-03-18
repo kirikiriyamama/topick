@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class SettingActivity extends MyActivity implements OnClickListener{
 
 
 	private static final int WEB_VIEW_ACTIVITY = 200;
 	
+	private ImageView mBackBtn;
 	private Button mLaunchManagementKayPhraseBtn,mLoginTwitterBtn,mLoginFacebookBtn;
 
 	@Override
@@ -18,6 +20,9 @@ public class SettingActivity extends MyActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting_layout);
 
+		mBackBtn = (ImageView) findViewById(R.id.btn_back_setting);
+		mBackBtn.setOnClickListener(this);
+		
 		mLaunchManagementKayPhraseBtn = (Button) findViewById(R.id.btn_launch_management_kay_phrase);
 		mLaunchManagementKayPhraseBtn.setOnClickListener(this);
 		
@@ -30,7 +35,10 @@ public class SettingActivity extends MyActivity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		if ( v == mLaunchManagementKayPhraseBtn ) {
+		if ( v == mBackBtn ) {
+			finish();
+		}
+		else if ( v == mLaunchManagementKayPhraseBtn ) {
 			Intent intent = new Intent(mContext, ManagementKeyPhraseActivity.class);
 			startActivity(intent);
 		}
@@ -46,4 +54,14 @@ public class SettingActivity extends MyActivity implements OnClickListener{
 			
 		}
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+    	if( requestCode == WEB_VIEW_ACTIVITY ){
+    		if( resultCode == RESULT_OK ){
+    			toast(data.getExtras().getString("name") + "ÇÃîFèÿÇ…ê¨å˜ÇµÇ‹ÇµÇΩÅB");
+    		}
+    	}
+    }
 }

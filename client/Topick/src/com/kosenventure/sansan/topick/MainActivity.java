@@ -17,10 +17,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 
 public class MainActivity extends MyActivity implements OnClickListener{
@@ -32,7 +32,8 @@ public class MainActivity extends MyActivity implements OnClickListener{
 	
 	private Uri mImageUri;
 	
-	private LinearLayout mLaunchCameraBtn,mLaunchSettingBtn;
+	private ImageView mLaunchSettingBtn;
+	private LinearLayout mLaunchCameraBtn;
 	private Button mSearchBtn;	
 
 	@Override
@@ -43,7 +44,7 @@ public class MainActivity extends MyActivity implements OnClickListener{
 		// 起動時にファイルをコピーする
 		copyOCRLibrary();
 		
-		mLaunchSettingBtn = (LinearLayout) findViewById(R.id.btn_launch_setting);
+		mLaunchSettingBtn = (ImageView) findViewById(R.id.btn_launch_setting);
 		mLaunchSettingBtn.setOnClickListener(this);
 		
 		mLaunchCameraBtn = (LinearLayout) findViewById(R.id.btn_launch_camera);
@@ -150,32 +151,6 @@ public class MainActivity extends MyActivity implements OnClickListener{
 		String sname = getEditText(R.id.edit_search_twitter_id);
 		if( !sname.equals("") && (sname.charAt(0) == '@' || sname.charAt(0) == '＠') ) sname = sname.substring(1);
 		array[6] = sname;
-		
-//		SharedPreferences mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , MODE_PRIVATE);  
-//		
-//		String url = getStr(R.string.url_facebook_search_user) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), "");
-//		String purl = url;
-//		if( !array[0].equals("") && !array[1].equals("") ){
-//			url += "&first_name_en=" + array[0] + "&last_name_en=" + array[1];
-//		}
-//		if( !array[2].equals("") && !array[3].equals("") ){
-//			url += "&first_name_kana=" + array[2] + "&last_name_kana=" + array[3];
-//		}		
-//		if( !array[4].equals("") && !array[5].equals("") ){
-//			url += "&first_name_kanji=" + array[4] + "&last_name_kanji=" + array[5];
-//		}
-//		
-//		String furl = null;
-//		if( !url.equals(purl) ) furl = url;
-//		
-//		// Twitterから抽出
-//		String turl = null;
-//		if( !array[6].equals("") ){
-//			turl = getStr(R.string.url_twitter_search_user) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&access_token_secret=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), "");
-//			turl += array[6];
-//		}
-//		
-//		String[] url_array = {furl,turl};
 		
 		return array;
 	}

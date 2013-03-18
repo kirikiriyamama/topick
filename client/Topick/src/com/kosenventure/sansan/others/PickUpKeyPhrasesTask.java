@@ -32,20 +32,18 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 	private Activity mActivity;
 	private Context mContext;
 	private SharedPreferences mPreference;  
-	private SharedPreferences.Editor mEditor;  
 	private ProgressDialog mProgressDialog;
 	
 	public PickUpKeyPhrasesTask(Activity activity) {
 		mActivity = activity;
 		mContext = activity.getApplicationContext();
 		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
-		mEditor = mPreference.edit();
 	}
 	
 	@Override
 	protected void onPreExecute(){
 		mProgressDialog = new ProgressDialog(mActivity);
-        mProgressDialog.setMessage(getStr(R.string.dialog_ocr_mes));
+        mProgressDialog.setMessage("íäèoíÜ");
         mProgressDialog.setIndeterminate(false);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(false);

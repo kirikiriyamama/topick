@@ -2,11 +2,8 @@ package com.kosenventure.sansan.topick;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Text;
-
 import com.kosenventure.sansan.others.AccessDb;
 
-import android.R.bool;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,22 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class SelectPickUpKeyPhraseActivity extends MyActivity implements OnClickListener{
 
-	LinearLayout mBackBtn;
+	ImageView mBackBtn;
 	ListView mListView;
 	Button mAddBtn;
 	
@@ -46,7 +40,7 @@ public class SelectPickUpKeyPhraseActivity extends MyActivity implements OnClick
 		String[] result = bundle.getStringArray("key_phrase");
 		date = bundle.getString("date");
 		
-		mBackBtn = (LinearLayout) findViewById(R.id.btn_back_select_pick_up_key_phrase);
+		mBackBtn = (ImageView) findViewById(R.id.btn_back_select_pick_up_key_phrase);
 		mBackBtn.setOnClickListener(this);
 		
 		mPickUpKeyPhraseAdapter = new PickUpKeyPhraseAdapter(mContext, result);

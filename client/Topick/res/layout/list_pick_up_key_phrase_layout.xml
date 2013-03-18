@@ -4,14 +4,12 @@
     android:layout_height="match_parent"
     android:paddingLeft="20dip"
     android:paddingRight="20dip"
-    android:paddingTop="10dip"
-    android:paddingBottom="10dip"
     android:background="@color/trans"
     >
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/paper_brown"
+        android:background="@drawable/keyphrase_background"
         android:padding="10dip"
         >
         

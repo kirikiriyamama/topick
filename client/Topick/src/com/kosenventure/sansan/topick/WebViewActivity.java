@@ -3,6 +3,7 @@ package com.kosenventure.sansan.topick;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,6 +21,9 @@ public class WebViewActivity extends MyActivity {
 			log(token);
 			mEditor.putString(getStr(R.string.facebook_access_token_set_key), token);
 			mEditor.commit();
+			Intent intent = new Intent();
+			intent.putExtra("name", "Twitter");
+			setResult(RESULT_OK, intent);
 			finish();
 		}
 		public void sendTwitterAccessToken(String token, String token_secret){
@@ -27,6 +31,9 @@ public class WebViewActivity extends MyActivity {
 			mEditor.putString(getStr(R.string.twitter_access_token_set_key), token);
 			mEditor.putString(getStr(R.string.twitter_access_token_secret_set_key), token_secret);
 			mEditor.commit();
+			Intent intent = new Intent();
+			intent.putExtra("name", "Facebook");
+			setResult(RESULT_OK, intent);
 			finish();
 		}
 	}

@@ -12,31 +12,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/set_toptitle_bg"
         >
-        <LinearLayout android:id="@+id/btn_back_management_key_phrase"
+        <ImageView android:id="@+id/btn_back_management_key_phrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/set_topback_btn"
-            android:gravity="center"
-            android:paddingTop="2dip"
-            android:paddingBottom="2dip"
-            android:paddingLeft="2dip"
-            android:paddingRight="7dip" 
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="10dip"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
-                android:background="@drawable/back_btn"
-                />
-                <TextView 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="戻る"
-                    android:textColor="@color/white"
-                    />
-        </LinearLayout>
+            android:layout_marginLeft="15dip"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/active_btn_back"
+            />
         <TextView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,38 +27,21 @@
             android:textColor="@color/white"
             android:layout_gravity="center"
             />
-        
-        <LinearLayout android:id="@+id/btn_show_add_key_phrase_menu"
+        <ImageView android:id="@+id/btn_show_add_key_phrase_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/set_topback_btn"
-            android:gravity="center"
-            android:paddingTop="2dip"
-            android:paddingBottom="2dip"
-            android:paddingLeft="2dip"
-            android:paddingRight="7dip" 
-            android:layout_gravity="center|right"
-            android:layout_marginLeft="10dip"
-            >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
-                android:background="@drawable/menu_btn"
-                />
-                <TextView 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="キーフレーズを追加"
-                    android:textColor="@color/white"
-                    />
-        </LinearLayout>
+            android:layout_marginRight="15dip"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/active_btn_menu"
+            />
     </FrameLayout>
     
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginLeft="20dip"
         android:orientation="horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true"
