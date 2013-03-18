@@ -13,12 +13,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.kosenventure.sansan.topick.R;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
-public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Object, Object> {
+public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, Void> {
 
 
 	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
@@ -27,6 +29,7 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Object, Object> {
 	private Context mContext;
 	private SharedPreferences mPreference;  
 	private SharedPreferences.Editor mEditor;  
+	private ProgressDialog mProgressDialog;
 	
 	public PickUpKeyPhrasesTask(Activity activity) {
 		mActivity = activity;
@@ -34,9 +37,19 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Object, Object> {
 		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
 		mEditor = mPreference.edit();
 	}
+	
+	@Override
+	protected void onPreExecute(){
+		mProgressDialog = new ProgressDialog(mActivity);
+        mProgressDialog.setMessage(getStr(R.string.dialog_ocr_mes));
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+	}
 
 	@Override
-	protected Object doInBackground(boolean[]... params) {
+	protected Void doInBackground(boolean[]... params) {
 		String data = null;
 		// まずFacebookから抽出する
 		if ( params[0][0] ){
@@ -53,7 +66,16 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Object, Object> {
 			}
 		}
 		
-		return data;
+		return null;
+//		return data;
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		super.onPostExecute(result);
+		
+		// ダイアログを消す
+        mProgressDialog.dismiss();
 	}
 	
 	private void log(String msg){
