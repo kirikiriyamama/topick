@@ -191,7 +191,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 													
 													if ( !isFb && !isTw ) {
 														toast("‚Ç‚¿‚ç‚©‚ð‘I‘ð‚µ‚Ä‚­‚¾‚³‚¢");
-														return;
+														showPickUpKeyPhraseDialog();
 													}
 													
 													PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(ManagementKeyPhraseActivity.this);

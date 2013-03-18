@@ -5,12 +5,12 @@
     <string name="app_name">Topick</string>
 
     <!-- URL -->
-    <string name="url_facebook_login">http://sansan-plus-plus.tk/auth/facebook</string>
-    <string name="url_twitter_login">http://sansan-plus-plus.tk/auth/twitter</string>
-    <string name="url_facebook_pick_up_key_phrase">http://sansan-plus-plus.tk/keyphrase/facebook?access_token=</string>
-    <string name="url_twitter_pick_up_key_phrase">http://sansan-plus-plus.tk/keyphrase/twitter?access_token=</string>
-    <string name="url_facebook_search_user">http://sansan-plus-plus.tk/search/facebook?access_token=</string>
-    <string name="url_twitter_search_user">http://sansan-plus-plus.tk/search/twitter?access_token=</string>
+    <string name="url_facebook_login">http://api.sansan-plus-plus.tk/auth/facebook</string>
+    <string name="url_twitter_login">http://api.sansan-plus-plus.tk/auth/twitter</string>
+    <string name="url_facebook_pick_up_key_phrase">http://api.sansan-plus-plus.tk/keyphrase/facebook?access_token=</string>
+    <string name="url_twitter_pick_up_key_phrase">http://api.sansan-plus-plus.tk/keyphrase/twitter?access_token=</string>
+    <string name="url_facebook_search_user">http://api.sansan-plus-plus.tk/search/facebook?access_token=</string>
+    <string name="url_twitter_search_user">http://api.sansan-plus-plus.tk/search/twitter?access_token=</string>
     
     <!-- Preference -->
     <string name="facebook_access_token_set_key">facebook_access_token</string>
