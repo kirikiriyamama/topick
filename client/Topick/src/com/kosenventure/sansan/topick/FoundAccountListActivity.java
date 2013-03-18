@@ -15,6 +15,7 @@ import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-public class FoundAccountListActivity extends Activity implements OnClickListener,OnItemClickListener{
+public class FoundAccountListActivity extends Activity implements OnClickListener{
 
 	Context mContext;
 	private ListView mAccountList;
@@ -52,7 +53,6 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 		mAccountList = (ListView) findViewById(R.id.list_found_account);
 		mFoundAccountAdapter = new FoundAccountAdapter(mContext, mFacebookAccounts, mTwitterAccount);
 		mAccountList.setAdapter(mFoundAccountAdapter);
-		mAccountList.setOnItemClickListener(this);
 	}
 	
 	private ArrayList<FacebookAccount> createFacebookAccountList(Object[] obj){
@@ -64,7 +64,6 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 		
 		return aclist;
 	}
-	
 
 	@Override
 	public void onClick(View v) {
@@ -73,12 +72,6 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 		}
 	}
 	
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Intent intent = new Intent(mContext, TopicListActivity.class);
-		startActivity(intent);
-	}
-
 	public class FoundAccountAdapter extends BaseAdapter {
 
 		private Context mContext;
@@ -160,6 +153,17 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 			TextView bio = (TextView) convertView.findViewById(R.id.twitter_account_biography);
 			bio.setText(mTwitterAccount.description);
 			
+			Button btn = (Button) convertView.findViewById(R.id.btn_show_detail_twitter_account);
+			btn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, WebViewActivity.class);
+					intent.putExtra("login_url", mTwitterAccount.prof_link);
+					startActivity(intent);					
+				}
+			});
+			
 			return convertView;
 		}
 		
@@ -209,6 +213,16 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 			
 			TextView locale = (TextView) convertView.findViewById(R.id.facebook_account_locale);
 			locale.setText(fac.locale);
+
+			Button btn = (Button) convertView.findViewById(R.id.btn_show_detail_facebook_account);
+			btn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(mContext, WebViewActivity.class);
+					intent.putExtra("login_url", mFacebookAccounts.get(p).prof_url);
+					startActivity(intent);					
+				}
+			});
 			
 			return convertView;
 		}
