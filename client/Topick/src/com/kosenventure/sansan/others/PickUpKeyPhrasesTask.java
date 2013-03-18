@@ -18,7 +18,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class PickUpKeyPhrasesTask extends AsyncTask<Void, Object, Object> {
+public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Object, Object> {
 
 
 	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
@@ -36,19 +36,24 @@ public class PickUpKeyPhrasesTask extends AsyncTask<Void, Object, Object> {
 	}
 
 	@Override
-	protected Object doInBackground(Void... params) {
+	protected Object doInBackground(boolean[]... params) {
+		String data = null;
 		// Ç‹Ç∏FacebookÇ©ÇÁíäèoÇ∑ÇÈ
-		String data = getJsonFromAPI(getStr(R.string.url_facebook_pick_up_key_phrase) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), ""));
-		if( data != null ){
-			log(data);
+		if ( params[0][0] ){
+			data = getJsonFromAPI(getStr(R.string.url_facebook_pick_up_key_phrase) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), ""));
+			if( data != null ){
+				log(data);
+			}
 		}
-		// TwitterÇ©ÇÁíäèo
-		data = getJsonFromAPI(getStr(R.string.url_twitter_pick_up_key_phrase) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&secret_access_token=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), ""));
-		if( data != null ){
-			log(data);
+		else if (params[0][1] ){
+			// TwitterÇ©ÇÁíäèo
+			data = getJsonFromAPI(getStr(R.string.url_twitter_pick_up_key_phrase) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&secret_access_token=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), ""));
+			if( data != null ){
+				log(data);
+			}
 		}
 		
-		return null;
+		return data;
 	}
 	
 	private void log(String msg){

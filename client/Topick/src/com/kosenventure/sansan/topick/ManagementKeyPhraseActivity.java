@@ -15,6 +15,7 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -154,8 +155,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 											.setNegativeButton("ï¬Ç∂ÇÈ", null)
 											.show();
 		
-//		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
-//		mPickUpKeyPhrasesTask.execute();
+//		
 	}
 	
 	private void showAddKeyPhraseDialog() {
@@ -176,7 +176,30 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	}
 	
 	private void showPickUpKeyPhraseDialog(){
+		View view = inflater.inflate(R.layout.dialog_pick_up_key_phrase_layout, null);
+		final CheckBox fbCheck = (CheckBox) view.findViewById(R.id.cb_pick_up_from_facebook),
+		twCheck = (CheckBox) view.findViewById(R.id.cb_pick_up_from_twitter);
 		
+		addKeyPhraseDialog = new AlertDialog.Builder(this)
+											.setView(view)
+											.setCancelable(false)
+											.setPositiveButton("íäèo", new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													boolean isFb = fbCheck.isChecked();
+													boolean isTw = twCheck.isChecked();
+													
+													if ( !isFb && !isTw ) {
+														toast("Ç«ÇøÇÁÇ©ÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢");
+														return;
+													}
+													
+													PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(ManagementKeyPhraseActivity.this);
+													mPickUpKeyPhrasesTask.execute(new boolean[]{isFb,isTw});
+													dialog.dismiss();
+												}
+											})
+											.show();
 	}
 	
 	@Override
