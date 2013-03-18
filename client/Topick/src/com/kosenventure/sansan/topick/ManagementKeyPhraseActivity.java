@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -33,8 +34,12 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	
 	LinearLayout mBackBtn,mShowAddKeyPhraseMenu;
 	private EditText mEditSearchKeyPhrase;
-	private Button mSearchKeyPhraseBtn;
+	private Button mSearchKeyPhraseBtn,mShowAddKeyPhraseDialogBtn,mShowPickUpKeyPhraseDialogBtn;
 	private ListView mKeyPhraseListView;
+
+	AlertDialog selectWayToAddKeyPhraseDialog,addKeyPhraseDialog,pickUpKeyPhraseDialog;
+
+	LayoutInflater inflater;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +47,8 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		setContentView(R.layout.activity_management_key_phrase_layout);
 		
 		mAd = new AccessDb(mContext);
-		saveData();
+		inflater = getLayoutInflater();
+//		saveData();
 		
 		mBackBtn = (LinearLayout) findViewById(R.id.btn_back_management_key_phrase);
 		mBackBtn.setOnClickListener(this);
@@ -127,8 +133,40 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	}
 	
 	private void showAddKeyPhraseMenu(){
+		View view = inflater.inflate(R.layout.dialog_select_way_to_add_key_phrase_dialog, null);
+		
+		mShowAddKeyPhraseDialogBtn = (Button) view.findViewById(R.id.btn_add_key_phrase);
+		mShowPickUpKeyPhraseDialogBtn = (Button) view.findViewById(R.id.btn_pick_up_key_phrase);
+		
+		selectWayToAddKeyPhraseDialog = new AlertDialog.Builder(this)
+											.setTitle("追加方法を選択")
+											.setView(view)
+											.setCancelable(false)
+											.setNegativeButton("閉じる", null)
+											.show();
+		
+//		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
+//		mPickUpKeyPhrasesTask.execute();
+	}
+	
+	private void showAddKeyPhraseDialog() {
+		View view = inflater.inflate(R.layout.dialog_add_key_phrase_layout, null);
+		EditText edit = (EditText) view.findViewById(R.id.edit_add_key_phrase_name);
+		
+		addKeyPhraseDialog = new AlertDialog.Builder(this)
+											.setTitle("追加方法を選択")
+											.setView(view)
+											.setCancelable(false)
+											.setNegativeButton("閉じる", null)
+											.show();
+		
 		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
 		mPickUpKeyPhrasesTask.execute();
+		
+	}
+	
+	private void showPickUpKeyPhraseDialog(){
+		
 	}
 	
 	@Override
@@ -141,6 +179,14 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		}
 		else if ( v == mSearchKeyPhraseBtn ) {
 			searchKeyPhrase();
+		}
+		else if ( v == mShowAddKeyPhraseDialogBtn ) {
+			selectWayToAddKeyPhraseDialog.dismiss();
+			showAddKeyPhraseDialog();
+		}
+		else if ( v == mShowPickUpKeyPhraseDialogBtn ) {
+			selectWayToAddKeyPhraseDialog.dismiss();
+			showPickUpKeyPhraseDialog();
 		}
 	}
 	
