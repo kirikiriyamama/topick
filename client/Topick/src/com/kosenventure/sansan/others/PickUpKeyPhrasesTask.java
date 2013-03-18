@@ -1,10 +1,7 @@
 package com.kosenventure.sansan.others;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.http.HttpResponse;
@@ -14,7 +11,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.kosenventure.sansan.topick.R;
 import com.kosenventure.sansan.topick.SelectPickUpKeyPhraseActivity;
