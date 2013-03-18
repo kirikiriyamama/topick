@@ -1,0 +1,82 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".ManagementKeyPhraseFragment" 
+    >
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dip"
+        android:orientation="vertical"
+        >
+	    <FrameLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/set_toptitle_bg"
+	        >
+	        <LinearLayout android:id="@+id/btn_back_select_pick_up_key_phrase"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/set_topback_btn"
+	            android:gravity="center"
+	            android:paddingTop="2dip"
+	            android:paddingBottom="2dip"
+	            android:paddingLeft="2dip"
+	            android:paddingRight="7dip" 
+	            android:layout_gravity="center|left"
+	            android:layout_marginLeft="10dip"
+	            >
+	            <ImageView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginRight="5dip"
+	                android:background="@drawable/back_btn"
+	                />
+	                <TextView 
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="戻る"
+	                    android:textColor="@color/white"
+	                    />
+	        </LinearLayout>
+	        <TextView 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="Topick"
+	            android:textSize="22sp"
+	            android:textColor="@color/white"
+	            android:layout_gravity="center"
+	            />
+	    </FrameLayout>
+	    
+	    <TextView 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="以下のキーフレーズが見つかりました。"
+	        android:textSize="20sp"
+	        android:textColor="@color/black"
+	        android:gravity="center"
+	        />
+	    
+	    <ListView android:id="@+id/list_pick_up_key_phrase"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:cacheColorHint="@color/trans"
+	        android:scrollingCache="false"
+	        android:fadingEdge="none"
+	        android:fadeScrollbars="false"
+	        android:divider="@color/trans"
+	        />
+    </LinearLayout>
+    
+    <Button android:id="@+id/btn_add_checked_pick_up_key_phrase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="追加"
+        android:background="@drawable/active_btn_background"
+        />
+    
+</FrameLayout>

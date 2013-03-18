@@ -111,7 +111,7 @@ public class MainActivity extends MyActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
     	if( requestCode == LAUNCH_CAMERA ){
-    		if( resultCode == -1 ){
+    		if( resultCode == RESULT_OK ){
     			OCRTask ocrTask = new OCRTask(this, mImageUri);
     			ocrTask.execute(data);
     		}

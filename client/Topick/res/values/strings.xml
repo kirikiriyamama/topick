@@ -11,12 +11,12 @@
     <string name="url_twitter_pick_up_key_phrase">http://api.sansan-plus-plus.tk/keyphrase/twitter?access_token=</string>
     <string name="url_facebook_search_user">http://api.sansan-plus-plus.tk/search/facebook?access_token=</string>
     <string name="url_twitter_search_user">http://api.sansan-plus-plus.tk/search/twitter?access_token=</string>
-    
+
     <!-- Preference -->
     <string name="facebook_access_token_set_key">facebook_access_token</string>
     <string name="twitter_access_token_set_key">twitter_access_token</string>
     <string name="twitter_access_token_secret_set_key">twitter_access_token_secret</string>
-    
+
     <!-- MainActivity -->
     <string name="text_subtitle_facebook">Facebookで検索</string>
     <string name="text_search_name">名前</string>
@@ -76,5 +76,6 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_management_key_phrase_btn">ManagementKeyPhraseBtn</string>
+    <string name="title_activity_select_pick_up_key_phrase">SelectPickUpKeyPhraseActivity</string>
 
 </resources>

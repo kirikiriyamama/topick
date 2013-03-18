@@ -1,12 +1,10 @@
 package com.kosenventure.sansan.topick;
 
 import com.kosenventure.sansan.others.AccessDb;
+import com.kosenventure.sansan.others.OCRTask;
 import com.kosenventure.sansan.others.PickUpKeyPhrasesTask;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +23,14 @@ import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 
 public class ManagementKeyPhraseActivity extends MyActivity implements OnClickListener,OnKeyListener{
 
-	final static String DUMMY_DATE = "1111-11-11 11:11:11";
+
+	final static private int SELECT_PICK_UP_KEY_PHRASE = 200;
+	final static private String DUMMY_DATE = "1111-11-11 11:11:11";
 	
 	private AccessDb mAd;
 	private KeyPhraseCursorAdapter mKeyPhraseCursorAdapter;
@@ -70,6 +71,15 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+    	if( requestCode == SELECT_PICK_UP_KEY_PHRASE ){
+    		if( resultCode == RESULT_OK ){
+    			mKeyPhraseCursorAdapter.requery();
+    		}
+    	}
+    }
 	
 	// DBからキーフレーズを取得する
 	private Cursor getKeyPhrasesFromDb(String where, String[] answer){

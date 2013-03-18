@@ -37,7 +37,7 @@
             android:name="com.kosenventure.sansan.topick.ManagementKeyPhraseActivity"
             android:label="@string/title_activity_management_key_phrase_btn"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"  >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name="com.kosenventure.sansan.topick.FoundAccountListActivity"
@@ -54,6 +54,12 @@
         <activity
             android:name="com.kosenventure.sansan.topick.WebViewActivity"
             android:label="@string/title_activity_web_view"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.kosenventure.sansan.topick.SelectPickUpKeyPhraseActivity"
+            android:label="@string/title_activity_select_pick_up_key_phrase" 
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>

@@ -3,24 +3,32 @@ package com.kosenventure.sansan.others;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.kosenventure.sansan.topick.R;
+import com.kosenventure.sansan.topick.SelectPickUpKeyPhraseActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, Void> {
+public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 
 
 	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
@@ -49,35 +57,64 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, Void> {
 	}
 
 	@Override
-	protected Void doInBackground(boolean[]... params) {
-		String data = null;
+	protected String[] doInBackground(boolean[]... params) {
+		String fbData = null,twData = null;
 		// まずFacebookから抽出する
 		if ( params[0][0] ){
-			data = getJsonFromAPI(getStr(R.string.url_facebook_pick_up_key_phrase) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), ""));
-			if( data != null ){
-				log(data);
-			}
-		}
-		else if (params[0][1] ){
-			// Twitterから抽出
-			data = getJsonFromAPI(getStr(R.string.url_twitter_pick_up_key_phrase) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&secret_access_token=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), ""));
-			if( data != null ){
-				log(data);
-			}
+			String url = getStr(R.string.url_facebook_pick_up_key_phrase) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), "");
+			fbData = getJsonFromAPI(url);
 		}
 		
-		return null;
+		if (params[0][1] ){
+			// Twitterから抽出
+			String url = getStr(R.string.url_twitter_pick_up_key_phrase) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&access_token_secret=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), "");
+			twData = getJsonFromAPI(url);
+		}
+		
+		return createKeyPhraseArray(fbData, twData);
 //		return data;
+	}
+	
+	private String[] createKeyPhraseArray(String fb, String tw){
+		JSONArray fbArray = null,twArray = null;
+		String[] keyPhraseArray = null;
+		try {
+			if(fb != null) fbArray = new JSONArray(fb);
+			if(tw != null) twArray = new JSONArray(tw);
+			keyPhraseArray = new String[ (fb != null ? fbArray.length() : 0) + (tw != null ? twArray.length() : 0)];
+			int i = 0;
+			if(fb != null) for ( i = 0; i < fbArray.length(); i++) keyPhraseArray[i] = fbArray.getString(i);
+			if(tw != null) for (int j = 0; j < twArray.length(); j++,i++) keyPhraseArray[i] = twArray.getString(j);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return keyPhraseArray;
 	}
 
 	@Override
-	protected void onPostExecute(Void result) {
+	protected void onPostExecute(String[] result) {
 		super.onPostExecute(result);
 		
 		// ダイアログを消す
         mProgressDialog.dismiss();
+        
+        if ( result == null ) Toast.makeText(mContext, "キーフレーズが見つかりませんでした", Toast.LENGTH_SHORT).show();
+        else{
+	        Intent intent = new Intent(mContext, SelectPickUpKeyPhraseActivity.class);
+	        intent.putExtra("key_phrase", result);
+	        intent.putExtra("date", getDate());
+	        mActivity.startActivityForResult(intent, 200);
+        }
 	}
 	
+	private String getDate(){
+		// 現在の時刻を取得
+		Date date = new Date();
+		// 表示形式を設定
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy'-'MM'-'dd kk':'mm':'ss");
+		return sdf.format(date);
+	}
 	private void log(String msg){
 		Log.d("PickUpKeyPhraseTask", msg);
 	}
