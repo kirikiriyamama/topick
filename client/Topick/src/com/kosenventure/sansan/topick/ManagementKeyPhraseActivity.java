@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 
 public class ManagementKeyPhraseActivity extends MyActivity implements OnClickListener,OnKeyListener{
@@ -126,6 +127,12 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		mKeyPhraseCursorAdapter.notifyDataSetChanged();
 	}
 
+	// キーフレーズの追加
+	public void addKeyPhrase(String phrase) {
+		mAd.writeDb(getStr(R.string.keyphrase_table), phrase, DUMMY_DATE);
+		mKeyPhraseCursorAdapter.requery();
+	}
+	
 	private void closeIME(View v){
         //ソフトキーボードを閉じる
 		InputMethodManager inputMethodManager = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -136,7 +143,9 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		View view = inflater.inflate(R.layout.dialog_select_way_to_add_key_phrase_dialog, null);
 		
 		mShowAddKeyPhraseDialogBtn = (Button) view.findViewById(R.id.btn_add_key_phrase);
+		mShowAddKeyPhraseDialogBtn.setOnClickListener(this);
 		mShowPickUpKeyPhraseDialogBtn = (Button) view.findViewById(R.id.btn_pick_up_key_phrase);
+		mShowPickUpKeyPhraseDialogBtn.setOnClickListener(this);
 		
 		selectWayToAddKeyPhraseDialog = new AlertDialog.Builder(this)
 											.setTitle("追加方法を選択")
@@ -151,18 +160,19 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	
 	private void showAddKeyPhraseDialog() {
 		View view = inflater.inflate(R.layout.dialog_add_key_phrase_layout, null);
-		EditText edit = (EditText) view.findViewById(R.id.edit_add_key_phrase_name);
+		final EditText edit = (EditText) view.findViewById(R.id.edit_add_key_phrase_name);
 		
 		addKeyPhraseDialog = new AlertDialog.Builder(this)
-											.setTitle("追加方法を選択")
 											.setView(view)
 											.setCancelable(false)
-											.setNegativeButton("閉じる", null)
+											.setPositiveButton("追加", new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													dialog.dismiss();
+													addKeyPhrase(edit.getEditableText().toString());
+												}
+											})
 											.show();
-		
-		PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(this);
-		mPickUpKeyPhrasesTask.execute();
-		
 	}
 	
 	private void showPickUpKeyPhraseDialog(){
@@ -211,6 +221,10 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 			mContext = context;
 		}
 		
+		public void requery(){
+			mMe.getCursor().requery();
+		}
+		
 		@Override
 		public void bindView(View view, Context context, Cursor cursor) {
 			final int id = cursor.getInt(cursor.getColumnIndex("_id"));
@@ -224,7 +238,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 				public void onClick(View v) {
 					// DBから削除
 					deleteKeyPhraseFromDb(id);
-					mMe.getCursor().requery();
+					requery();
 				}
 			});
 		}
