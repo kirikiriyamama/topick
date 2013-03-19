@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kosenventure.sansan.others.Account;
 import com.kosenventure.sansan.others.FacebookAccount;
+import com.kosenventure.sansan.others.ImageDownloadTask;
 import com.kosenventure.sansan.others.PickUpTopicTask;
 import com.kosenventure.sansan.others.TwitterAccount;
 
