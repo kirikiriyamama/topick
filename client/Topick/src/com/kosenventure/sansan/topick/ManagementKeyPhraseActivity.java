@@ -183,8 +183,17 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 											.setPositiveButton("í«â¡", new DialogInterface.OnClickListener() {
 												@Override
 												public void onClick(DialogInterface dialog, int which) {
-													dialog.dismiss();
-													addKeyPhrase(edit.getEditableText().toString());
+													String text = edit.getEditableText().toString();
+													String ttext = text.replace(" ", "");
+													ttext = ttext.replace("Å@", "");
+													
+													if( ttext.length() == 0 ){
+														toast("ãÛîíÇÕí«â¡Ç≈Ç´Ç‹ÇπÇÒÅB");
+														showAddKeyPhraseDialog();
+													}else{
+														dialog.dismiss();
+														addKeyPhrase(edit.getEditableText().toString());
+													}	
 												}
 											})
 											.setNegativeButton("ï¬Ç∂ÇÈ", null)
