@@ -67,7 +67,7 @@ public final class R {
         public static final int subtitle_twitter=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f090033;
+        public static final int action_settings=0x7f09002f;
         public static final int btn_add_checked_pick_up_key_phrase=0x7f090014;
         public static final int btn_add_key_phrase=0x7f090022;
         public static final int btn_back_found_account_list=0x7f090000;
@@ -76,7 +76,7 @@ public final class R {
         public static final int btn_back_setting=0x7f090015;
         public static final int btn_back_show_topic_list=0x7f090019;
         public static final int btn_back_to_home=0x7f09001a;
-        public static final int btn_delete_key_phrase=0x7f09002e;
+        public static final int btn_delete_key_phrase=0x7f09002a;
         public static final int btn_launch_camera=0x7f09000b;
         public static final int btn_launch_management_kay_phrase=0x7f090016;
         public static final int btn_launch_pick_up_topick=0x7f090002;
@@ -86,12 +86,10 @@ public final class R {
         public static final int btn_pick_up_key_phrase=0x7f090023;
         public static final int btn_search_key_phrase=0x7f090010;
         public static final int btn_show_add_key_phrase_menu=0x7f09000e;
-        public static final int btn_show_detail_facebook_account=0x7f090028;
-        public static final int btn_show_detail_twitter_account=0x7f09002c;
         public static final int btn_topic_search=0x7f09000c;
         public static final int cb_pick_up_from_facebook=0x7f09001e;
         public static final int cb_pick_up_from_twitter=0x7f09001f;
-        public static final int cb_pick_up_key_phrase=0x7f090030;
+        public static final int cb_pick_up_key_phrase=0x7f09002c;
         public static final int edit_add_key_phrase_name=0x7f09001d;
         public static final int edit_kana_first_name=0x7f090006;
         public static final int edit_kana_last_name=0x7f090007;
@@ -101,23 +99,21 @@ public final class R {
         public static final int edit_romaji_last_name=0x7f090005;
         public static final int edit_search_key_phrase=0x7f09000f;
         public static final int edit_search_twitter_id=0x7f09000a;
-        public static final int facebook_account_gender=0x7f090026;
-        public static final int facebook_account_locale=0x7f090027;
-        public static final int facebook_account_name=0x7f090025;
-        public static final int icon_facebook=0x7f090024;
-        public static final int layout_topic_links=0x7f090032;
+        public static final int image_prof=0x7f090025;
+        public static final int image_sns_icon=0x7f090024;
+        public static final int layout_topic_links=0x7f09002e;
         public static final int list_found_account=0x7f090001;
         public static final int list_key_phrase=0x7f090011;
         public static final int list_pick_up_key_phrase=0x7f090013;
         public static final int list_pick_up_word=0x7f090021;
         public static final int list_topic=0x7f09001b;
         public static final int login_webview=0x7f09001c;
-        public static final int text_key_phrase=0x7f09002d;
-        public static final int text_pick_up_key_phrase=0x7f09002f;
-        public static final int text_topic_summary=0x7f090031;
-        public static final int twitter_account_biography=0x7f09002b;
-        public static final int twitter_account_name=0x7f090029;
-        public static final int twitter_account_screen_name=0x7f09002a;
+        public static final int text_accont_1=0x7f090026;
+        public static final int text_accont_2=0x7f090027;
+        public static final int text_accont_3=0x7f090028;
+        public static final int text_key_phrase=0x7f090029;
+        public static final int text_pick_up_key_phrase=0x7f09002b;
+        public static final int text_topic_summary=0x7f09002d;
         public static final int valuebase2=0x7f090020;
     }
     public static final class layout {
@@ -132,11 +128,10 @@ public final class R {
         public static final int dialog_pick_up_key_phrase_layout=0x7f030008;
         public static final int dialog_pick_up_word_layout=0x7f030009;
         public static final int dialog_select_way_to_add_key_phrase_dialog=0x7f03000a;
-        public static final int list_found_facebook_account_layout=0x7f03000b;
-        public static final int list_found_twitter_account_layout=0x7f03000c;
-        public static final int list_key_phrase_layout=0x7f03000d;
-        public static final int list_pick_up_key_phrase_layout=0x7f03000e;
-        public static final int list_topic_layout=0x7f03000f;
+        public static final int list_found_account_layout=0x7f03000b;
+        public static final int list_key_phrase_layout=0x7f03000c;
+        public static final int list_pick_up_key_phrase_layout=0x7f03000d;
+        public static final int list_topic_layout=0x7f03000e;
     }
     public static final class menu {
         public static final int main=0x7f080000;
