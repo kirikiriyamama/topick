@@ -87,13 +87,13 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 			if(fb != null){
 				for (i = 0; i < fbArray.length(); i++){
 					JSONObject to = fbArray.getJSONObject(i);
-					topicList[i] = new Topic(to.getString("summary"), to.getString("link"), createShare(to.getJSONObject("shared_link")));
+					topicList[i] = new Topic(to.getString("keyphrase"), to.getString("summary"), to.getString("link"), createShare(to.getJSONObject("shared_link")));
 				}
 			}
 			if(tw != null){
 				for (int j = 0; j < twArray.length(); j++,i++){
 					JSONObject to = twArray.getJSONObject(j);
-					topicList[i] = new Topic(to.getString("summary"), to.getString("link"), createShares(to.getJSONArray("shared_links")));
+					topicList[i] = new Topic(to.getString("keyphrase"), to.getString("summary"), to.getString("link"), createShares(to.getJSONArray("shared_links")));
 				}
 			}
 			

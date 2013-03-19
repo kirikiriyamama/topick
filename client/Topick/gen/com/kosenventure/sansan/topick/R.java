@@ -67,7 +67,7 @@ public final class R {
         public static final int subtitle_twitter=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f09002f;
+        public static final int action_settings=0x7f090030;
         public static final int btn_add_checked_pick_up_key_phrase=0x7f090014;
         public static final int btn_add_key_phrase=0x7f090022;
         public static final int btn_back_found_account_list=0x7f090000;
@@ -101,7 +101,7 @@ public final class R {
         public static final int edit_search_twitter_id=0x7f09000a;
         public static final int image_prof=0x7f090025;
         public static final int image_sns_icon=0x7f090024;
-        public static final int layout_topic_links=0x7f09002e;
+        public static final int layout_topic_links=0x7f09002f;
         public static final int list_found_account=0x7f090001;
         public static final int list_key_phrase=0x7f090011;
         public static final int list_pick_up_key_phrase=0x7f090013;
@@ -113,7 +113,8 @@ public final class R {
         public static final int text_accont_3=0x7f090028;
         public static final int text_key_phrase=0x7f090029;
         public static final int text_pick_up_key_phrase=0x7f09002b;
-        public static final int text_topic_summary=0x7f09002d;
+        public static final int text_topic_key_phrase=0x7f09002d;
+        public static final int text_topic_summary=0x7f09002e;
         public static final int valuebase2=0x7f090020;
     }
     public static final class layout {

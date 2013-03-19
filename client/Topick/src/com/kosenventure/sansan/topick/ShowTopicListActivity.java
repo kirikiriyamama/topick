@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -109,6 +110,9 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 				LayoutInflater inflater = getLayoutInflater();
 				convertView = inflater.inflate(R.layout.list_topic_layout, null);
 			}
+			
+			TextView keyphrase = (TextView) convertView.findViewById(R.id.text_topic_key_phrase);
+			keyphrase.setText(t.keyphrase);
 			
 			TextView summary = (TextView) convertView.findViewById(R.id.text_topic_summary);
 			summary.setText( t.summary.equals("null") ? "‚È‚µ" : t.summary+"...");
