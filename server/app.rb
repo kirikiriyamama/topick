@@ -70,8 +70,6 @@ class Topick < Sinatra::Base
 			halt 400
 		end
 
-		pp response
-
 		content_type :json
 		response.to_json
 	end
