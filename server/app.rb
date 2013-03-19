@@ -5,7 +5,7 @@ require File.join(DIR, 'lib', 'oauth_twitter')
 require File.join(DIR, 'lib', 'twitter_configure')
 require File.join(DIR, 'lib', 'parse_tweet')
 require File.join(DIR, 'lib', 'get_keyphrases')
-require File.join(DIR, 'lib', 'to_regexp')
+require File.join(DIR, 'lib', 'search_keyphrase')
 
 
 class Topick < Sinatra::Base
@@ -31,35 +31,42 @@ class Topick < Sinatra::Base
 		halt 400 if params[:target_user].blank?
 		halt 400 if params[:keyphrase].blank?
 
-		keyphrase = to_regexp(params[:keyphrase].split(','))
-
 		response = Array.new
 		graph = Koala::Facebook::API.new(params[:access_token])
 		begin
 			graph.get_connection(params[:target_user], 'posts', :limit => 100).each do |result|
 				result = result.symbolize_keys
-				flg = false
 
-				topic = Hash.new
-				topic[:summary] = nil
-				topic[:shared_link] = { :summary => nil, :link => nil }
+				flg = false
+				topic = {
+					topic[:keyphrase] => nil,
+					topic[:summary] => nil,
+					topic[:shared_link] => { :summary => nil, :link => nil } }
 
 				# message
-				if !result[:message].nil? && (result[:message] =~ keyphrase) then
-					flg = true
-					topic[:summary] = result[:message].slice(0, 20)
+				unless result[:message].nil?
+					unless (keyphrase = search_keyphrase(result[:message], params[:keyphrase])).blank?
+						flg = true
+						topic[:keyphrase] = keyphrase
+						topic[:summary] = result[:message].slice(0, 20)
+					end
 				end
 
 				# shared link
-				if (result[:type] == 'link') && (result[:status_type] == 'shared_story') then
-					if ((!result[:name].nil? && (result[:name] =~ keyphrase)) || (!result[:description].nil? && (result[:description] =~ keyphrase))) || flg then
+				if (result[:type] == 'link') && (result[:status_type] == 'shared_story')
+					if flg
+						topic[:shared_link][:summary] = result[:name].slice(0, 20) unless result[:name].nil?
+						topic[:shared_link][:link] = result[:link]
+					elsif !(keyphrase = search_keyphrase(result[:name], params[:keyphrase])).blank? ||
+					      !(keyphrase = search_keyphrase(result[:description], params[:keyphrase])).blank?
 						flg = true
+						topic[:keyphrase] = keyphrase
 						topic[:shared_link][:summary] = result[:name].slice(0, 20) unless result[:name].nil?
 						topic[:shared_link][:link] = result[:link]
 					end
 				end
 				
-				if flg then
+				if flg
 					id = result[:id].split('_')
 					topic[:link] = create_url('http', Koala::Facebook::DIALOG_HOST, "/#{id.first}/posts/#{id.last}")
 					topic[:date] = Time::parse(result[:created_time]).strftime("%Y-%m-%d %H:%M:%S")
@@ -78,9 +85,9 @@ class Topick < Sinatra::Base
 		halt 400 if params[:access_token].blank?
 
 		queries = Array.new
-		if !params[:first_name_en].blank? && !params[:last_name_en].blank? then
+		if !params[:first_name_en].blank? && !params[:last_name_en].blank?
 			queries << "#{params[:first_name_en]} #{params[:last_name_en]}"
-		elsif !params[:first_name_kana].blank? && !params[:last_name_kana].blank? then
+		elsif !params[:first_name_kana].blank? && !params[:last_name_kana].blank?
 			queries << "#{params[:first_name_kana].to_roman} #{params[:last_name_kana].to_roman}"
 			queries << "#{params[:first_name_kana].to_roman.to_kunrei} #{params[:last_name_kana].to_roman.to_kunrei}"
 		else
@@ -138,7 +145,7 @@ class Topick < Sinatra::Base
 				# message
 				queries << result[:message] unless result[:message].nil?
 				# shared link
-				if result[:type] == 'link' and result[:status_type] == 'shared_story' then
+				if result[:type] == 'link' and result[:status_type] == 'shared_story'
 					queries << result[:name] unless result[:name].nil?
 					queries << result[:description] unless result[:description].nil?
 				end
@@ -180,27 +187,27 @@ class Topick < Sinatra::Base
 		halt 400 if params[:target_user].blank?
 		halt 400 if params[:keyphrase].blank?
 
-		keyphrase = to_regexp(params[:keyphrase].split(','))
-
 		response = Array.new
 		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
 		begin
 			twitter.user_timeline(:count => 100).each do |result|
 				topic = Hash.new
 
-				text = parse_tweet(result)
-				if !text.nil? && (text =~ keyphrase) then
-					topic[:summary] = result.text.slice(0, 20)
-					topic[:shared_links] = Array.new
-					unless result.urls.blank? then
-						result.urls.each do |url|
-							topic[:shared_links] << { :link => url.expanded_url }
+				unless (text = parse_tweet(result)).nil?
+					unless (keyphrase = search_keyphrase(text, params[:keyphrase])).blank?
+						topic[:keyphrase] = keyphrase
+						topic[:summary] = result.text.slice(0, 20)
+						topic[:shared_links] = Array.new
+						unless result.urls.blank?
+							result.urls.each do |url|
+								topic[:shared_links] << { :link => url.expanded_url }
+							end
 						end
-					end
-					topic[:link] = create_url('https', 'twitter.com', "/#{result.user.screen_name}/status/#{result.id}")
-					topic[:date] = result.created_at.strftime("%Y-%m-%d %H:%M:%S")
+						topic[:link] = create_url('https', 'twitter.com', "/#{result.user.screen_name}/status/#{result.id}")
+						topic[:date] = result.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
-					response << topic
+						response << topic
+					end
 				end
 			end
 		rescue Twitter::Error::ClientError
@@ -219,7 +226,7 @@ class Topick < Sinatra::Base
 		response = Array.new
 		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
 		begin
-			unless (result = twitter.user_search(params[:screen_name]).first).blank? then
+			unless (result = twitter.user_search(params[:screen_name]).first).blank?
 				response << {
 					:id => result.id,
 					:screen_name => result.screen_name,
