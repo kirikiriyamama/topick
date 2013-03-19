@@ -39,9 +39,9 @@ class Topick < Sinatra::Base
 
 				flg = false
 				topic = {
-					topic[:keyphrase] => nil,
-					topic[:summary] => nil,
-					topic[:shared_link] => { :summary => nil, :link => nil } }
+					:keyphrase => nil,
+					:summary => nil,
+					:shared_link => { :summary => nil, :link => nil } }
 
 				# message
 				unless result[:message].nil?
