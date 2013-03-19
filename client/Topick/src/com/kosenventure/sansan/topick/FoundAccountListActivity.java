@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kosenventure.sansan.others.Account;
 import com.kosenventure.sansan.others.FacebookAccount;
+import com.kosenventure.sansan.others.PickUpTopicTask;
 import com.kosenventure.sansan.others.TwitterAccount;
 
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-public class FoundAccountListActivity extends Activity implements OnClickListener{
+public class FoundAccountListActivity extends MyActivity implements OnClickListener{
 
 	Context mContext;
 	private ListView mAccountList;
@@ -36,6 +37,7 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 	private TwitterAccount mTwitterAccount;
 	
 	private ImageView mBackBtn;
+	private Button mLaunchPickUpTopic;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 		mAccountList = (ListView) findViewById(R.id.list_found_account);
 		mFoundAccountAdapter = new FoundAccountAdapter(mContext, mFacebookAccounts, mTwitterAccount);
 		mAccountList.setAdapter(mFoundAccountAdapter);
+		
+		mLaunchPickUpTopic = (Button) findViewById(R.id.btn_launch_pick_up_topick);
+		mLaunchPickUpTopic.setOnClickListener(this);
 	}
 	
 	private ArrayList<FacebookAccount> createFacebookAccountList(Object[] obj){
@@ -69,6 +74,16 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 	public void onClick(View v) {
 		if ( v == mBackBtn ) {
 			finish();
+		}
+		else if ( v == mLaunchPickUpTopic ) {
+			String[] array = mFoundAccountAdapter.getSelectedAccount();
+			if( array == null ) {
+				toast("Ç«ÇÍÇ©ÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB");
+				return;
+			}
+			
+			PickUpTopicTask mPickUpTopicTask = new PickUpTopicTask(this);
+			mPickUpTopicTask.execute(array);
 		}
 	}
 	
@@ -88,6 +103,20 @@ public class FoundAccountListActivity extends Activity implements OnClickListene
 			mContext = context;
 			mFacebookAccounts = fblist;
 			mTwitterAccount = twac;
+		}
+		
+		public String[] getSelectedAccount(){
+			String[] array = new String[2];
+			
+			if ( mSelectFacebookAccount == -1 && !isTwitterSelecte ) return null;
+
+			if( mSelectFacebookAccount != -1 )
+				array[0] = String.valueOf(mFacebookAccounts.get(mSelectFacebookAccount).id);
+			
+			if( isTwitterSelecte )
+				array[1] = mTwitterAccount.screen_name;
+			
+			return array;
 		}
 
 		@Override

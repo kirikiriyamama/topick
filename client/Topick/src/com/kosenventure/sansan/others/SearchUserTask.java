@@ -73,7 +73,7 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 		// TwitterÇ©ÇÁíäèo
 		if( !array[6].equals("") ){
 			url = getStr(R.string.url_twitter_search_user) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&access_token_secret=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), "");
-			url += array[6];
+			url += "&screen_name="+array[6];
 			log(url);
 			twData = getJsonFromAPI(url);
 		}
@@ -82,6 +82,8 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 	}	
 
 	private Intent createAccountIntent(String fb, String tw){
+		if ( fb == null && tw == null ) return null;
+		
 		Intent intent = null;
 		JSONArray fbArray = null,twArray = null;
 		FacebookAccount[] fbAc = null;
@@ -90,7 +92,7 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 			if(fb != null) fbArray = new JSONArray(fb);
 //			if(tw != null) twArray = new JSONArray(tw);
 			if(fb != null){
-				fbAc = new FacebookAccount[fb.length()];
+				fbAc = new FacebookAccount[fbArray.length()];
 				for (int i = 0; i < fbArray.length(); i++){
 					JSONObject ac = fbArray.getJSONObject(i);
 					fbAc[i] = new FacebookAccount(ac.getInt("id"), ac.getString("name"), ac.getString("locale"), ac.getString("gender"), ac.getString("link"), ac.getString("picture"));

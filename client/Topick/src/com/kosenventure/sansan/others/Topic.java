@@ -1,15 +1,31 @@
 package com.kosenventure.sansan.others;
 
-public class Topic {
+import java.io.Serializable;
+
+public class Topic implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2884989690855075449L;
 	public String[] keyphrases;
-	public String image;
-	public String content;
+	public String[] shared_lists,shared_summary;
+	public String summary,page_link,picture_link;
 	
-	public Topic(String[] keyphrase, String image, String content) {
-		this.keyphrases = keyphrase;
-		this.image = image;
-		this.content = content;
+	// Facebook
+	public Topic(String summary, String page_url, String[] shared_links, String[] shared_summary) {
+		this.summary = summary;
+		this.page_link = page_url;
+		this.shared_lists = shared_links;
+		this.shared_summary = shared_summary;
+	}
+	
+	
+	// Twitter
+	public Topic(String summary, String page_url, String[] shared_links) {
+		this.summary = summary;
+		this.page_link = page_url;
+		this.shared_lists = shared_links;
 	}
 	
 	public String getKeyPhrase(){

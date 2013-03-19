@@ -31,9 +31,9 @@ public class TopicListActivity extends Activity implements OnItemClickListener{
 		mContext = getApplicationContext();
 		
 		mTopics = new Topic[3];
-		mTopics[0] = new Topic(new String[]{"高専"}, null, "高専楽しい！");
-		mTopics[1] = new Topic(new String[]{"高専","島根"}, null, "高専楽しくない！");
-		mTopics[2] = new Topic(new String[]{"高専","石川"}, null, "高専は就職が楽！");
+//		mTopics[0] = new Topic(new String[]{"高専"}, null, "高専楽しい！");
+//		mTopics[1] = new Topic(new String[]{"高専","島根"}, null, "高専楽しくない！");
+//		mTopics[2] = new Topic(new String[]{"高専","石川"}, null, "高専は就職が楽！");
 		
 		mTopicList = (ListView) findViewById(R.id.topic_list);
 		mTopicAdapter = new TopicAdapter(this, R.layout.list_topic_layout, mTopics);
@@ -79,7 +79,7 @@ public class TopicListActivity extends Activity implements OnItemClickListener{
 			name.setText(mObjects[position].getKeyPhrase());
 			
 			TextView bio = (TextView) convertView.findViewById(R.id.topic_content);
-			bio.setText(mObjects[position].content);
+//			bio.setText(mObjects[position].content);
 			
 			return convertView;
 		}

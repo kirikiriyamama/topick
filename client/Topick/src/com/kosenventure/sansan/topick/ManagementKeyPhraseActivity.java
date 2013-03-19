@@ -80,6 +80,12 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
     	}
     }
 	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		closeDb();
+	}
+	
 	// DBからキーフレーズを取得する
 	private Cursor getKeyPhrasesFromDb(String where, String[] answer){
 		return mAd.readDb(getStr(R.string.keyphrase_table), new String[]{"id as _id","phrase","date"}, where, answer, "id");

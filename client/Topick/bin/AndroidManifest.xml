@@ -59,9 +59,13 @@
         </activity>
         <activity
             android:name="com.kosenventure.sansan.topick.SelectPickUpKeyPhraseActivity"
-            android:label="@string/title_activity_select_pick_up_key_phrase" 
+            android:label="@string/title_activity_select_pick_up_key_phrase"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.kosenventure.sansan.topick.ShowTopicListActivity"
+            android:label="@string/title_activity_show_topic_list" >
         </activity>
     </application>
 
