@@ -275,7 +275,7 @@ class Topick < Sinatra::Base
 		rescue Oauth::Unauthorized
 			halt 400
 		end
-		pp "<script>Login.sendTwitterAccessToken(\"#{access_token.token}\", \"#{access_token.secret}\");</script>"
+		"<script>Login.sendTwitterAccessToken(\"#{access_token.token}\", \"#{access_token.secret}\");</script>"
 	end
 
 	get '/auth/check/twitter' do
