@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/trans"
     >
-    <FrameLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
         android:layout_marginBottom="10dip"
@@ -18,17 +18,15 @@
         <TextView android:id="@+id/text_pick_up_key_phrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingRight="40dip"
+            android:layout_marginRight="15dip"
             android:textColor="@color/black"
             />
         
         <CheckBox android:id="@+id/cb_pick_up_key_phrase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
             />
         
-    </FrameLayout>
+    </LinearLayout>
 
 </LinearLayout>

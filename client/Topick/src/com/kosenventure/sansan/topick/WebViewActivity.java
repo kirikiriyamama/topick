@@ -53,7 +53,7 @@ public class WebViewActivity extends MyActivity {
 		mPreference = mContext.getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
 		mEditor = mPreference.edit();
 
-		write();
+//		write();
 		
 		WebView webView = (WebView) findViewById(R.id.login_webview);
         webView.setWebViewClient(new WebViewClient(){});

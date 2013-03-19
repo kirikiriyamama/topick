@@ -34,7 +34,7 @@
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
         android:layout_marginTop="20dip"
-        android:padding="100dip"
+        android:padding="40dip"
         android:text="@string/btn_launch_manegement_kay_phrase"
         android:textColor="@color/white"
         android:background="@drawable/active_btn_background"

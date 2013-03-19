@@ -144,72 +144,70 @@ public final class R {
         /**  Preference 
          */
         public static final int access_preference_key=0x7f060009;
-        public static final int action_settings=0x7f06003c;
-        public static final int alert_search_key_phrase=0x7f06002e;
+        public static final int action_settings=0x7f06003a;
+        public static final int alert_search_key_phrase=0x7f06002c;
         /**  AppName 
          */
         public static final int app_name=0x7f060000;
-        public static final int btn_add_key_phrase=0x7f06002f;
-        public static final int btn_launch_camera=0x7f06001d;
+        public static final int btn_add_key_phrase=0x7f06002d;
+        public static final int btn_launch_camera=0x7f06001b;
         /**  SettingActivity 
          */
-        public static final int btn_launch_manegement_kay_phrase=0x7f060028;
-        public static final int btn_login_facebook=0x7f060029;
-        public static final int btn_login_twitter=0x7f06002a;
+        public static final int btn_launch_manegement_kay_phrase=0x7f060026;
+        public static final int btn_login_facebook=0x7f060027;
+        public static final int btn_login_twitter=0x7f060028;
         /**  ManagementKeyPhrase 
          */
-        public static final int btn_pick_up_keyphrase=0x7f06002b;
-        public static final int btn_save_kay_phrase_change=0x7f060031;
-        public static final int btn_search_key_phrase=0x7f06002c;
-        public static final int btn_topic_search=0x7f06001e;
-        public static final int create_keyphrase_table_sql=0x7f060033;
+        public static final int btn_pick_up_keyphrase=0x7f060029;
+        public static final int btn_save_kay_phrase_change=0x7f06002f;
+        public static final int btn_search_key_phrase=0x7f06002a;
+        public static final int btn_topic_search=0x7f06001c;
+        public static final int create_keyphrase_table_sql=0x7f060031;
         /**  OCRTask 
          */
-        public static final int dialog_ocr_mes=0x7f06001f;
-        public static final int dialog_pick_up_word_list_back_btn=0x7f060025;
-        public static final int dialog_pick_up_word_list_end_btn=0x7f060026;
-        public static final int dialog_pick_up_word_list_next_btn=0x7f060024;
-        public static final int dialog_pick_up_word_list_title_kana_name=0x7f060020;
-        public static final int dialog_pick_up_word_list_title_kanji_name=0x7f060022;
-        public static final int dialog_pick_up_word_list_title_romaji_name=0x7f060021;
-        public static final int dialog_pick_up_word_list_title_twitter_id=0x7f060023;
+        public static final int dialog_ocr_mes=0x7f06001d;
+        public static final int dialog_pick_up_word_list_back_btn=0x7f060023;
+        public static final int dialog_pick_up_word_list_end_btn=0x7f060024;
+        public static final int dialog_pick_up_word_list_next_btn=0x7f060022;
+        public static final int dialog_pick_up_word_list_title_kana_name=0x7f06001e;
+        public static final int dialog_pick_up_word_list_title_kanji_name=0x7f060020;
+        public static final int dialog_pick_up_word_list_title_romaji_name=0x7f06001f;
+        public static final int dialog_pick_up_word_list_title_twitter_id=0x7f060021;
         public static final int facebook_access_token_set_key=0x7f06000a;
         public static final int facebook_up_to_date_day_key=0x7f06000d;
-        public static final int found_account_title=0x7f060034;
-        public static final int hello_world=0x7f06003d;
-        public static final int hint_add_key_phrase=0x7f060030;
-        public static final int hint_kana_first_name=0x7f060016;
-        public static final int hint_kana_last_name=0x7f060017;
-        public static final int hint_kanji_first_name=0x7f060018;
-        public static final int hint_kanji_last_name=0x7f060019;
-        public static final int hint_romaji_first_name=0x7f060014;
-        public static final int hint_romaji_last_name=0x7f060015;
-        public static final int hint_search_key_phrase=0x7f06002d;
-        public static final int hint_twitter=0x7f06001c;
+        public static final int found_account_title=0x7f060032;
+        public static final int hello_world=0x7f06003b;
+        public static final int hint_add_key_phrase=0x7f06002e;
+        public static final int hint_kana_first_name=0x7f060014;
+        public static final int hint_kana_last_name=0x7f060015;
+        public static final int hint_kanji_first_name=0x7f060016;
+        public static final int hint_kanji_last_name=0x7f060017;
+        public static final int hint_romaji_first_name=0x7f060012;
+        public static final int hint_romaji_last_name=0x7f060013;
+        public static final int hint_search_key_phrase=0x7f06002b;
+        public static final int hint_twitter=0x7f06001a;
         /**  AccessDb 
          */
-        public static final int keyphrase_table=0x7f060032;
-        public static final int text_kana=0x7f060011;
-        public static final int text_kanji=0x7f060013;
-        public static final int text_romaji=0x7f060012;
-        public static final int text_search_name=0x7f060010;
-        public static final int text_search_twitter=0x7f06001b;
-        public static final int text_setting_cancel_keyphrase_on_off=0x7f060038;
-        public static final int text_setting_sns_relation=0x7f060039;
+        public static final int keyphrase_table=0x7f060030;
+        public static final int text_kana=0x7f060010;
+        public static final int text_kanji=0x7f060011;
         /**  MainActivity 
          */
-        public static final int text_subtitle_facebook=0x7f06000f;
-        public static final int text_subtitle_twitter=0x7f06001a;
-        public static final int title_activity_found_account_list=0x7f060036;
-        public static final int title_activity_main=0x7f060040;
-        public static final int title_activity_management_key_phrase_btn=0x7f06003e;
-        public static final int title_activity_select_pick_up_key_phrase=0x7f06003f;
-        public static final int title_activity_setting=0x7f06003b;
-        public static final int title_activity_show_topic_list=0x7f060041;
-        public static final int title_activity_topic_list=0x7f060035;
-        public static final int title_activity_web_view=0x7f06003a;
-        public static final int toast_pick_up_failure_msg=0x7f060027;
-        public static final int topic=0x7f060037;
+        public static final int text_romaji=0x7f06000f;
+        public static final int text_search_twitter=0x7f060019;
+        public static final int text_setting_cancel_keyphrase_on_off=0x7f060036;
+        public static final int text_setting_sns_relation=0x7f060037;
+        public static final int text_subtitle_twitter=0x7f060018;
+        public static final int title_activity_found_account_list=0x7f060034;
+        public static final int title_activity_main=0x7f06003e;
+        public static final int title_activity_management_key_phrase_btn=0x7f06003c;
+        public static final int title_activity_select_pick_up_key_phrase=0x7f06003d;
+        public static final int title_activity_setting=0x7f060039;
+        public static final int title_activity_show_topic_list=0x7f06003f;
+        public static final int title_activity_topic_list=0x7f060033;
+        public static final int title_activity_web_view=0x7f060038;
+        public static final int toast_pick_up_failure_msg=0x7f060025;
+        public static final int topic=0x7f060035;
         public static final int twitter_access_token_secret_set_key=0x7f06000c;
         public static final int twitter_access_token_set_key=0x7f06000b;
         public static final int twitter_up_to_date_day_key=0x7f06000e;

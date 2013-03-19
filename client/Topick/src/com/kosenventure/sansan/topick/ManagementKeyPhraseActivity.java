@@ -87,7 +87,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	
 	// DBからキーフレーズを取得する
 	private Cursor getKeyPhrasesFromDb(String where, String[] answer){
-		return mAd.readDb(getStr(R.string.keyphrase_table), new String[]{"id as _id","phrase","date"}, where, answer, "id");
+		return mAd.readDb(getStr(R.string.keyphrase_table), new String[]{"id as _id","phrase"}, where, answer, "id");
 	}
 	
 	// DBからキーフレーズを削除する
@@ -240,7 +240,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		public void requery(){
 			if( mMe.getCursor() == null ){
 				mMe.changeCursor(getKeyPhrasesFromDb(null, null));
-				mMe.notifyDataSetInvalidated();
+				mMe.notifyDataSetChanged();
 			}else{
 				mMe.getCursor().requery();
 			}

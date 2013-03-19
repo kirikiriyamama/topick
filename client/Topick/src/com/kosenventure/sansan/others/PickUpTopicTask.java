@@ -64,8 +64,6 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 			fbData = getJsonFromAPI(url);
 		}
 		
-		array[1] = "sakuna63";
-		
 		if ( array[1] != null ) {
 			url = getStr(R.string.url_twitter_pick_up_topic) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&access_token_secret=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), "");
 			url += "&target_user=" + array[1] + "&keyphrase=" + getKeyPhrases();
@@ -77,24 +75,24 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 	}
 	
 	private Intent createTopicIntent(String fb, String tw){
-		if( fb == null && tw == null ) return null;
+		if( ( fb == null || fb.length() == 2 ) && ( tw == null || tw.length() == 2 )) return null;
 		Intent intent = null;
 		JSONArray fbArray = null,twArray = null;
 		Topic[] topicList;
 		try {
-//			if(fb != null) fbArray = new JSONArray(fb);
+			if(fb != null) fbArray = new JSONArray(fb);
 			if(tw != null) twArray = new JSONArray(tw);
-			topicList = new Topic[twArray.length()];
-//			if(fb != null){
-//				fbAc = new FacebookAccount[fb.length()];
-//				for (int i = 0; i < fbArray.length(); i++){
-//					JSONObject ac = fbArray.getJSONObject(i);
-//					fbAc[i] = new FacebookAccount(ac.getInt("id"), ac.getString("name"), ac.getString("locale"), ac.getString("gender"), ac.getString("link"), ac.getString("picture"));
-//				}
-//			}
+			topicList = new Topic[ ( fb != null ? fbArray.length() : 0 ) + ( tw != null ? twArray.length() : 0 ) ];
+			int i = 0;
+			if(fb != null){
+				for (i = 0; i < fbArray.length(); i++){
+					JSONObject to = fbArray.getJSONObject(i);
+					topicList[i] = new Topic(to.getString("summary"), to.getString("link"), createShare(to.getJSONObject("shared_link")));
+				}
+			}
 			if(tw != null){
-				for (int i = 0; i < twArray.length(); i++){
-					JSONObject to = twArray.getJSONObject(i);
+				for (int j = 0; j < twArray.length(); j++,i++){
+					JSONObject to = twArray.getJSONObject(j);
 					topicList[i] = new Topic(to.getString("summary"), to.getString("link"), createShares(to.getJSONArray("shared_links")));
 				}
 			}
@@ -120,6 +118,24 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
         else{
 	        mActivity.startActivityForResult(result, SHOW_TOPIC_LIST);
         }
+	}
+	
+	private String[] createShare(JSONObject obj){
+		String[] links = null;
+		try {
+			String summary = obj.getString("summary");
+			if(summary != null){
+				links = new String[2];
+				links[0] = summary;
+			}else{
+				links = new String[1];
+			}
+			links[links.length-1] = obj.getString("link");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return links;
 	}
 	
 	private String[] createShares(JSONArray array){

@@ -72,7 +72,7 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 	}
 	
 	private String[] createKeyPhraseArray(String fb, String tw){
-		if( (fb == null || fb.length() == 0 ) && ( tw == null || tw.length() == 0 )) return null;
+		if( (fb == null || fb.length() == 2 ) && ( tw == null || tw.length() == 2 )) return null;
 		JSONArray fbArray = null,twArray = null;
 		String[] keyPhraseArray = null;
 		try {
