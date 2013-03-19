@@ -41,6 +41,7 @@ public class WebViewActivity extends MyActivity {
 		mEditor.putString(getStr(R.string.twitter_access_token_set_key), "xZpXSqUwTfUCRPBYz72vVDZ4KVNnSwsOCajwIq42iEo");
 		mEditor.putString(getStr(R.string.twitter_access_token_secret_set_key), "sxVae1soQc6pZ8xHSit9Mz1tGA0dpYD3e6UbMOl1nQM");
 		mEditor.commit();
+		log("write");
 	}
 	
 	@Override
@@ -53,7 +54,7 @@ public class WebViewActivity extends MyActivity {
 		mPreference = mContext.getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
 		mEditor = mPreference.edit();
 
-//		write();
+		write();
 		
 		WebView webView = (WebView) findViewById(R.id.login_webview);
         webView.setWebViewClient(new WebViewClient(){});

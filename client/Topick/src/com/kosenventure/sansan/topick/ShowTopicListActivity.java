@@ -111,7 +111,7 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 			}
 			
 			TextView summary = (TextView) convertView.findViewById(R.id.text_topic_summary);
-			summary.setText( t.summary == null ? "‚È‚µ" : t.summary+"...");
+			summary.setText( t.summary.equals("null") ? "‚È‚µ" : t.summary+"...");
 			
 			LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.layout_topic_links);
 			if (t.shared_lists.length == 0) {
@@ -123,6 +123,7 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 			}
 			for ( String link : t.shared_lists ){
 				final String l = link;
+				if( l.equals("null") ) continue;
 				TextView url = new TextView(mContext);
 				url.setText(link);
 				url.setTextSize(15f);
@@ -138,6 +139,14 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 				}else{
 					url.setTextColor(Color.BLACK);
 				}
+				layout.addView(url);
+			}
+			
+			if( layout.getChildCount() == 0 ){
+				TextView url = new TextView(mContext);
+				url.setText("‚È‚µ");
+				url.setTextColor(Color.BLACK);
+				url.setTextSize(15f);
 				layout.addView(url);
 			}
 			
