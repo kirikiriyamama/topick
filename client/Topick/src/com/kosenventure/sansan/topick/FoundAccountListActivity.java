@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.kosenventure.sansan.others.Account;
 import com.kosenventure.sansan.others.FacebookAccount;
-import com.kosenventure.sansan.others.ImageDownloadTask;
 import com.kosenventure.sansan.others.PickUpTopicTask;
 import com.kosenventure.sansan.others.TwitterAccount;
 
@@ -199,8 +198,8 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 			}
 			
 			ImageView prof = (ImageView) convertView.findViewById(R.id.image_prof);
-//			ImageDownloadTask task = new ImageDownloadTask(prof);  
-//			task.execute(ac.picture_link); 
+			ImageDownloadTask task = new ImageDownloadTask(prof);  
+			task.execute(ac.picture_link); 
 			
 			TextView text1 = (TextView) convertView.findViewById(R.id.text_accont_1);
 			text1.setText(ac.name);
