@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.kosenventure.sansan.topick.FoundAccountListActivity;
 import com.kosenventure.sansan.topick.R;
 import com.kosenventure.sansan.topick.ShowTopicListActivity;
 
@@ -28,6 +27,7 @@ import android.widget.Toast;
 public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 
 
+	final static private int SHOW_TOPIC_LIST = 500;
 	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
 	
 	private Activity mActivity;
@@ -101,7 +101,7 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 			}
 			
 			intent = new Intent(mContext, ShowTopicListActivity.class);
-			intent.putExtra("topick", topicList);
+			intent.putExtra("topic", topicList);
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -119,7 +119,7 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
         
         if ( result == null ) Toast.makeText(mContext, "òbëËÇ™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÇ≈ÇµÇΩÅB", Toast.LENGTH_SHORT).show();
         else{
-	        mActivity.startActivity(result);
+	        mActivity.startActivityForResult(result, SHOW_TOPIC_LIST);
         }
 	}
 	

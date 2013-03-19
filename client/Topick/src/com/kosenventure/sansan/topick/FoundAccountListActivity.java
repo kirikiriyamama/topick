@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kosenventure.sansan.others.Account;
 import com.kosenventure.sansan.others.FacebookAccount;
+import com.kosenventure.sansan.others.OCRTask;
 import com.kosenventure.sansan.others.PickUpTopicTask;
 import com.kosenventure.sansan.others.TwitterAccount;
 
@@ -13,21 +14,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.View.OnLongClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 public class FoundAccountListActivity extends MyActivity implements OnClickListener{
 
+	final static private int SHOW_TOPIC_LIST = 500;
+	
 	Context mContext;
 	private ListView mAccountList;
 	private FoundAccountAdapter mFoundAccountAdapter;
@@ -59,6 +57,16 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 		mLaunchPickUpTopic = (Button) findViewById(R.id.btn_launch_pick_up_topick);
 		mLaunchPickUpTopic.setOnClickListener(this);
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+    	if( requestCode == SHOW_TOPIC_LIST ){
+    		if( resultCode == RESULT_OK ){
+    			finish();
+    		}
+    	}
+    }
 	
 	private ArrayList<FacebookAccount> createFacebookAccountList(Object[] obj){
 		ArrayList<FacebookAccount> aclist = new ArrayList<FacebookAccount>();
@@ -164,14 +172,14 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 			convertView.setOnLongClickListener(new OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					v = ((ViewGroup)v).getChildAt(1);
+					v = ((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(1);
 					v.setBackgroundResource(isTwitterSelecte ? R.drawable.account_background : R.drawable.account_background_selected);
 					isTwitterSelecte = !isTwitterSelecte;
 					return false;
 				}
 			});
 			
-			((ViewGroup)convertView).getChildAt(1).setBackgroundResource( isTwitterSelecte ? R.drawable.account_background : R.drawable.account_background_selected );
+			((ViewGroup)((ViewGroup)convertView).getChildAt(0)).getChildAt(1).setBackgroundResource( isTwitterSelecte ? R.drawable.account_background : R.drawable.account_background_selected );
 			
 			TextView name = (TextView) convertView.findViewById(R.id.twitter_account_name);
 			name.setText(mTwitterAccount.name);
@@ -206,7 +214,7 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 			convertView.setOnLongClickListener(new OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					v = ((ViewGroup)v).getChildAt(1);
+					v = ((ViewGroup)((ViewGroup)v).getChildAt(0)).getChildAt(1);
 					if( mSelectFacebookAccount == p ){
 						mSelectFacebookAccount = -1;
 						mSelectFacebookView = null;
@@ -222,8 +230,8 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 				}
 			});
 
-			if( position == mSelectFacebookAccount ) ((ViewGroup)convertView).getChildAt(1).setBackgroundResource(R.drawable.account_background_selected);
-			else ((ViewGroup)convertView).getChildAt(1).setBackgroundResource(R.drawable.account_background);
+			if( position == mSelectFacebookAccount ) ((ViewGroup)((ViewGroup)convertView).getChildAt(0)).getChildAt(1).setBackgroundResource(R.drawable.account_background_selected);
+			else ((ViewGroup)((ViewGroup)convertView).getChildAt(0)).getChildAt(1).setBackgroundResource(R.drawable.account_background);
 			
 			FacebookAccount fac = mFacebookAccounts.get(position);
 
