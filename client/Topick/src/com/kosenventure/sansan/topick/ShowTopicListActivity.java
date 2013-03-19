@@ -111,7 +111,7 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 			}
 			
 			TextView summary = (TextView) convertView.findViewById(R.id.text_topic_summary);
-			summary.setText(t.summary+"...");
+			summary.setText( t.summary == null ? "‚È‚µ" : t.summary+"...");
 			
 			LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.layout_topic_links);
 			if (t.shared_lists.length == 0) {
@@ -125,15 +125,19 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 				final String l = link;
 				TextView url = new TextView(mContext);
 				url.setText(link);
-				url.setTextColor(Color.BLUE);
 				url.setTextSize(15f);
-				url.getPaint().setUnderlineText(true);
-				url.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						openBrowser(l);
-					}
-				});
+				if( l.indexOf("http", 0) != -1){
+					url.setTextColor(Color.BLUE);
+					url.getPaint().setUnderlineText(true);
+					url.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							openBrowser(l);
+						}
+					});
+				}else{
+					url.setTextColor(Color.BLACK);
+				}
 				layout.addView(url);
 			}
 			

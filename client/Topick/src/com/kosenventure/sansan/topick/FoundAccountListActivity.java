@@ -146,12 +146,14 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 				if ( mSelectFacebookPosition != -1 ) {
 					getBackgroundView(mSelectFacebookView).setBackgroundResource(R.drawable.account_background);
 				}
-				else if( mSelectFacebookPosition == position ){
+				
+				if( mSelectFacebookPosition == position ){
 					getBackgroundView(view).setBackgroundResource(R.drawable.account_background);
 					mSelectFacebookPosition = -1;
 					mSelectFacebookView = null;
 					return;
 				}
+				
 				getBackgroundView(view).setBackgroundResource(R.drawable.account_background_selected); 
 				mSelectFacebookPosition = position;
 				mSelectFacebookView = view;
@@ -167,7 +169,7 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 				array[0] = String.valueOf(getItem(mSelectFacebookPosition).id);
 			
 			if( isTwitterSelect )
-				array[1] = mTwitterAccount.screen_name;
+				array[1] = String.valueOf(mTwitterAccount.id);
 			
 			return array;
 		}
@@ -197,8 +199,8 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 			}
 			
 			ImageView prof = (ImageView) convertView.findViewById(R.id.image_prof);
-			ImageDownloadTask task = new ImageDownloadTask(prof);  
-			task.execute(ac.picture_link); 
+//			ImageDownloadTask task = new ImageDownloadTask(prof);  
+//			task.execute(ac.picture_link); 
 			
 			TextView text1 = (TextView) convertView.findViewById(R.id.text_accont_1);
 			text1.setText(ac.name);
@@ -209,6 +211,7 @@ public class FoundAccountListActivity extends MyActivity implements OnClickListe
 			if ( ac instanceof TwitterAccount ){
 				getBackgroundView(convertView).setBackgroundResource( isTwitterSelect ? R.drawable.account_background_selected : R.drawable.account_background);
 				icon.setImageResource(R.drawable.icon_twitter);
+				icon.setVisibility(View.VISIBLE);
 				text2.setText(((TwitterAccount) ac).screen_name);
 				text3.setText(((TwitterAccount) ac).description);
 			}

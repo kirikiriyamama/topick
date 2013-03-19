@@ -24,11 +24,9 @@
     
 
     <!-- MainActivity -->
-    <string name="text_subtitle_facebook">Facebookで検索</string>
-    <string name="text_search_name">名前</string>
-    <string name="text_kana">かな</string>
-    <string name="text_romaji">ローマ字</string>
-    <string name="text_kanji">漢字</string>
+    <string name="text_romaji">Name</string>
+    <string name="text_kana">なまえ</string>
+    <string name="text_kanji">名前</string>
     <string name="hint_romaji_first_name">First_name</string>
     <string name="hint_romaji_last_name">Last_name</string>
     <string name="hint_kana_first_name">みょうじ</string>
@@ -54,8 +52,8 @@
 
     <!-- SettingActivity -->
     <string name="btn_launch_manegement_kay_phrase">キーフレーズ管理</string>
-    <string name="btn_login_facebook">Facebook</string>
-    <string name="btn_login_twitter">Twitter</string>
+    <string name="btn_login_facebook">Facebook認証</string>
+    <string name="btn_login_twitter">Twitter認証</string>
 
     <!-- ManagementKeyPhrase -->
     <string name="btn_pick_up_keyphrase">抽出する</string>

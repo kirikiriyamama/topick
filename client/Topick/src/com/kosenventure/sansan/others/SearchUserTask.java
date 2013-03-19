@@ -88,15 +88,20 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 		TwitterAccount twAc = null;
 		try {
 			if(fb != null) fbArray = new JSONArray(fb);
-//			if(tw != null) twArray = new JSONArray(tw);
+			if(tw != null) twArray = new JSONArray(tw);
 			if(fb != null){
 				fbAc = new FacebookAccount[fbArray.length()];
 				for (int i = 0; i < fbArray.length(); i++){
 					JSONObject ac = fbArray.getJSONObject(i);
-					fbAc[i] = new FacebookAccount(ac.getInt("id"), ac.getString("name"), ac.getString("locale"), ac.getString("gender"), ac.getString("link"), ac.getString("picture"));
+					fbAc[i] = new FacebookAccount(ac.getLong("id"), ac.getString("name"), ac.getString("locale"), ac.getString("gender"), ac.getString("link"), ac.getString("picture"));
 				}
 			}
-//			if(tw != null) for (int j = 0; j < twArray.length(); j++,i++) keyPhraseArray[i] = twArray.getString(j);
+			if(tw != null){
+				for (int j = 0; j < twArray.length(); j++){
+					JSONObject ac = twArray.getJSONObject(j);
+					twAc = new TwitterAccount(ac.getLong("id"), ac.getString("screen_name"), ac.getString("name"), ac.getString("description"), ac.getString("link"), ac.getString("picture"));
+				}
+			}
 			
 			intent = new Intent(mContext, FoundAccountListActivity.class);
 			intent.putExtra("facebook", fbAc);

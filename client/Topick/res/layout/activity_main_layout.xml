@@ -42,29 +42,12 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
         >
         <LinearLayout 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            style="@style/StandardTextViewStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/text_search_name" 
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dip"
-            android:layout_marginRight="5dip"
-            />
-
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
             android:orientation="vertical"
             >
             <LinearLayout 
@@ -74,22 +57,23 @@
                 <TextView 
                     style="@style/StandardTextViewStyle"
                     android:layout_width="0dip"
+                    
                     android:text="@string/text_romaji"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />       
                 <EditText android:id="@+id/edit_romaji_first_name"
                     style="@style/StandardEditTextStyle"
                     android:layout_width="0dip"
                     android:hint="@string/hint_romaji_first_name"
                     android:layout_weight="2"
-                    android:text="sato"
+                    android:text="nawate"
                     />
                 <EditText android:id="@+id/edit_romaji_last_name"
                     style="@style/StandardEditTextStyle"
                     android:layout_width="0dip"
                     android:hint="@string/hint_romaji_last_name"
                     android:layout_weight="2"
-                    android:text="katsuya"
+                    android:text="ippei"
                     />
             </LinearLayout>
             <LinearLayout 
@@ -100,19 +84,21 @@
                     style="@style/StandardTextViewStyle"
                     android:layout_width="0dip"
                     android:text="@string/text_kana"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />       
                 <EditText android:id="@+id/edit_kana_first_name"
                     style="@style/StandardEditTextStyle"
                     android:layout_width="0dip"
                     android:hint="@string/hint_kana_first_name"
                     android:layout_weight="2"
+                    android:text="なわて"
                     />
                 <EditText android:id="@+id/edit_kana_last_name"
                     style="@style/StandardEditTextStyle"
                     android:layout_width="0dip"
                     android:hint="@string/hint_kana_last_name"
                     android:layout_weight="2"
+                    android:text="いっぺい"
                     />
             </LinearLayout>
             <LinearLayout 
@@ -123,33 +109,31 @@
                     style="@style/StandardTextViewStyle"
                     android:layout_width="0dip"
                     android:text="@string/text_kanji"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />       
                 <EditText android:id="@+id/edit_kanji_first_name"
                     style="@style/StandardEditTextStyle"
                     android:layout_width="0dip"
                     android:hint="@string/hint_kanji_first_name"
                     android:layout_weight="2"
+                    android:text="索手"
                     />
                 <EditText android:id="@+id/edit_kanji_last_name"
                     style="@style/StandardEditTextStyle"
                     android:layout_width="0dip"
                     android:hint="@string/hint_kanji_last_name"
                     android:layout_weight="2"
+                    android:text="一平"
                     />
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-    </LinearLayout> 
-    
+    </LinearLayout>
+
     <ImageView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_margin="10dip"
+        android:layout_marginTop="20dip"
         android:src="@drawable/subtitle_twitter"
         />
     
@@ -174,7 +158,7 @@
             android:layout_width="0dip"
             android:layout_weight="2"
             android:hint="@string/hint_twitter"
-            android:text="eratokki"
+            android:text="sakuna63"
             />
         <LinearLayout 
             android:layout_width="wrap_content"
