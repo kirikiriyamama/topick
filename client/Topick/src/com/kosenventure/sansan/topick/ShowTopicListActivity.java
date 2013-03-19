@@ -119,6 +119,7 @@ public class ShowTopicListActivity extends MyActivity implements OnClickListener
 				url.setText("‚È‚µ");
 				url.setTextColor(Color.BLACK);
 				url.setTextSize(15f);
+				layout.addView(url);
 			}
 			for ( String link : t.shared_lists ){
 				final String l = link;
