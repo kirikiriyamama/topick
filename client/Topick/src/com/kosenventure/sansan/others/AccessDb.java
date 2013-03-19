@@ -53,12 +53,11 @@ public class AccessDb {
         else { return null; }
     }
 	
-	public void writeDb(String table_name, String phrase, String date) {
+	public void writeDb(String table_name, String phrase) {
 		// ContentValuesインスタンスに
         // データベースへ書き込む情報をセット
         ContentValues values = new ContentValues();
         values.put("phrase", phrase);
-        values.put("date", date);
  
         mWritableDb.beginTransaction();
         
@@ -114,10 +113,7 @@ public class AccessDb {
 			db.beginTransaction();
 	        try {
 	            // テーブル作成を実行
-//	        	db.execSQL("drop tabl keyphrase_table");
-//	            db.execSQL("drop table cancel_keyphrase_table");
 	            db.execSQL(getStr(R.string.create_keyphrase_table_sql));
-	            db.execSQL(getStr(R.string.create_cancel_keyphrase_table_sql));
 	            db.setTransactionSuccessful();
 	        } finally {
 	            // データベース終了処理

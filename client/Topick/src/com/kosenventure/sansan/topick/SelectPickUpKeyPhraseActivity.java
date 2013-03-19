@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import com.kosenventure.sansan.others.AccessDb;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +31,11 @@ public class SelectPickUpKeyPhraseActivity extends MyActivity implements OnClick
 	Button mAddBtn;
 	
 	PickUpKeyPhraseAdapter mPickUpKeyPhraseAdapter;
+	private SharedPreferences mPreference;  
+	private SharedPreferences.Editor mEditor;
+	
 	String date;
+	boolean isTw,isFe;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,11 @@ public class SelectPickUpKeyPhraseActivity extends MyActivity implements OnClick
 		Bundle bundle = getIntent().getExtras();
 		String[] result = bundle.getStringArray("key_phrase");
 		date = bundle.getString("date");
+		isFe = bundle.getBoolean("facebook");
+		isTw = bundle.getBoolean("twitter");
+
+		mPreference = getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
+		mEditor = mPreference.edit();
 		
 		mBackBtn = (ImageView) findViewById(R.id.btn_back_select_pick_up_key_phrase);
 		mBackBtn.setOnClickListener(this);
@@ -82,8 +93,10 @@ public class SelectPickUpKeyPhraseActivity extends MyActivity implements OnClick
 									AccessDb ad = new AccessDb(mContext);
 									ArrayList<String> list = mPickUpKeyPhraseAdapter.getCheckedPhrase();
 									for ( String phrase : list ){
-										ad.writeDb(getStr(R.string.keyphrase_table), phrase, date);
+										ad.writeDb(getStr(R.string.keyphrase_table), phrase);
 									}
+									ad.closeDb();
+									saveDate();
 									setResult(RESULT_OK);
 									finish();
 								}
@@ -93,6 +106,11 @@ public class SelectPickUpKeyPhraseActivity extends MyActivity implements OnClick
 		}
 	}
 	
+	private void saveDate(){
+		if(isFe) mEditor.putString(getStr(R.string.facebook_up_to_date_day_key), date);
+		if(isTw) mEditor.putString(getStr(R.string.twitter_up_to_date_day_key), date);
+		mEditor.commit();
+	}
 	public class PickUpKeyPhraseAdapter extends BaseAdapter{
 
 		private String[] objects;

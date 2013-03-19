@@ -29,7 +29,6 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 
 
 	final static private int SELECT_PICK_UP_KEY_PHRASE = 200;
-	final static private String DUMMY_DATE = "1111-11-11 11:11:11";
 	
 	private AccessDb mAd;
 	private KeyPhraseCursorAdapter mKeyPhraseCursorAdapter;
@@ -96,36 +95,6 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		mAd.deleteDb(getStr(R.string.keyphrase_table), String.valueOf(id));
 	}
 	
-	// デバッグ用。DBにダミーデータを追加
-	private void saveData(){
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-		mAd.writeDb(getStr(R.string.keyphrase_table), "テストテストテスト", "2009-08-24 23:10:15");	
-		mAd.writeDb(getStr(R.string.keyphrase_table), "キーフレーズキーフレーズキーフレーズキーフレーズ", "2009-08-24 23:10:15");
-	}
-	
-	// デバッグ用。DBのデータをすべて削除
-	private void deleteData(){
-		Cursor cursor = mAd.readDb(getStr(R.string.keyphrase_table), null, null, null, "id");
-		int id;
-		if(cursor != null){
-			do {
-				id = cursor.getInt(cursor.getColumnIndex("id"));
-				mAd.deleteDb(getStr(R.string.keyphrase_table), String.valueOf(id));
-			} while (cursor.moveToNext());
-			cursor.close();
-		}
-	}
-	
 	// DBをcloseする
 	public void closeDb(){
 		mAd.closeDb();
@@ -145,7 +114,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 
 	// キーフレーズの追加
 	public void addKeyPhrase(String phrase) {
-		mAd.writeDb(getStr(R.string.keyphrase_table), phrase, DUMMY_DATE);
+		mAd.writeDb(getStr(R.string.keyphrase_table), phrase);
 		mKeyPhraseCursorAdapter.requery();
 	}
 	
@@ -217,11 +186,11 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 													if ( !isFb && !isTw ) {
 														toast("どちらかを選択してください");
 														showPickUpKeyPhraseDialog();
+													}else {
+														PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(ManagementKeyPhraseActivity.this);
+														mPickUpKeyPhrasesTask.execute(new boolean[]{isFb,isTw});
+														dialog.dismiss();
 													}
-													
-													PickUpKeyPhrasesTask mPickUpKeyPhrasesTask = new PickUpKeyPhrasesTask(ManagementKeyPhraseActivity.this);
-													mPickUpKeyPhrasesTask.execute(new boolean[]{isFb,isTw});
-													dialog.dismiss();
 												}
 											})
 											.setNegativeButton("閉じる", null)
@@ -261,9 +230,7 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 	
 	private class KeyPhraseCursorAdapter extends CursorAdapter {
 
-
 		private KeyPhraseCursorAdapter mMe = this;
-		
 
 		public KeyPhraseCursorAdapter(Context context, Cursor c, boolean autoRequery) {
 			super(context, c, autoRequery);
@@ -271,7 +238,12 @@ public class ManagementKeyPhraseActivity extends MyActivity implements OnClickLi
 		}
 		
 		public void requery(){
-			mMe.getCursor().requery();
+			if( mMe.getCursor() == null ){
+				mMe.changeCursor(getKeyPhrasesFromDb(null, null));
+				mMe.notifyDataSetInvalidated();
+			}else{
+				mMe.getCursor().requery();
+			}
 		}
 		
 		private void showConfirmDialog(String phrase, final int id){

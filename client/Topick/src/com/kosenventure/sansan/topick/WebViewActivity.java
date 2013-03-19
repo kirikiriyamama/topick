@@ -10,8 +10,6 @@ import android.webkit.WebViewClient;
 
 public class WebViewActivity extends MyActivity {
 
-	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
-	
 	private Context mContext;
 	private SharedPreferences mPreference;  
 	private SharedPreferences.Editor mEditor;  
@@ -22,7 +20,7 @@ public class WebViewActivity extends MyActivity {
 			mEditor.putString(getStr(R.string.facebook_access_token_set_key), token);
 			mEditor.commit();
 			Intent intent = new Intent();
-			intent.putExtra("name", "Twitter");
+			intent.putExtra("name", "Facebook");
 			setResult(RESULT_OK, intent);
 			finish();
 		}
@@ -32,10 +30,17 @@ public class WebViewActivity extends MyActivity {
 			mEditor.putString(getStr(R.string.twitter_access_token_secret_set_key), token_secret);
 			mEditor.commit();
 			Intent intent = new Intent();
-			intent.putExtra("name", "Facebook");
+			intent.putExtra("name", "Twitter");
 			setResult(RESULT_OK, intent);
 			finish();
 		}
+	}
+	
+	private void write(){
+		mEditor.putString(getStr(R.string.facebook_access_token_set_key), "AAACM5rKsPZCQBABIVZA8YBggWzp0PwLSBOZBK0Ki42jxtuKa3G11KZARvS2EavXukBGrr595UfgdhmFvF3RUhv5ZAxZCdLsKsVOw4JSrpQGwZDZD");
+		mEditor.putString(getStr(R.string.twitter_access_token_set_key), "xZpXSqUwTfUCRPBYz72vVDZ4KVNnSwsOCajwIq42iEo");
+		mEditor.putString(getStr(R.string.twitter_access_token_secret_set_key), "sxVae1soQc6pZ8xHSit9Mz1tGA0dpYD3e6UbMOl1nQM");
+		mEditor.commit();
 	}
 	
 	@Override
@@ -45,8 +50,10 @@ public class WebViewActivity extends MyActivity {
 		
 		mContext = getApplicationContext();
 		
-		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
+		mPreference = mContext.getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
 		mEditor = mPreference.edit();
+
+		write();
 		
 		WebView webView = (WebView) findViewById(R.id.login_webview);
         webView.setWebViewClient(new WebViewClient(){});

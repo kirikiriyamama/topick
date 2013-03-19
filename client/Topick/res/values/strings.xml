@@ -15,9 +15,13 @@
     <string name="url_twitter_pick_up_topic">http://api.sansan-plus-plus.tk/topic/twitter?access_token=</string>
 
     <!-- Preference -->
+    <string name="access_preference_key">access_token</string>
     <string name="facebook_access_token_set_key">facebook_access_token</string>
     <string name="twitter_access_token_set_key">twitter_access_token</string>
     <string name="twitter_access_token_secret_set_key">twitter_access_token_secret</string>
+    <string name="facebook_up_to_date_day_key">facebook_up_to_date_day</string>
+    <string name="twitter_up_to_date_day_key">twitter_up_to_date_day</string>
+    
 
     <!-- MainActivity -->
     <string name="text_subtitle_facebook">Facebookで検索</string>
@@ -64,9 +68,8 @@
 
     <!-- AccessDb -->
     <string name="keyphrase_table">keyphrase_table</string>
-    <string name="cancel_keyphrase_table">cancel_keyphrase_table</string>
-    <string name="create_keyphrase_table_sql">CREATE TABLE keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT, date TEXT);</string>
-    <string name="create_cancel_keyphrase_table_sql">CREATE TABLE cancel_keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT, date TEXT);</string>
+    <string name="create_keyphrase_table_sql">CREATE TABLE keyphrase_table ( id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, phrase TEXT);</string>
+    
     <string name="found_account_title">見つかったアカウント</string>
     <string name="title_activity_topic_list">TopicListActivity</string>
     <string name="title_activity_found_account_list">FoundAccountListActivity</string>

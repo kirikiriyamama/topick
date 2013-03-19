@@ -28,7 +28,6 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 
 
 	final static private int SHOW_TOPIC_LIST = 500;
-	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
 	
 	private Activity mActivity;
 	private Context mContext;
@@ -38,7 +37,7 @@ public class PickUpTopicTask extends AsyncTask<String[], Void, Intent>{
 	public PickUpTopicTask(Activity activity) {
 		mActivity = activity;
 		mContext = activity.getApplicationContext();
-		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
+		mPreference = mContext.getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
 	}
 
 	@Override

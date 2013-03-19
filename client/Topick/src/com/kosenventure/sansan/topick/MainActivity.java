@@ -42,7 +42,7 @@ public class MainActivity extends MyActivity implements OnClickListener{
 		setContentView(R.layout.activity_main_layout);
 
 		// 起動時にファイルをコピーする
-		copyOCRLibrary();
+//		copyOCRLibrary();
 		
 		mLaunchSettingBtn = (ImageView) findViewById(R.id.btn_launch_setting);
 		mLaunchSettingBtn.setOnClickListener(this);

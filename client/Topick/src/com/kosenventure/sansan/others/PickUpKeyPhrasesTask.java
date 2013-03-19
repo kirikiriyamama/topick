@@ -27,17 +27,17 @@ import android.widget.Toast;
 public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 
 
-	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
-	
 	private Activity mActivity;
 	private Context mContext;
 	private SharedPreferences mPreference;  
 	private ProgressDialog mProgressDialog;
 	
+	private boolean[] flag;
+	
 	public PickUpKeyPhrasesTask(Activity activity) {
 		mActivity = activity;
 		mContext = activity.getApplicationContext();
-		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
+		mPreference = mContext.getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
 	}
 	
 	@Override
@@ -52,24 +52,27 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 
 	@Override
 	protected String[] doInBackground(boolean[]... params) {
+		flag = params[0];
 		String fbData = null,twData = null;
 		// Ç‹Ç∏FacebookÇ©ÇÁíäèoÇ∑ÇÈ
 		if ( params[0][0] ){
 			String url = getStr(R.string.url_facebook_pick_up_key_phrase) + mPreference.getString(getStr(R.string.facebook_access_token_set_key), "");
+			if( mPreference.getString(getStr(R.string.facebook_up_to_date_day_key), null) != null ) url += "&since=" + mPreference.getString(getStr(R.string.facebook_up_to_date_day_key), null).replace(" ", "%20");
 			fbData = getJsonFromAPI(url);
 		}
 		
 		if (params[0][1] ){
 			// TwitterÇ©ÇÁíäèo
 			String url = getStr(R.string.url_twitter_pick_up_key_phrase) + mPreference.getString(getStr(R.string.twitter_access_token_set_key), "") + "&access_token_secret=" + mPreference.getString(getStr(R.string.twitter_access_token_secret_set_key), "");
+			if( mPreference.getString(getStr(R.string.twitter_up_to_date_day_key), null) != null ) url += "&since=" + mPreference.getString(getStr(R.string.twitter_up_to_date_day_key), null).replace(" ", "%20");
 			twData = getJsonFromAPI(url);
 		}
 		
 		return createKeyPhraseArray(fbData, twData);
-//		return data;
 	}
 	
 	private String[] createKeyPhraseArray(String fb, String tw){
+		if( (fb == null || fb.length() == 0 ) && ( tw == null || tw.length() == 0 )) return null;
 		JSONArray fbArray = null,twArray = null;
 		String[] keyPhraseArray = null;
 		try {
@@ -98,6 +101,8 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 	        Intent intent = new Intent(mContext, SelectPickUpKeyPhraseActivity.class);
 	        intent.putExtra("key_phrase", result);
 	        intent.putExtra("date", getDate());
+	        intent.putExtra("facebook", flag[0]);
+	        intent.putExtra("twitter", flag[1]);
 	        mActivity.startActivityForResult(intent, 200);
         }
 	}
@@ -109,6 +114,7 @@ public class PickUpKeyPhrasesTask extends AsyncTask<boolean[], Void, String[]> {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy'-'MM'-'dd kk':'mm':'ss");
 		return sdf.format(date);
 	}
+	
 	private void log(String msg){
 		Log.d("PickUpKeyPhraseTask", msg);
 	}

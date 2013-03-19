@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 
-	public static final String ACCESSTOKEN_PREFERENCE_KEY = "access_token";
-	
 	private Activity mActivity;
 	private Context mContext;
 	private SharedPreferences mPreference;  
@@ -35,7 +33,7 @@ public class SearchUserTask extends AsyncTask<String[], Void, Intent> {
 	public SearchUserTask(Activity activity) {
 		mActivity = activity;
 		mContext = activity.getApplicationContext();
-		mPreference = mContext.getSharedPreferences(ACCESSTOKEN_PREFERENCE_KEY , Activity.MODE_PRIVATE);  
+		mPreference = mContext.getSharedPreferences(getStr(R.string.access_preference_key) , Activity.MODE_PRIVATE);  
 	}
 	
 	@Override
