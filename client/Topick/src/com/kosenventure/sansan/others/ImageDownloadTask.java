@@ -44,7 +44,6 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Bitmap> {
         
         public static Bitmap getImage(String key) {  
             if (cache.containsKey(key)) {  
-                Log.d("cache", "cache hit!");  
                 return cache.get(key);  
             }  
             return null;  
