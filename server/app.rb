@@ -102,7 +102,7 @@ class Topick < Sinatra::Base
 			end
 
 			# get user information
-			graph.get_objects(ids.uniq, :locale => 'ja_JP').each do |result|
+			graph.get_objects(ids.uniq, :fields => 'id,name,gender,locale,link,picture', :locale => 'ja_JP').each do |result|
 				result = result.last.symbolize_keys
 
 				next if (!params[:first_name_ja].blank?) && (params[:first_name_ja] != result[:first_name])
@@ -114,7 +114,7 @@ class Topick < Sinatra::Base
 					:gender => result[:gender],
 					:locale => result[:locale],
 					:link => result[:link],
-					:picture => graph.get_picture(result[:id], :type => 'large')}
+					:picture => result[:picture][:data][:url]}
 			end
 		rescue Koala::Facebook::ClientError
 			halt 400
@@ -222,14 +222,13 @@ class Topick < Sinatra::Base
 		twitter = twitter_configure(params[:access_token], params[:access_token_secret])
 		begin
 			unless (result = twitter.user_search(params[:screen_name]).first).blank? then
-				pp result
 				response << {
 					:id => result.id,
 					:screen_name => result.screen_name,
 					:name => result.name,
 					:description => result.description,
 					:link => create_url('https', 'twitter.com', "/#{result.screen_name}"),
-					:picture => result.profile_image_url(:bigger)}
+					:picture => result.profile_image_url(:normal)}
 			end
 		rescue Twitter::Error::ClientError
 			halt 400
