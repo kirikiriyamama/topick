@@ -1,0 +1,209 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".SearchTopicFragment" 
+    android:background="@drawable/background"
+    >
+
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/set_toptitle_bg"
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="話題検索"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+        <ImageView android:id="@+id/btn_launch_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dip"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/active_btn_setting"
+            />
+    </FrameLayout>
+    
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="10dip"
+        android:src="@drawable/subtitle_facebook"
+        />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        >
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView 
+                    style="@style/StandardTextViewStyle"
+                    android:layout_width="0dip"
+                    
+                    android:text="@string/text_romaji"
+                    android:layout_weight="1"
+                    />       
+                <EditText android:id="@+id/edit_romaji_first_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_romaji_first_name"
+                    android:layout_weight="2"
+                    android:text="nawate"
+                    />
+                <EditText android:id="@+id/edit_romaji_last_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_romaji_last_name"
+                    android:layout_weight="2"
+                    android:text="ippei"
+                    />
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView 
+                    style="@style/StandardTextViewStyle"
+                    android:layout_width="0dip"
+                    android:text="@string/text_kana"
+                    android:layout_weight="1"
+                    />       
+                <EditText android:id="@+id/edit_kana_first_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_kana_first_name"
+                    android:layout_weight="2"
+                    android:text="なわて"
+                    />
+                <EditText android:id="@+id/edit_kana_last_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_kana_last_name"
+                    android:layout_weight="2"
+                    android:text="いっぺい"
+                    />
+            </LinearLayout>
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView 
+                    style="@style/StandardTextViewStyle"
+                    android:layout_width="0dip"
+                    android:text="@string/text_kanji"
+                    android:layout_weight="1"
+                    />       
+                <EditText android:id="@+id/edit_kanji_first_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_kanji_first_name"
+                    android:layout_weight="2"
+                    android:text="索手"
+                    />
+                <EditText android:id="@+id/edit_kanji_last_name"
+                    style="@style/StandardEditTextStyle"
+                    android:layout_width="0dip"
+                    android:hint="@string/hint_kanji_last_name"
+                    android:layout_weight="2"
+                    android:text="一平"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="10dip"
+        android:layout_marginTop="20dip"
+        android:src="@drawable/subtitle_twitter"
+        />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <TextView 
+            style="@style/StandardTextViewStyle"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="@string/text_search_twitter"
+            />
+        <EditText android:id="@+id/edit_search_twitter_id"
+            style="@style/StandardEditTextStyle"
+            android:layout_width="0dip"
+            android:layout_weight="2"
+            android:hint="@string/hint_twitter"
+            android:text="sakuna63"
+            />
+        <LinearLayout 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout> 
+    
+    <LinearLayout android:id="@+id/btn_launch_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:padding="10dip"
+        android:background="@drawable/active_btn_background"
+        android:gravity="center"
+        
+        >
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            android:gravity="center"
+            android:text="@string/btn_launch_camera"
+            android:textColor="@color/white"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/camera"
+            />
+    </LinearLayout>
+    
+    
+    <Button android:id="@+id/btn_topic_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:padding="10dip"
+        android:text="@string/btn_topic_search"
+        android:textColor="@color/white"
+        android:background="@drawable/active_btn_background"
+        />
+    
+</LinearLayout>

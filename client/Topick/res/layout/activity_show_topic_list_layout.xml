@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context=".ManagementKeyPhraseFragment" 
+    >
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/set_toptitle_bg"
+        >
+        <ImageView android:id="@+id/btn_back_show_topic_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/active_btn_back"
+            />
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Topic一覧"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+        <ImageView android:id="@+id/btn_back_to_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dip"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/active_btn_home"
+            />
+    </FrameLayout>
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="10dip"
+        android:text="以下のTopicが見つかりました。"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        />
+    
+    <ListView android:id="@+id/list_topic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/trans"
+        android:scrollingCache="false"
+        android:fadingEdge="none"
+        android:fadeScrollbars="false"
+        android:divider="@color/trans"
+        />
+</LinearLayout>

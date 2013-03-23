@@ -1,0 +1,19 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+    
+    <style name="StandardTextViewStyle">
+       <item name="android:layout_height">wrap_content</item>
+       <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="StandardEditTextStyle">
+       <item name="android:layout_height">wrap_content</item>
+       <item name="android:lines">1</item>
+       <item name="android:inputType">text</item>
+    </style>
+
+</resources>

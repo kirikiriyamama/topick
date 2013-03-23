@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context=".SettingsFragment" >
+
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/set_toptitle_bg"
+        >
+        <ImageView android:id="@+id/btn_back_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/active_btn_back"
+            />
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="設定"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+    
+    <Button android:id="@+id/btn_launch_management_kay_phrase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:padding="40dip"
+        android:text="@string/btn_launch_manegement_kay_phrase"
+        android:textColor="@color/white"
+        android:background="@drawable/active_btn_background"
+        />
+    
+    <Button android:id="@+id/btn_login_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:padding="40dip"
+        android:textColor="@color/white"
+        android:background="@drawable/active_btn_background"
+        android:text="@string/btn_login_facebook"
+        />
+    
+    <Button android:id="@+id/btn_login_twitter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:padding="40dip"
+        android:textColor="@color/white"
+        android:background="@drawable/active_btn_background"
+        android:text="@string/btn_login_twitter"
+        />
+
+</LinearLayout>

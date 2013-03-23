@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+    tools:context=".ManagementKeyPhraseFragment" 
+    >
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/set_toptitle_bg"
+        >
+        <ImageView android:id="@+id/btn_back_management_key_phrase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/active_btn_back"
+            />
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="キーフレーズ管理"
+            android:textSize="22sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            />
+        <ImageView android:id="@+id/btn_show_add_key_phrase_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dip"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/active_btn_menu"
+            />
+    </FrameLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginLeft="20dip"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+        <EditText android:id="@+id/edit_search_key_phrase"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/hint_search_key_phrase"
+            android:inputType="text"
+            android:lines="1"
+            android:imeOptions="actionDone"
+            />
+        <Button android:id="@+id/btn_search_key_phrase"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:text="@string/btn_search_key_phrase"
+            android:textColor="@color/white"
+            android:background="@drawable/active_btn_background"
+            />
+    </LinearLayout>
+    
+    <ListView android:id="@+id/list_key_phrase"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/trans"
+        android:scrollingCache="false"
+        android:fadingEdge="none"
+        android:fadeScrollbars="false"
+        android:divider="@color/trans"
+        />
+    
+</LinearLayout>
